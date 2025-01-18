@@ -5,8 +5,11 @@ from vehiclemanager import VehicleManager
 from filtermanager import FilterManager
 from vehicle import Vehicle
 from tkinter import messagebox
-from constants import SQL_MAPPINGS, COLUMN_NAMES, FUEL_TYPES, TAX_TYPES, VEHICLE_TYPES, ASCII_ART, TAX_STATUS
+from constants import SQL_MAPPINGS, COLUMN_NAMES, FUEL_TYPES, TAX_TYPES, VEHICLE_TYPES, ASCII_ART, TAX_STATUS, MAPPINGS
 import datetime
+
+current_year = datetime.datetime.now().year
+manufacture_years = [str(year) for year in range(current_year, current_year - 20, -1)]
 
 class FleetApp:
     def __init__(self, root):
@@ -150,49 +153,42 @@ class FleetApp:
 
     def open_add_vehicle_popup(self):
         """Opens a popup window for adding a new vehicle."""
-        popup = tk.Toplevel(self.root)
-        popup.title("Add Vehicle")
+        self.vehicle_popup("add")
+        # popup = tk.Toplevel(self.root)
+        # popup.title("Add Vehicle")
 
-        # Field labels and widget types
-        fields = [
-            ("Type", lambda parent: ttk.Combobox(parent, values=[
-                "Sedan", "Hatchback", "SUV", "Coupe", "Convertible", "Minivan",
-                "Pickup Truck", "Cargo Van", "Box Truck", "Bus", "Motorcycle", "Scooter",
-                "Bicycle", "Semi-Truck", "Dump Truck", "Bulldozer", "Fire Truck", "Crane",
-                "ATV", "Forklift", "Snowmobile", "Speedboat", "Yacht", "Ferry", "Helicopter"
-            ])),
-            ("Registration Number", tk.Entry),
-            ("Tax Status", lambda parent: ttk.Combobox(parent, values=["Paid", "Unpaid"])),
-            ("Tax Type", lambda parent: ttk.Combobox(parent, values=[
-                "Taxed", "Tax Exempt", "SORN", "Untaxed", "First-Year Rate", "Reduced Rate","Historic", "Disabled", "Agricultural Vehicle", "Exported" 
-            ])),
-            ("Tax Due Date", lambda parent: DateEntry(parent, date_pattern='yyyy-mm-dd')),
-            ("Service Date", lambda parent: DateEntry(parent, date_pattern='yyyy-mm-dd')),
-            ("Fuel Type", lambda parent: ttk.Combobox(parent, values=[
-                "Diesel", "Petrol", "Electricity", "Kerosene", "Hydrogen"
-            ])),
-            ("Manufacture Year", tk.Entry)
-        ]
+        # # Field labels and widget types
+        # fields = [
+        #     ("Type", lambda parent: ttk.Combobox(parent, values=VEHICLE_TYPES)),
+        #     ("Registration Number", tk.Entry),
+        #     ("Tax Status", lambda parent: ttk.Combobox(parent, values=["Paid", "Unpaid"])),
+        #     ("Tax Type", lambda parent: ttk.Combobox(parent, values=TAX_TYPES)),
+        #     ("Tax Due Date", lambda parent: DateEntry(parent, date_pattern='yyyy-mm-dd')),
+        #     ("Service Date", lambda parent: DateEntry(parent, date_pattern='yyyy-mm-dd')),
+        #     ("Fuel Type", lambda parent: ttk.Combobox(parent, values=FUEL_TYPES)),
+        #     ("Manufacture Year", tk.Entry)
+        # ]
 
-        # Dictionary to store input widgets
-        inputs = {}
+        # # Dictionary to store input widgets
+        # inputs = {}
 
-        # Create labels and input widgets dynamically
-        for i, (label, widget_type) in enumerate(fields):
-            tk.Label(popup, text=label).grid(row=i, column=0)
-            widget = widget_type(popup)
-            widget.grid(row=i, column=1)
-            inputs[label] = widget
+        # # Create labels and input widgets dynamically
+        # for i, (label, widget_type) in enumerate(fields):
+        #     tk.Label(popup, text=label).grid(row=i, column=0)
+        #     widget = widget_type(popup)
+        #     widget.grid(row=i, column=1)
+        #     inputs[label] = widget
 
-            # Set default values for dropdowns (if applicable)
-            if label == "Type":
-                widget.set("Sedan")
-            elif label == "Fuel Type":
-                widget.set("Diesel")
+        #     # Set default values for dropdowns (if applicable)
+        #     if label == "Type":
+        #         widget.set("Sedan")
+        #     elif label == "Fuel Type":
+        #         widget.set("Diesel")
 
         def add_vehicle():
             try:
                 # Create a Vehicle object using field values
+                print(inputs)
                 vehicle = Vehicle(
                     vehicle_type=inputs["Type"].get(),
                     reg_number=inputs["Registration Number"].get(),
@@ -246,7 +242,8 @@ class FleetApp:
         """Update the treeview with given records."""
         self.tree.delete(*self.tree.get_children())
         for record in records:
-            self.tree.insert("", "end", values=record)
+            if not self.tree.exists(record[2]):  # Ensure unique iid
+                self.tree.insert("", "end", iid=record[2], values=("☐", *record[1:]))
 
     def toggle_checkbox(self, event):
         """
@@ -282,81 +279,114 @@ class FleetApp:
         self.list_all_vehicles()
 
     def edit_vehicle_popup(self, event):
+        """Opens a popup window for editing an existing vehicle."""
         item = self.tree.identify_row(event.y)
         if not item:
             return
 
-        reg_number = self.tree.item(item)["values"][2]  # Get Registration Number
+        reg_number = self.tree.item(item, "values")[2]  # Get Registration Number
         vehicle = self.manager.search_vehicles("SELECT * FROM Vehicles WHERE RegistrationNumber = ?", (reg_number,))
+        print(vehicle)
         if not vehicle:
             messagebox.showerror("Error", "Vehicle not found.")
             return
 
         vehicle = vehicle[0]  # Extract the record
+        self.vehicle_popup("edit", vehicle)
+        
+    def vehicle_popup(self, mode, vehicle_data=None):
+        """Generalized popup window for adding or editing a vehicle."""
         popup = tk.Toplevel(self.root)
-        popup.title("Edit Vehicle")
+        popup.title("Edit Vehicle" if mode == "edit" else "Add Vehicle")
 
-        # Editable fields in the popup
-        tk.Label(popup, text="Type").grid(row=0, column=0)
-        type_entry = tk.Entry(popup)
-        type_entry.insert(0, vehicle[1])
-        type_entry.grid(row=0, column=1)
+        current_year = datetime.datetime.now().year
+        manufacture_years = [str(year) for year in range(current_year, current_year - 20, -1)]
 
-        tk.Label(popup, text="Registration Number").grid(row=1, column=0)
-        reg_entry = tk.Entry(popup)
-        reg_entry.insert(0, vehicle[2])
-        reg_entry.grid(row=1, column=1)
+        # Fields configuration
+        fields = [
+            ("Type", lambda parent: ttk.Combobox(parent, values=VEHICLE_TYPES, state="readonly"), ""),
+            ("Registration Number", tk.Entry, ""),
+            ("Tax Status", lambda parent: ttk.Combobox(parent, values=TAX_STATUS, state="readonly"), ""),
+            ("Tax Due Date", lambda parent: DateEntry(parent, date_pattern='yyyy-mm-dd'), ""),
+            ("Tax Type", lambda parent: ttk.Combobox(parent, values=TAX_TYPES, state="readonly"), ""),
+            ("Service Date", lambda parent: DateEntry(parent, date_pattern='yyyy-mm-dd'), ""),
+            ("Fuel Type", lambda parent: ttk.Combobox(parent, values=FUEL_TYPES, state="readonly"), ""),
+            ("Manufacture Year", lambda parent: ttk.Combobox(parent, values=manufacture_years, state="readonly"), "")
+        ]
 
-        tk.Label(popup, text="Tax Status").grid(row=2, column=0)
-        tax_entry = tk.Entry(popup)
-        tax_entry.insert(0, vehicle[3])
-        tax_entry.grid(row=2, column=1)
+        # If editing, populate initial values
+        if mode == "edit" and vehicle_data:
+            for i, field in enumerate(fields):
+                fields[i] = (field[0], field[1], vehicle_data[i + 1])
 
-        tk.Label(popup, text="Service Date").grid(row=3, column=0)
-        service_date_picker = DateEntry(popup, date_pattern='yyyy-mm-dd')
-        service_date_picker.set_date(vehicle[4])
-        service_date_picker.grid(row=3, column=1)
+        inputs = {}
 
-        tk.Label(popup, text="Fuel Type").grid(row=4, column=0)
-        fuel_entry = tk.Entry(popup)
-        fuel_entry.insert(0, vehicle[5])
-        fuel_entry.grid(row=4, column=1)
+        # Create labels and input widgets dynamically
+        for i, (label, widget_type, initial_value) in enumerate(fields):
+            tk.Label(popup, text=label).grid(row=i, column=0)
+            widget = widget_type(popup)
+            widget.grid(row=i, column=1)
 
-        tk.Label(popup, text="Manufacture Year").grid(row=5, column=0)
-        year_entry = tk.Entry(popup)
-        year_entry.insert(0, vehicle[6])
-        year_entry.grid(row=5, column=1)
+            # Set initial value
+            if isinstance(widget, ttk.Combobox):
+                widget.set(initial_value)
+            elif isinstance(widget, DateEntry):
+                try:
+                    if initial_value:
+                        widget.set_date(initial_value)
+                    else:
+                        widget.set_date(datetime.date.today())
+                except ValueError:
+                    widget.set_date(datetime.date.today())  # Fallback to today's date for invalid values
+            else:
+                widget.insert(0, initial_value)
+
+            inputs[label] = widget
 
         def save_changes():
-            updates = {
-                "Type": type_entry.get(),
-                "RegistrationNumber": reg_entry.get(),
-                "TaxStatus": tax_entry.get(),
-                "ServiceDate": service_date_picker.get(),
-                "FuelType": fuel_entry.get(),
-                "ManufactureYear": year_entry.get(),
-            }
-
             try:
-                # Update the vehicle in the database
-                self.manager.update_vehicle(vehicle[2], **updates)
-                messagebox.showinfo("Success", "Vehicle updated successfully!")
+                updates = {
+                    "Type": inputs["Type"].get(),
+                    "RegistrationNumber": inputs["Registration Number"].get(),
+                    "TaxStatus": inputs["Tax Status"].get(),
+                    "TaxType": inputs["Tax Type"].get(),
+                    "TaxDueDate": inputs["Tax Due Date"].get(),
+                    "ServiceDate": inputs["Service Date"].get(),
+                    "FuelType": inputs["Fuel Type"].get(),
+                    "ManufactureYear": int(inputs["Manufacture Year"].get())
+                }
+
+                if mode == "edit":
+                    self.manager.update_vehicle(vehicle_data[2], **updates)
+                    messagebox.showinfo("Success", "Vehicle updated successfully!")
+                else:
+                    updated_keys = {MAPPINGS[key]: value for key, value in updates.items()}
+                    new_vehicle = Vehicle(**updated_keys)
+                    self.manager.add_vehicle(new_vehicle)
+                    messagebox.showinfo("Success", "Vehicle added successfully!")
+
                 popup.destroy()
                 self.list_all_vehicles()
             except Exception as e:
-                messagebox.showerror("Error", f"Failed to update vehicle: {e}")
-        
+                messagebox.showerror("Error", f"Failed to save vehicle: {e}")
+
         def delete_vehicle():
-            try:
-                self.manager.remove_vehicle(vehicle[2])
-                messagebox.showinfo("Success", "Vehicle deleted successfully!")
-                popup.destroy()
-                self.list_all_vehicles()
-            except Exception as e:
-                messagebox.showerror("Error", f"Failed to delete vehicle: {e}")
+            if mode == "edit":
+                try:
+                    self.manager.remove_vehicle(vehicle_data[2])
+                    messagebox.showinfo("Success", "Vehicle deleted successfully!")
+                    popup.destroy()
+                    self.list_all_vehicles()
+                except Exception as e:
+                    messagebox.showerror("Error", f"Failed to delete vehicle: {e}")
 
-        tk.Button(popup, text="Save Changes", command=save_changes).grid(row=6, column=0)
-        tk.Button(popup, text="Delete Vehicle", command=delete_vehicle).grid(row=6, column=1)
+        # Add Save and Delete buttons
+        tk.Button(popup, text="Save Changes" if mode == "edit" else "Add Vehicle", command=save_changes).grid(row=len(fields), column=0, pady=10)
+
+        if mode == "edit":
+            tk.Button(popup, text="Delete Vehicle", command=delete_vehicle).grid(row=len(fields), column=1, pady=10)    
+    
+
 
 # Run the App
 if __name__ == "__main__":
