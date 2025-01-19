@@ -16,12 +16,16 @@ class FilterManager:
 
         def add_range_filter(field_from, field_to, db_field):
             """Add range filter for date or year fields."""
-            from_value = self.filters.get(field_from, "").get()
-            to_value = self.filters.get(field_to, "").get()
+            from_widget = self.filters.get(field_from)
+            to_widget = self.filters.get(field_to)
 
-            # Skip adding conditions if both range fields are empty
-            if not from_value and not to_value:
-                return  
+            from_value = from_widget.get() if from_widget else ""
+            to_value = to_widget.get() if to_widget else ""
+
+            if not from_value or from_value == "All":
+                from_value = None
+            if not to_value or to_value == "All":
+                to_value = None
 
             if from_value and to_value and to_value < from_value:
                 AppMessage.show("error", f"'{field_to}' cannot be earlier than '{field_from}'.")
@@ -40,11 +44,14 @@ class FilterManager:
             values.extend([f"%{search_query}%"] * len(search_fields))
 
         # Range Filters
-        add_range_filter("Year From", "Year To", "ManufactureYear")
-        add_range_filter("Tax Due Date From", "Tax Due Date To", "TaxDueDate")
-        add_range_filter("Service Date From", "Service Date To", "ServiceDate")
+        if "Year From" in self.filters and "Year To" in self.filters:
+            add_range_filter("Year From", "Year To", "ManufactureYear")
+        if "Tax Due Date From" in self.filters and "Tax Due Date To" in self.filters:
+            add_range_filter("Tax Due Date From", "Tax Due Date To", "TaxDueDate")
+        if "Service Date From" in self.filters and "Service Date To" in self.filters:
+            add_range_filter("Service Date From", "Service Date To", "ServiceDate")
 
-        # Dropdown Filters
+    # Dropdown Filters
         for field, widget in self.filters.items():
             if field not in ["Year From", "Year To", "Tax Due Date From", "Tax Due Date To", "Service Date From", "Service Date To", "Search"]:
                 value = widget.get()
@@ -55,7 +62,7 @@ class FilterManager:
         query = "SELECT * FROM Vehicles"
         if where_clauses:
             query += f" WHERE {' AND '.join(where_clauses)}"
-        print(query)
+        print(query, values)
         return query, values
 
     def clear_filters(self):

@@ -10,9 +10,6 @@ import datetime
 from vehiclepopup import VehiclePopup
 from appmessage import AppMessage
 
-current_year = datetime.datetime.now().year
-manufacture_years = [str(year) for year in range(current_year, current_year - 20, -1)]
-
 
 class FleetApp:
     def __init__(self, root):
@@ -24,7 +21,7 @@ class FleetApp:
 
     def create_widgets(self):
         current_year = datetime.datetime.now().year
-        year_options = [str(year) for year in range(current_year - 50, current_year + 1)]
+        year_options = [int(year) for year in range(current_year - 50, current_year + 1)]
 
         # Top frame for ASCII art, buttons, and search functionality
         self.top_frame = tk.Frame(self.root)
