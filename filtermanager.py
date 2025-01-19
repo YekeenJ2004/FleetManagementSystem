@@ -2,6 +2,8 @@ from constants import SQL_MAPPINGS
 import tkinter as tk
 from tkinter import ttk
 from tkcalendar import DateEntry
+from appmessage import AppMessage
+
 
 class FilterManager:
     def __init__(self, filters):
@@ -17,7 +19,7 @@ class FilterManager:
             from_value = self.filters.get(field_from, "").get()
             to_value = self.filters.get(field_to, "").get()
             if from_value and to_value and to_value < from_value:
-                raise ValueError(f"'{field_to}' cannot be earlier than '{field_from}'.")
+                AppMessage.show("error", f"'{field_to}' cannot be earlier than '{field_from}'.")
             if from_value:
                 where_clauses.append(f'"{db_field}" >= ?')
                 values.append(from_value)
