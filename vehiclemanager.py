@@ -1,6 +1,7 @@
 import sqlite3
 from vehicle import Vehicle
 
+
 class VehicleManager:
     def __init__(self, db_name="fleet_management.db"):
         self.conn = sqlite3.connect(db_name)
@@ -16,7 +17,8 @@ class VehicleManager:
                 TaxStatus TEXT,
                 TaxDueDate DATE,
                 TaxType TEXT,
-                ServiceDate DATE,
+                ServiceDueDate DATE,
+                ServiceStatus TEXT,
                 FuelType TEXT,
                 ManufactureYear INTEGER
             )
@@ -26,9 +28,9 @@ class VehicleManager:
     def add_vehicle(self, vehicle: Vehicle):
         cursor = self.conn.cursor()
         cursor.execute("""
-            INSERT INTO Vehicles (Type, RegistrationNumber, TaxStatus, TaxDueDate, TaxType, ServiceDate, FuelType, ManufactureYear)
-            VALUES (?, ?, ?, ?, ?, ?, ?, ?)
-        """, (vehicle.vehicle_type, vehicle.reg_number, vehicle.tax_status, vehicle.tax_due_date, vehicle.tax_type, vehicle.service_date, vehicle.fuel_type, vehicle.manufacture_year))
+            INSERT INTO Vehicles (Type, RegistrationNumber, TaxStatus, TaxDueDate, TaxType, ServiceDueDate, ServiceStatus, FuelType, ManufactureYear)
+            VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)
+        """, (vehicle.vehicle_type, vehicle.reg_number, vehicle.tax_status, vehicle.tax_due_date, vehicle.tax_type, vehicle.service_due_date,vehicle.service_status, vehicle.fuel_type, vehicle.manufacture_year))
         self.conn.commit()
 
     def remove_vehicle(self, reg_number):

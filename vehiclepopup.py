@@ -3,7 +3,7 @@ from tkinter import ttk, messagebox
 from tkcalendar import DateEntry
 import datetime
 from vehicle import Vehicle
-from constants import VEHICLE_TYPES, TAX_STATUS, TAX_TYPES, FUEL_TYPES, SQL_MAPPINGS,VEHICLE_CLASS_MAPPINGS
+from constants import VEHICLE_TYPES, TAX_STATUS, TAX_TYPES, FUEL_TYPES, SQL_MAPPINGS, VEHICLE_CLASS_MAPPINGS, SERVICE_STATUS
 
 class VehiclePopup:
     """Popup window for adding or editing a vehicle."""
@@ -31,7 +31,8 @@ class VehiclePopup:
             ("Tax Status", lambda parent: ttk.Combobox(parent, values=TAX_STATUS, state="readonly"), ""),
             ("Tax Due Date", lambda parent: DateEntry(parent, date_pattern='yyyy-mm-dd'), ""),
             ("Tax Type", lambda parent: ttk.Combobox(parent, values=TAX_TYPES, state="readonly"), ""),
-            ("Service Date", lambda parent: DateEntry(parent, date_pattern='yyyy-mm-dd'), ""),
+            ("Service Due Date", lambda parent: DateEntry(parent, date_pattern='yyyy-mm-dd'), ""),
+            ("Service Status", lambda parent: ttk.Combobox(parent, values=SERVICE_STATUS, state="readonly"), ""),
             ("Fuel Type", lambda parent: ttk.Combobox(parent, values=FUEL_TYPES, state="readonly"), ""),
             ("Manufacture Year", lambda parent: ttk.Combobox(parent, values=self.manufacture_years, state="readonly"), "")
         ]

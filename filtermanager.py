@@ -18,6 +18,11 @@ class FilterManager:
             """Add range filter for date or year fields."""
             from_value = self.filters.get(field_from, "").get()
             to_value = self.filters.get(field_to, "").get()
+
+            # Skip adding conditions if both range fields are empty
+            if not from_value and not to_value:
+                return  
+
             if from_value and to_value and to_value < from_value:
                 AppMessage.show("error", f"'{field_to}' cannot be earlier than '{field_from}'.")
             if from_value:
@@ -50,6 +55,7 @@ class FilterManager:
         query = "SELECT * FROM Vehicles"
         if where_clauses:
             query += f" WHERE {' AND '.join(where_clauses)}"
+        print(query)
         return query, values
 
     def clear_filters(self):

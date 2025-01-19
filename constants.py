@@ -15,9 +15,10 @@ FUEL_TYPES = [
     "Hydrogen", "Solar", "Other"
 ]
 TAX_STATUS = ["Paid", "Unpaid"]
+SERVICE_STATUS = ["Done", "Pending"]
 COLUMN_NAMES = [
-    "Select", "Type", "Registration Number", "Tax Status", "Tax Due Date", 
-    "Tax Type", "Service Date", "Fuel Type", "Manufacture Year"
+    "Select", "Type", "Registration Number", "Tax Status", "Tax Due Date",
+    "Tax Type", "Service Due Date", "Service Status", "Fuel Type", "Manufacture Year"
 ]
 SQL_MAPPINGS = {
     "Type": "Type",
@@ -27,7 +28,8 @@ SQL_MAPPINGS = {
     "Fuel Type": "FuelType",
     "Manufacture Year": "ManufactureYear",
     "Tax Due Date": "TaxDueDate",
-    "Service Date": "ServiceDate"
+    "Service Due Date": "ServiceDueDate",
+    "Service Status": "ServiceStatus"
 }
 VEHICLE_CLASS_MAPPINGS = {
     "Type": "vehicle_type",
@@ -35,7 +37,8 @@ VEHICLE_CLASS_MAPPINGS = {
     "TaxStatus": "tax_status",
     "TaxType": "tax_type",
     "TaxDueDate": "tax_due_date",
-    "ServiceDate": "service_date",
+    "ServiceDueDate": "service_due_date",
+    "ServiceStatus": "service_status",
     "FuelType": "fuel_type",
     "ManufactureYear": "manufacture_year"
 }
@@ -49,6 +52,7 @@ FILTER_OPTIONS = {
     "Tax Type": TAX_TYPES + ["All"],
     "Tax Status": TAX_STATUS + ["All"],
     "Fuel Type": FUEL_TYPES + ["All"],
+    "Service Status": SERVICE_STATUS + ["All"]
 }
 ASCII_ART = r"""
          ______ __  __  _____
