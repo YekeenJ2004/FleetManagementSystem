@@ -3,19 +3,45 @@ import tkinter as tk
 from tkinter import ttk
 from tkcalendar import DateEntry
 from appmessage import AppMessage
+from typing import Dict, Any, Tuple, List
+from customtypes import FromRange, ToRange, RangeField
 
 
 class FilterManager:
-    def __init__(self, filters):
+    """
+    A class to manage and apply filters for querying a database.
+
+    This class builds SQL `WHERE` clauses based on user-provided filters and 
+    manages resetting the filters to their default states.
+    """
+    def __init__(self, filters: Dict[str, Any]) -> None:
+        """
+        Initialize the FilterManager with a dictionary of filters.
+
+        Args:
+            filters (Dict[str, Any]): A dictionary where keys are filter names and values are tkinter widgets.
+        """
         self.filters = filters
 
-    def apply_filters(self):
-        """Build the SQL WHERE clause and values based on the filters."""
+    def apply_filters(self) -> Tuple[str, List[Any]]:
+        """
+        Build the SQL `WHERE` clause and corresponding values based on the filters.
+
+        Returns:
+            Tuple[str, List[Any]]: A tuple containing the SQL query string and the list of query parameters.
+        """
         where_clauses = []
         values = []
 
-        def add_range_filter(field_from, field_to, db_field):
-            """Add range filter for date or year fields."""
+        def add_range_filter(field_from: FromRange, field_to: ToRange, db_field: RangeField) -> None:
+            """
+            Add range filters for date or year fields to the query.
+
+            Args:
+                field_from (str): The filter name for the start of the range.
+                field_to (str): The filter name for the end of the range.
+                db_field (str): The database column name to filter.
+            """
             from_widget = self.filters.get(field_from)
             to_widget = self.filters.get(field_to)
 
@@ -40,7 +66,9 @@ class FilterManager:
         search_query = self.filters.get("Search", "").get().strip()
         if search_query:
             search_fields = ["Type", "RegistrationNumber", "TaxStatus", "FuelType"]
-            where_clauses.append(" OR ".join([f'"{field}" LIKE ?' for field in search_fields]))
+            search_fields = ["Type", "RegistrationNumber", "TaxStatus", "FuelType"]
+            search_conditions = " OR ".join([f'"{field}" LIKE ?' for field in search_fields])
+            where_clauses.append(f"({search_conditions})")
             values.extend([f"%{search_query}%"] * len(search_fields))
 
         # Range Filters
@@ -53,7 +81,7 @@ class FilterManager:
 
     # Dropdown Filters
         for field, widget in self.filters.items():
-            if field not in ["Year From", "Year To", "Tax Due Date From", "Tax Due Date To", "Service Date From", "Service Date To", "Search"]:
+            if field not in ["Year From", "Year To", "Tax Due Date From", "Tax Due Date To", "Service Date From", "Service Date To", "Search", "Order By", "Order Direction", "Order By", "Order Direction"]:
                 value = widget.get()
                 if value and value != "All":
                     where_clauses.append(f'"{SQL_MAPPINGS[field]}" = ?')
@@ -62,15 +90,29 @@ class FilterManager:
         query = "SELECT * FROM Vehicles"
         if where_clauses:
             query += f" WHERE {' AND '.join(where_clauses)}"
+
+         # Order By
+        order_by_column = self.filters.get("Order By").get()
+        order_direction = self.filters.get("Order Direction").get()
+
+        if order_by_column and order_direction:
+            query += f" ORDER BY \"{SQL_MAPPINGS.get(order_by_column, order_by_column)}\" {order_direction}"
+
         print(query, values)
         return query, values
 
-    def clear_filters(self):
-        """Reset all filters to their default values."""
+    def clear_filters(self) -> None:
+        """
+        Reset all filters to their default values.
+        """
         for field, widget in self.filters.items():
-            if isinstance(widget, ttk.Combobox):
-                widget.set("All")  # Reset dropdowns to "All"
-            elif isinstance(widget, tk.Entry):
-                widget.delete(0, tk.END)  # Clear search bar
+            if field == "Order By":
+                widget.set("ManufactureYear")  # Default Order By to ManufactureYear
+            elif field == "Order Direction":
+                widget.set("ASC")  # Default Order Direction to ASC
+            elif isinstance(widget, ttk.Combobox):
+                widget.set("All")
+            elif isinstance(widget, ttk.Entry):
+                widget.delete(0, "end")
             elif isinstance(widget, DateEntry):
-                widget.delete(0, tk.END)  # Clear date picker
+                widget.delete(0, "end")

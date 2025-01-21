@@ -3,14 +3,34 @@ from tkinter import ttk
 from tkcalendar import DateEntry
 import datetime
 from vehicle import Vehicle
+from typing import Callable, Optional, Dict, Any
 from constants import SQL_MAPPINGS, VEHICLE_CLASS_MAPPINGS, VEHICLE_POPUP_FIELDS, FIELD_OPTIONS
 from appmessage import AppMessage
+from vehiclemanager import VehicleManager
+from customtypes import VehiclePopupAction
 
 
 class VehiclePopup:
     """Popup window for adding or editing a vehicle."""
 
-    def __init__(self, root, manager, list_all_vehicles, mode, vehicle_data=None):
+    def __init__(
+        self,
+        root: Any,
+        manager: VehicleManager,
+        list_all_vehicles: Callable[[], None],
+        mode: VehiclePopupAction,
+        vehicle_data: Optional[Dict[str, Any]] = None,
+    ) -> None:
+        """
+        A popup window for adding or editing vehicle information.
+
+        Attributes:
+            root (tk.Tk): The root window.
+            manager (VehicleManager): The manager instance for database operations.
+            list_all_vehicles (Callable): Function to refresh the vehicle list in the main application.
+            mode (str): The mode of the popup, either 'add' or 'edit'.
+            vehicle_data (Optional[Dict[str, Any]]): Data of the vehicle being edited, if applicable.
+        """
         self.root = root
         self.manager = manager
         self.list_all_vehicles = list_all_vehicles
@@ -26,7 +46,10 @@ class VehiclePopup:
         self.inputs = {}
         self.create_widgets()
 
-    def create_widgets(self):
+    def create_widgets(self) -> None:
+        """
+        Create and layout the widgets in the popup window.
+        """
         fields = VEHICLE_POPUP_FIELDS + [("Manufacture Year", lambda parent: ttk.Combobox(parent, values=self.manufacture_years, state="readonly"), "")]
 
         if self.mode == "edit" and self.vehicle_data:
@@ -55,7 +78,13 @@ class VehiclePopup:
         if self.mode == "edit":
             tk.Button(self.popup, text="Delete Vehicle", command=self.delete_vehicle).grid(row=len(fields), column=1, pady=10)
 
-    def save_changes(self):
+    def save_changes(self) -> None:
+        """
+        Save the changes made to the vehicle.
+
+        This method validates the input data and either adds a new vehicle or updates an existing one
+        in the database. It shows appropriate messages based on the success or failure of the operation.
+        """
         try:
             updates = {}
             for label, widget in self.inputs.items():
@@ -107,7 +136,12 @@ class VehiclePopup:
             # Handle generic errors
             AppMessage.show("error", f"Failed to save vehicle: {e}")
 
-    def delete_vehicle(self):
+    def delete_vehicle(self) -> None:
+        """
+        Delete the current vehicle from the database.
+
+        Displays appropriate success or error messages based on the outcome.
+        """
         try:
             self.manager.remove_vehicle(self.vehicle_data[2])
             AppMessage.show("info", "Vehicle deleted successfully!")

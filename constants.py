@@ -58,7 +58,7 @@ VEHICLE_CLASS_MAPPINGS = {
     "FuelType": "fuel_type",
     "ManufactureYear": "manufacture_year"
 }
-FILTER_FIELDS = [
+FILTER_RANGE_FIELDS = [
     ("Year From", "Year From", 2, 4), ("To", "Year To", 2, 6),
     ("Tax Due Date From", "Tax Due Date From", 2, 0), ("To", "Tax Due Date To", 2, 2),
     ("Service Date From", "Service Date From", 3, 0), ("To", "Service Date To", 3, 2)
@@ -68,7 +68,9 @@ FILTER_OPTIONS = {
     "Tax Type": TAX_TYPES + ["All"],
     "Tax Status": TAX_STATUS + ["All"],
     "Fuel Type": FUEL_TYPES + ["All"],
-    "Service Status": SERVICE_STATUS + ["All"]
+    "Service Status": SERVICE_STATUS + ["All"],
+    "Order By": ["Manufacture Year", "Tax Due Date", "Service Due Date", "Registration Number"],
+    "Order Direction": ["ASC", "DESC"]
 }
 FIELD_OPTIONS = {
     "Type": VEHICLE_TYPES,
