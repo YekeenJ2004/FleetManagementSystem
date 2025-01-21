@@ -186,4 +186,3 @@ class FleetApp:
             self.manager.remove_vehicle(reg)
         AppMessage.show("info", "Selected vehicle(s) deleted successfully!")
         self.list_all_vehicles()
-

@@ -24,7 +24,8 @@ TAX_STATUS = ["Paid", "Unpaid"]
 SERVICE_STATUS = ["Done", "Pending"]
 COLUMN_NAMES = [
     "Select", "Type", "Registration Number", "Tax Status", "Tax Due Date",
-    "Tax Type", "Service Due Date", "Service Status", "Fuel Type", "Manufacture Year"
+    "Tax Type", "Service Due Date", "Service Status", 
+    "Fuel Type", "Manufacture Year"
 ]
 SQL_MAPPINGS = {
     "Type": "Type",
@@ -38,14 +39,32 @@ SQL_MAPPINGS = {
     "Service Status": "ServiceStatus"
 }
 VEHICLE_POPUP_FIELDS = [
-    ("Type", lambda parent: ttk.Combobox(parent, values=VEHICLE_TYPES, state="readonly"), ""),
+    ("Type",
+     lambda parent: ttk.Combobox(
+         parent, values=VEHICLE_TYPES, state="readonly"
+     ),
+     ""),
     ("Registration Number", tk.Entry, ""),
-    ("Tax Status", lambda parent: ttk.Combobox(parent, values=TAX_STATUS, state="readonly"), ""),
-    ("Tax Due Date", lambda parent: DateEntry(parent, date_pattern='yyyy-mm-dd'), ""),
-    ("Tax Type", lambda parent: ttk.Combobox(parent, values=TAX_TYPES, state="readonly"), ""),
-    ("Service Due Date", lambda parent: DateEntry(parent, date_pattern='yyyy-mm-dd'), ""),
-    ("Service Status", lambda parent: ttk.Combobox(parent, values=SERVICE_STATUS, state="readonly"), ""),
-    ("Fuel Type", lambda parent: ttk.Combobox(parent, values=FUEL_TYPES, state="readonly"), ""),
+    ("Tax Status",
+     lambda parent: ttk.Combobox(parent, values=TAX_STATUS, state="readonly"),
+     ""),
+    ("Tax Due Date",
+     lambda parent: DateEntry(parent, date_pattern='yyyy-mm-dd'),
+     ""),
+    ("Tax Type",
+     lambda parent: ttk.Combobox(parent, values=TAX_TYPES, state="readonly"),
+     ""),
+    ("Service Due Date",
+     lambda parent: DateEntry(parent, date_pattern='yyyy-mm-dd'),
+     ""),
+    ("Service Status",
+     lambda parent: ttk.Combobox(
+         parent, values=SERVICE_STATUS, state="readonly"
+     ),
+     ""),
+    ("Fuel Type",
+     lambda parent: ttk.Combobox(parent, values=FUEL_TYPES, state="readonly"),
+     ""),
 ]
 VEHICLE_CLASS_MAPPINGS = {
     "Type": "vehicle_type",
@@ -60,8 +79,10 @@ VEHICLE_CLASS_MAPPINGS = {
 }
 FILTER_RANGE_FIELDS = [
     ("Year From", "Year From", 2, 4), ("To", "Year To", 2, 6),
-    ("Tax Due Date From", "Tax Due Date From", 2, 0), ("To", "Tax Due Date To", 2, 2),
-    ("Service Date From", "Service Date From", 3, 0), ("To", "Service Date To", 3, 2)
+    ("Tax Due Date From", "Tax Due Date From", 2, 0),
+    ("To", "Tax Due Date To", 2, 2),
+    ("Service Date From", "Service Date From", 3, 0),
+    ("To", "Service Date To", 3, 2)
 ]
 FILTER_OPTIONS = {
     "Type": VEHICLE_TYPES + ["All"],
@@ -69,7 +90,10 @@ FILTER_OPTIONS = {
     "Tax Status": TAX_STATUS + ["All"],
     "Fuel Type": FUEL_TYPES + ["All"],
     "Service Status": SERVICE_STATUS + ["All"],
-    "Order By": ["Manufacture Year", "Tax Due Date", "Service Due Date", "Registration Number"],
+    "Order By": [
+        "Manufacture Year", "Tax Due Date", 
+        "Service Due Date", "Registration Number"
+    ],
     "Order Direction": ["ASC", "DESC"]
 }
 FIELD_OPTIONS = {

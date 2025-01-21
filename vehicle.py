@@ -15,8 +15,10 @@ class Vehicle:
         tax_type (str): The type of tax applicable to the vehicle.
         tax_due_date (Optional[str]): The due date for tax payment (format: YYYY-MM-DD).
         service_status (str): The service status of the vehicle (e.g., Due, Completed).
-        service_due_date (Optional[str]): The due date for vehicle service (format: YYYY-MM-DD).
-        fuel_type (str): The type of fuel used by the vehicle (e.g., Petrol, Diesel).
+        service_due_date (Optional[str]): The due date for vehicle service 
+            (format: YYYY-MM-DD).
+        fuel_type (str): The type of fuel used by the vehicle 
+            (e.g., Petrol, Diesel).
         manufacture_year (int): The year the vehicle was manufactured.
     """
     def __init__(
@@ -40,7 +42,8 @@ class Vehicle:
             tax_status (str): The tax status of the vehicle (e.g., Paid, Unpaid).
             tax_type (str): The type of tax applicable to the vehicle.
             tax_due_date (Optional[str]): The due date for tax payment (format: YYYY-MM-DD).
-            service_status (str): The service status of the vehicle (e.g., Piad, Pending).
+            service_status (str): The service status of the vehicle 
+                (e.g., Paid, Pending).
             service_due_date (Optional[str]): The due date for vehicle service (format: YYYY-MM-DD).
             fuel_type (str): The type of fuel used by the vehicle (e.g., Petrol, Diesel).
             manufacture_year (int): The year the vehicle was manufactured.
