@@ -1,3 +1,6 @@
+import logging
+
+
 class Vehicle:
     def __init__(self, vehicle_type, reg_number, tax_status, tax_type, tax_due_date, service_status, service_due_date, fuel_type, manufacture_year):
         attributes = {
@@ -18,7 +21,7 @@ class Vehicle:
                     raise TypeError(f"{attr_name} must be of type {expected_type.__name__}")
             except TypeError as e:
                 # Handle the error: log, re-raise, or provide custom behavior
-                print(f"Error initializing Vehicle: {e}")
+                logging.error(f"Error initializing Vehicle: {e}")
                 raise
 
         # Assign attributes

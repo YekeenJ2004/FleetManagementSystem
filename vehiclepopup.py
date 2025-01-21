@@ -1,9 +1,11 @@
 import tkinter as tk
-from tkinter import ttk, messagebox
+from tkinter import ttk
 from tkcalendar import DateEntry
 import datetime
 from vehicle import Vehicle
-from constants import VEHICLE_TYPES, TAX_STATUS, TAX_TYPES, FUEL_TYPES, SQL_MAPPINGS, VEHICLE_CLASS_MAPPINGS, SERVICE_STATUS
+from constants import SQL_MAPPINGS, VEHICLE_CLASS_MAPPINGS, VEHICLE_POPUP_FIELDS, FIELD_OPTIONS
+from appmessage import AppMessage
+
 
 class VehiclePopup:
     """Popup window for adding or editing a vehicle."""
@@ -25,17 +27,7 @@ class VehiclePopup:
         self.create_widgets()
 
     def create_widgets(self):
-        fields = [
-            ("Type", lambda parent: ttk.Combobox(parent, values=VEHICLE_TYPES, state="readonly"), ""),
-            ("Registration Number", tk.Entry, ""),
-            ("Tax Status", lambda parent: ttk.Combobox(parent, values=TAX_STATUS, state="readonly"), ""),
-            ("Tax Due Date", lambda parent: DateEntry(parent, date_pattern='yyyy-mm-dd'), ""),
-            ("Tax Type", lambda parent: ttk.Combobox(parent, values=TAX_TYPES, state="readonly"), ""),
-            ("Service Due Date", lambda parent: DateEntry(parent, date_pattern='yyyy-mm-dd'), ""),
-            ("Service Status", lambda parent: ttk.Combobox(parent, values=SERVICE_STATUS, state="readonly"), ""),
-            ("Fuel Type", lambda parent: ttk.Combobox(parent, values=FUEL_TYPES, state="readonly"), ""),
-            ("Manufacture Year", lambda parent: ttk.Combobox(parent, values=self.manufacture_years, state="readonly"), "")
-        ]
+        fields = VEHICLE_POPUP_FIELDS + [("Manufacture Year", lambda parent: ttk.Combobox(parent, values=self.manufacture_years, state="readonly"), "")]
 
         if self.mode == "edit" and self.vehicle_data:
             for i, field in enumerate(fields):
@@ -68,32 +60,58 @@ class VehiclePopup:
             updates = {}
             for label, widget in self.inputs.items():
                 value = widget.get()
-                if label == "Manufacture Year" and not value.isdigit():
-                    raise ValueError(f"{label} must be a valid number.")
-                updates[label] = value
+
+                # Validate each field based on its expected data type
+                if label == "Manufacture Year":
+                    if not value.isdigit():
+                        raise ValueError(f"{label} must be a valid number.")
+                    updates[label] = int(value)  # Convert to int
+                elif label in ["Tax Due Date", "Service Date"]:  # Date fields
+                    if not value:
+                        raise ValueError(f"{label} cannot be empty.")
+                    try:
+                        # Ensure valid date format
+                        datetime.datetime.strptime(value, "%Y-%m-%d")
+                    except ValueError:
+                        raise ValueError(f"{label} must be in YYYY-MM-DD format.")
+                    updates[label] = value
+                elif label in ["Type", "Tax Status", "Tax Type", "Fuel Type"]:  # Dropdown fields
+                    if value not in FIELD_OPTIONS[label]:  # Example: Check if value is in the predefined options
+                        raise ValueError(f"{label} must be a valid option.")
+                    updates[label] = value
+                elif label == "Registration Number":  # String field
+                    if not isinstance(value, str) or not value.strip():
+                        raise ValueError(f"{label} must be a non-empty string.")
+                    updates[label] = value.strip()
+                else:
+                    updates[label] = value
+
+            # Map the field names for database or class object compatibility
             updates = {SQL_MAPPINGS[key]: value for key, value in updates.items()}
 
             if self.mode == "edit":
                 self.manager.update_vehicle(self.vehicle_data[2], **updates)
-                messagebox.showinfo("Success", "Vehicle updated successfully!")
+                AppMessage.show("info", "Vehicle updated successfully!")
             else:
                 updates = {VEHICLE_CLASS_MAPPINGS[key]: value for key, value in updates.items()}
                 new_vehicle = Vehicle(**updates)
                 self.manager.add_vehicle(new_vehicle)
-                messagebox.showinfo("Success", "Vehicle added successfully!")
+                AppMessage.show("info", "Vehicle added successfully!")
 
             self.popup.destroy()
             self.list_all_vehicles()
+        except ValueError as ve:
+            # Show specific validation error in a popup
+            AppMessage.show("error", f"Validation Error: {ve}")
         except Exception as e:
-            print(f"Error: {e}")
-            messagebox.showerror("Error", f"Failed to save vehicle: {e}")
+            # Handle generic errors
+            AppMessage.show("error", f"Failed to save vehicle: {e}")
 
     def delete_vehicle(self):
         try:
             self.manager.remove_vehicle(self.vehicle_data[2])
-            messagebox.showinfo("Success", "Vehicle deleted successfully!")
+            AppMessage.show("info", "Vehicle deleted successfully!")
             self.popup.destroy()
             self.list_all_vehicles()
         except Exception as e:
-            print(f"Error: {e}")
-            messagebox.showerror("Error", f"Failed to delete vehicle: {e}")
+            AppMessage.show("error", f"Failed to delete vehicle: {e}")

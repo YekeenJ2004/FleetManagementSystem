@@ -1,3 +1,9 @@
+import tkinter as tk
+from tkinter import ttk
+from tkcalendar import DateEntry
+
+
+# Constants
 VEHICLE_TYPES = [
     "Sedan", "Hatchback", "SUV", "Coupe", "Convertible", "Minivan",
     "Pickup Truck", "Cargo Van", "Box Truck", "Bus", "Motorcycle",
@@ -31,6 +37,16 @@ SQL_MAPPINGS = {
     "Service Due Date": "ServiceDueDate",
     "Service Status": "ServiceStatus"
 }
+VEHICLE_POPUP_FIELDS = [
+    ("Type", lambda parent: ttk.Combobox(parent, values=VEHICLE_TYPES, state="readonly"), ""),
+    ("Registration Number", tk.Entry, ""),
+    ("Tax Status", lambda parent: ttk.Combobox(parent, values=TAX_STATUS, state="readonly"), ""),
+    ("Tax Due Date", lambda parent: DateEntry(parent, date_pattern='yyyy-mm-dd'), ""),
+    ("Tax Type", lambda parent: ttk.Combobox(parent, values=TAX_TYPES, state="readonly"), ""),
+    ("Service Due Date", lambda parent: DateEntry(parent, date_pattern='yyyy-mm-dd'), ""),
+    ("Service Status", lambda parent: ttk.Combobox(parent, values=SERVICE_STATUS, state="readonly"), ""),
+    ("Fuel Type", lambda parent: ttk.Combobox(parent, values=FUEL_TYPES, state="readonly"), ""),
+]
 VEHICLE_CLASS_MAPPINGS = {
     "Type": "vehicle_type",
     "RegistrationNumber": "reg_number",
@@ -53,6 +69,13 @@ FILTER_OPTIONS = {
     "Tax Status": TAX_STATUS + ["All"],
     "Fuel Type": FUEL_TYPES + ["All"],
     "Service Status": SERVICE_STATUS + ["All"]
+}
+FIELD_OPTIONS = {
+    "Type": VEHICLE_TYPES,
+    "Tax Type": TAX_TYPES,
+    "Tax Status": TAX_STATUS,
+    "Fuel Type": FUEL_TYPES,
+    "Service Status": SERVICE_STATUS
 }
 ASCII_ART = r"""
          ______ __  __  _____
