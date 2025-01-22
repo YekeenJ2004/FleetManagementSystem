@@ -64,7 +64,7 @@ class TestFilterManager:
         assert "Type" in query
         assert "ASC" in query
         assert set(values) == {"SUV", "2020", "2021", "%Example%"}
-    
+
     def test_apply_filters_with_order_by_only(self, mock_filters):
         """Test applying filters with only the Order By fields set."""
         mock_filters["Order By"].set("ManufactureYear")

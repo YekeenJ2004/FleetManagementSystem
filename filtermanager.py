@@ -132,9 +132,6 @@ class FilterManager:
             query += (
                 f"{order_direction}"
             )
-            query += (
-                f"{order_direction}"
-            )
 
         print(query, values)
         return query, values
