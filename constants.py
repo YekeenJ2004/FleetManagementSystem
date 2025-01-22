@@ -24,7 +24,7 @@ TAX_STATUS = ["Paid", "Unpaid"]
 SERVICE_STATUS = ["Done", "Pending"]
 COLUMN_NAMES = [
     "Select", "Type", "Registration Number", "Tax Status", "Tax Due Date",
-    "Tax Type", "Service Due Date", "Service Status", 
+    "Tax Type", "Service Due Date", "Service Status",
     "Fuel Type", "Manufacture Year"
 ]
 SQL_MAPPINGS = {
@@ -91,7 +91,7 @@ FILTER_OPTIONS = {
     "Fuel Type": FUEL_TYPES + ["All"],
     "Service Status": SERVICE_STATUS + ["All"],
     "Order By": [
-        "Manufacture Year", "Tax Due Date", 
+        "Manufacture Year", "Tax Due Date",
         "Service Due Date", "Registration Number"
     ],
     "Order Direction": ["ASC", "DESC"]
