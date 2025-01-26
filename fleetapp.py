@@ -1,6 +1,6 @@
 import tkinter as tk
 from tkinter import ttk
-from tkcalendar import DateEntry
+from utils.dateentry import DateEntry
 from vehiclemanager import VehicleManager
 from filtermanager import FilterManager
 from constants import (
@@ -41,10 +41,30 @@ class FleetApp:
         try:
             current_year = datetime.datetime.now().year
             year_options = [int(year) for year in range(current_year - 50, current_year + 1)]
-
+            
             # Top frame for ASCII art, buttons, and search functionality
             self.top_frame = tk.Frame(self.root)
             self.top_frame.pack(fill=tk.X, pady=10)
+            
+            # Create a canvas for the main content and attach a horizontal scrollbar
+            self.canvas = tk.Canvas(self.root)
+            self.canvas.pack(fill=tk.BOTH, expand=True)
+
+            self.scrollbar_x = ttk.Scrollbar(self.root, orient=tk.HORIZONTAL, command=self.canvas.xview)
+            self.scrollbar_x.pack(side=tk.BOTTOM, fill=tk.X)
+
+            self.canvas.configure(xscrollcommand=self.scrollbar_x.set)
+
+            # Create a frame inside the canvas to hold all content
+            self.content_frame = tk.Frame(self.canvas)
+            self.content_frame.pack(fill=tk.BOTH, expand=True)
+
+            self.canvas.create_window(
+                (0, 0), window=self.content_frame,
+            )
+
+            # Update scroll region whenever the content changes
+            self.content_frame.bind("<Configure>", lambda e: self.canvas.configure(scrollregion=self.canvas.bbox("all")))
 
             # ASCII art on the left
             tk.Label(
@@ -79,7 +99,7 @@ class FleetApp:
             ).pack(side=tk.LEFT)
 
             # Filter frame
-            self.filter_frame = tk.Frame(self.root)
+            self.filter_frame = tk.Frame(self.content_frame)
             self.filter_frame.pack(fill=tk.X, padx=10, pady=5)
 
             for i, (field, options) in enumerate(FILTER_OPTIONS.items()):
@@ -152,11 +172,15 @@ class FleetApp:
             info_icon.bind("<Enter>", lambda event: self.filter_tooltip.show_tooltip(event))
             info_icon.bind("<Leave>", lambda event: self.filter_tooltip.hide_tooltip(event))
             
+            # Frame for Treeview and scrollbar
+            self.tree_frame = tk.Frame(self.root)
+            self.tree_frame.pack(fill=tk.BOTH, expand=True)
+
             # Treeview for listing vehicles
             self.tree = ttk.Treeview(
-                self.root, columns=COLUMN_NAMES, show="headings"
+                self.tree_frame, columns=COLUMN_NAMES, show="headings", height=20
             )
-            self.tree.pack(fill=tk.BOTH, expand=True)
+            self.tree.pack(side=tk.LEFT, fill=tk.BOTH, expand=True,pady=(0, 10))
 
             # Define headings
             self.tree.heading("Select", text="Select")

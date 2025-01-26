@@ -1,6 +1,6 @@
 import tkinter as tk
 from tkinter import ttk
-from tkcalendar import DateEntry
+from utils.tkkcalendar import DateEntry
 
 
 # Constants

@@ -1,6 +1,6 @@
 import pytest
 from tkinter import ttk, Tk
-from tkcalendar import DateEntry
+from utils.dateentry import DateEntry
 from filtermanager import FilterManager
 from appmessage import AppMessage
 

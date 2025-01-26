@@ -1,6 +1,6 @@
 from constants import SQL_MAPPINGS
 from tkinter import ttk
-from tkcalendar import DateEntry
+from utils.dateentry import DateEntry
 from appmessage import AppMessage
 from typing import Dict, Any, Tuple, List
 from customtypes import FromRange, ToRange, RangeField
