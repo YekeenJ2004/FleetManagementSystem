@@ -1,25 +1,25 @@
 import tkinter as tk
 from tkinter import ttk
-from utils.dateentry import DateEntry
+from utils.customdatepicker import CustomDatePicker
 from vehiclemanager import VehicleManager
 from filtermanager import FilterManager
 from constants import (
     COLUMN_NAMES, ASCII_ART, FILTER_RANGE_FIELDS, FILTER_OPTIONS
 )
 import datetime
-from vehiclepopup import VehiclePopup
+from utils.vehiclepopup import VehiclePopup
 from appmessage import AppMessage
 from typing import List, Any, Optional
 import logging
-from tooltip import ToolTip
+from utils.tooltip import ToolTip
 
 
 class FleetApp:
     """
     Fleet Management System application.
 
-    This class handles the main GUI components, user interactions, and integrates
-    with the `VehicleManager` and `FilterManager` for backend operations.
+    This class handles the main GUI components, user interactions, and
+    integrates with the `VehicleManager` and `FilterManager` for backend operations.
     """
     def __init__(self, root: tk.Tk) -> None:
         """
@@ -100,7 +100,7 @@ class FleetApp:
 
             # Filter frame
             self.filter_frame = tk.Frame(self.content_frame)
-            self.filter_frame.pack(fill=tk.X, padx=10, pady=5)
+            self.filter_frame.pack(side=tk.BOTTOM, fill=tk.X, padx=10, pady=5)
 
             for i, (field, options) in enumerate(FILTER_OPTIONS.items()):
                 tk.Label(self.filter_frame, text=field).grid(
@@ -120,8 +120,8 @@ class FleetApp:
                     row=row, column=col
                 )
                 if "Date" in var:
-                    date_picker = DateEntry(
-                        self.filter_frame, date_pattern='yyyy-mm-dd'
+                    date_picker = CustomDatePicker(
+                        self.filter_frame,
                     )
                     date_picker.delete(0, tk.END)
                     date_picker.grid(row=row, column=col + 1)

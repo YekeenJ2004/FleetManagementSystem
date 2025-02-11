@@ -1,9 +1,16 @@
 import tkinter as tk
 from tkinter import ttk
-from utils.tkkcalendar import DateEntry
-
+from utils.customdatepicker import CustomDatePicker
 
 # Constants
+MONTHS_SHORT_NAME = [
+    "Jan", "Feb", "Mar", "Apr", "May", "Jun", 
+    "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"
+]
+MONTH_DAYS = {
+    "Jan": 31, "Feb": 28, "Mar": 31, "Apr": 30, "May": 31, "Jun": 30,
+    "Jul": 31, "Aug": 31, "Sep": 30, "Oct": 31, "Nov": 30, "Dec": 31
+}
 VEHICLE_TYPES = [
     "Sedan", "Hatchback", "SUV", "Coupe", "Convertible", "Minivan",
     "Pickup Truck", "Cargo Van", "Box Truck", "Bus", "Motorcycle",
@@ -40,23 +47,24 @@ SQL_MAPPINGS = {
 }
 VEHICLE_POPUP_FIELDS = [
     ("Type",
-     lambda parent: ttk.Combobox(
-         parent, values=VEHICLE_TYPES, state="readonly"
+        lambda parent: ttk.Combobox(parent, values=VEHICLE_TYPES, state="readonly"
      ),
      ""),
     ("Registration Number", tk.Entry, ""),
     ("Tax Status",
-     lambda parent: ttk.Combobox(parent, values=TAX_STATUS, state="readonly"),
+        lambda parent: ttk.Combobox(parent, values=TAX_STATUS, state="readonly"),
      ""),
     ("Tax Due Date",
-     lambda parent: DateEntry(parent, date_pattern='yyyy-mm-dd'),
-     ""),
+        lambda parent: CustomDatePicker(parent),
+    ""),
     ("Tax Type",
      lambda parent: ttk.Combobox(parent, values=TAX_TYPES, state="readonly"),
      ""),
-    ("Service Due Date",
-     lambda parent: DateEntry(parent, date_pattern='yyyy-mm-dd'),
-     ""),
+    (
+        "Service Due Date",
+        lambda parent: CustomDatePicker(parent),
+        ""
+    ),
     ("Service Status",
      lambda parent: ttk.Combobox(
          parent, values=SERVICE_STATUS, state="readonly"

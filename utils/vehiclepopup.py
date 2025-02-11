@@ -1,6 +1,6 @@
 import tkinter as tk
 from tkinter import ttk
-from utils.dateentry import DateEntry
+from utils.customdatepicker import CustomDatePicker
 import datetime
 from vehicle import Vehicle
 from typing import Callable, Optional, Dict, Any
@@ -48,6 +48,10 @@ class VehiclePopup:
         self.popup = tk.Toplevel(root)
         self.popup.title("Edit Vehicle" if mode == "edit" else "Add Vehicle")
 
+        self.popup.transient(root)  # Make the popup window a transient child of root
+        self.popup.grab_set()      # Direct all input events to the popup
+        self.popup.focus_force()   # Bring the popup to focus
+
         self.current_year = datetime.datetime.now().year
         self.manufacture_years = [
             str(year)
@@ -77,20 +81,20 @@ class VehiclePopup:
 
         for i, (label, widget_type, initial_value) in enumerate(fields):
             tk.Label(self.popup, text=label).grid(row=i, column=0)
-            widget = widget_type(self.popup)
+
+            if widget_type == CustomDatePicker:
+                widget_instance = CustomDatePicker(self.popup)  # Create an instance
+                widget = widget_instance.entry  # Get the actual entry field
+            else:
+                widget = widget_type(self.popup)
+
             widget.grid(row=i, column=1)
 
             if isinstance(widget, ttk.Combobox):
                 widget.set(initial_value)
-            elif isinstance(widget, DateEntry):
+            elif isinstance(widget, CustomDatePicker):
                 try:
-                    widget.set_date(
-                        datetime.datetime.strptime(
-                            initial_value, "%Y-%m-%d"
-                        ).date()
-                        if initial_value
-                        else datetime.date.today()
-                    )
+                    widget.set_date(initial_value)
                 except ValueError:
                     # Fallback to today's date if the stored date is invalid
                     widget.set_date(datetime.date.today())

@@ -1,7 +1,7 @@
 import tkinter as tk
 import pytest
 
-from tooltip import ToolTip
+from utils.tooltip import ToolTip
 
 class TestToolTip:
     """Test suite for the ToolTip class."""

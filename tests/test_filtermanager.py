@@ -1,6 +1,6 @@
 import pytest
 from tkinter import ttk, Tk
-from utils.dateentry import DateEntry
+from utils.customdatepicker import CustomDatePicker
 from filtermanager import FilterManager
 from appmessage import AppMessage
 
@@ -16,10 +16,10 @@ class TestFilterManager:
             "Type": ttk.Combobox(root, values=["Sedan", "SUV", "All"], state="readonly"),
             "Year From": ttk.Combobox(root, values=["2020", "2021", "2022"], state="readonly"),
             "Year To": ttk.Combobox(root, values=["2020", "2021", "2022"], state="readonly"),
-            "Tax Due Date From": DateEntry(root, date_pattern="yyyy-mm-dd"),
-            "Tax Due Date To": DateEntry(root, date_pattern="yyyy-mm-dd"),
-            "Service Date From": DateEntry(root, date_pattern="yyyy-mm-dd"),
-            "Service Date To": DateEntry(root, date_pattern="yyyy-mm-dd"),
+            "Tax Due Date From": CustomDatePicker(root),
+            "Tax Due Date To": CustomDatePicker(root),
+            "Service Date From": CustomDatePicker(root),
+            "Service Date To": CustomDatePicker(root),
             "Search": ttk.Entry(root),
             "Order By": ttk.Combobox(root, values=["Type", "RegistrationNumber", "ManufactureYear"], state="readonly"),
             "Order Direction": ttk.Combobox(root, values=["ASC", "DESC"], state="readonly"),
@@ -35,7 +35,7 @@ class TestFilterManager:
                 widget.set("All")
             elif isinstance(widget, ttk.Entry):
                 widget.delete(0, "end")
-            elif isinstance(widget, DateEntry):
+            elif isinstance(widget, CustomDatePicker):
                 widget.delete(0, "end")
         # Mock AppMessage.show for testing
         self.messages = []

@@ -24,4 +24,4 @@ class AppMessage:
             logging.warning(message)
             messagebox.showwarning("Warning", message)
         else:
-            raise ValueError("Invalid message type. Use 'info' or 'error'.")
+            raise ValueError("Invalid message type. Use 'info', 'error', or 'warning'.")

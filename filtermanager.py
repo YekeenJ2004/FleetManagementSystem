@@ -1,7 +1,7 @@
 from constants import SQL_MAPPINGS
 from tkinter import ttk
-from utils.dateentry import DateEntry
 from appmessage import AppMessage
+from utils.customdatepicker import CustomDatePicker
 from typing import Dict, Any, Tuple, List
 from customtypes import FromRange, ToRange, RangeField
 
@@ -150,5 +150,5 @@ class FilterManager:
                 widget.set("All")
             elif isinstance(widget, ttk.Entry):
                 widget.delete(0, "end")
-            elif isinstance(widget, DateEntry):
+            elif isinstance(widget, CustomDatePicker):
                 widget.delete(0, "end")
