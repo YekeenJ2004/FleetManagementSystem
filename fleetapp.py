@@ -2,6 +2,7 @@ import tkinter as tk
 from tkinter import ttk
 from utils.customdatepicker import CustomDatePicker
 from vehiclemanager import VehicleManager
+from tkfiltermanager import TkFilterManager
 from filtermanager import FilterManager
 from constants import (
     COLUMN_NAMES, ASCII_ART, FILTER_RANGE_FIELDS, FILTER_OPTIONS
@@ -123,7 +124,7 @@ class FleetApp:
                     date_picker = CustomDatePicker(
                         self.filter_frame,
                     )
-                    date_picker.delete(0, tk.END)
+                    date_picker.delete()
                     date_picker.grid(row=row, column=col + 1)
                     self.filters[var] = date_picker
                 else:
@@ -193,6 +194,7 @@ class FleetApp:
             )
             self.tree.bind("<Button-1>", self.toggle_checkbox)
         except Exception as e:
+
             logging.error(f"Error: {e}")
 
     def vehicle_popup(self, mode: str, vehicle_data: Optional[List[Any]] = None) -> None:
@@ -203,10 +205,13 @@ class FleetApp:
             mode (str): The mode of the popup ("add" or "edit").
             vehicle_data (Optional[List[Any]]): Data for the vehicle to edit.
         """
-        VehiclePopup(
-            self.root, self.manager, self.list_all_vehicles, mode, vehicle_data
-        )
-
+        try:
+            VehiclePopup(
+                self.root, self.manager, self.list_all_vehicles, mode, vehicle_data
+            )
+        except Exception as e:
+            AppMessage.show("error", str(e), e)
+        
     def open_add_vehicle_popup(self) -> None:
         """
         Open a popup window for adding a new vehicle.
@@ -241,16 +246,16 @@ class FleetApp:
 
             self.vehicle_popup("edit", vehicle[0])
         except Exception as e:
-            logging.error(f"Error at opening vehicle popup at root level: {e}")
+            AppMessage.show("error", "Error at opening vehicle popup at root level", e)
 
     def apply_filters(self) -> None:
         """
         Apply the selected filters and update the vehicle list.
         """
         try:
-            filter_manager = FilterManager(self.filters)
+            filter_manager = TkFilterManager(self.filters)
             query, values = filter_manager.apply_filters()
-            print(query, values)
+            logging.info(query, values)
             records = self.manager.search_vehicles(query, values)
             self.update_treeview(records)
         except ValueError as e:
@@ -260,7 +265,7 @@ class FleetApp:
         """
         Clear all filters and reset the vehicle list.
         """
-        filter_manager = FilterManager(self.filters)
+        filter_manager = TkFilterManager(self.filters)
         filter_manager.clear_filters()
         self.list_all_vehicles()
 
@@ -275,12 +280,15 @@ class FleetApp:
         """
         Update the treeview with given records.
         """
-        self.tree.delete(*self.tree.get_children())
-        for record in records:
-            if not self.tree.exists(record[2]):  # Ensure unique iid
-                self.tree.insert(
-                    "", "end", iid=record[2], values=("☐", *record[1:])
-                )
+        try:
+            self.tree.delete(*self.tree.get_children())
+            for record in records:
+                if not self.tree.exists(record[2]):  # Ensure unique iid
+                    self.tree.insert(
+                        "", "end", iid=record[2], values=("☐", *record[1:])
+                    )
+        except Exception as e:
+            AppMessage.show("error", str(e), e)
 
     def toggle_checkbox(self, event: tk.Event) -> None:
         """
@@ -291,32 +299,38 @@ class FleetApp:
             event: The event object containing information about the click
             event.
         """
-        # Identify the row and column clicked
-        region = self.tree.identify("region", event.x, event.y)
-        if region == "cell":
-            item = self.tree.identify_row(event.y)
-            col = self.tree.identify_column(event.x)
-            if col == "#1":  # Checkbox column
-                current_value = self.tree.item(item, "values")[0]
-                new_value = "☑" if current_value == "☐" else "☐"
-                values = (new_value, *self.tree.item(item, "values")[1:])
-                self.tree.item(item, values=values)
+        try:
+            # Identify the row and column clicked
+            region = self.tree.identify("region", event.x, event.y)
+            if region == "cell":
+                item = self.tree.identify_row(event.y)
+                col = self.tree.identify_column(event.x)
+                if col == "#1":  # Checkbox column
+                    current_value = self.tree.item(item, "values")[0]
+                    new_value = "☑" if current_value == "☐" else "☐"
+                    values = (new_value, *self.tree.item(item, "values")[1:])
+                    self.tree.item(item, values=values)
+        except Exception as e:
+            AppMessage.show("error", str(e), e)
 
     def bulk_delete(self) -> None:
         """
         Delete selected vehicles from the database
         and refresh the vehicle list.
         """
-        selected = []
-        for item in self.tree.get_children():
-            if self.tree.item(item, "values")[0] == "☑":
-                selected.append(self.tree.item(item, "values")[2])
+        try: 
+            selected = []
+            for item in self.tree.get_children():
+                if self.tree.item(item, "values")[0] == "☑":
+                    selected.append(self.tree.item(item, "values")[2])
 
-        if not selected:
-            AppMessage.show("warning", "No vehicles selected for deletion.")
-            return
+            if not selected:
+                AppMessage.show("warning", "No vehicles selected for deletion.")
+                return
 
-        for reg in selected:
-            self.manager.remove_vehicle(reg)
-        AppMessage.show("info", "Selected vehicle(s) deleted successfully!")
-        self.list_all_vehicles()
+            for reg in selected:
+                self.manager.remove_vehicle(reg)
+            AppMessage.show("info", "Selected vehicle(s) deleted successfully!")
+            self.list_all_vehicles()
+        except Exception as e:
+            AppMessage.show("error", str(e), e)

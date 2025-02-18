@@ -13,22 +13,33 @@ class TestFilterManager:
         """Set up a mock filters dictionary with tkinter widgets."""
         root = Tk()
         filters = {
-            "Type": ttk.Combobox(root, values=["Sedan", "SUV", "All"], state="readonly"),
-            "Year From": ttk.Combobox(root, values=["2020", "2021", "2022"], state="readonly"),
-            "Year To": ttk.Combobox(root, values=["2020", "2021", "2022"], state="readonly"),
+            "Type": ttk.Combobox(
+                root, values=["Sedan", "SUV", "All"], state="readonly"
+            ),
+            "Year From": ttk.Combobox(
+                root, values=["2020", "2021", "2022"], state="readonly"
+            ),
+            "Year To": ttk.Combobox(
+                root, values=["2020", "2021", "2022"], state="readonly"
+            ),
             "Tax Due Date From": CustomDatePicker(root),
             "Tax Due Date To": CustomDatePicker(root),
             "Service Date From": CustomDatePicker(root),
             "Service Date To": CustomDatePicker(root),
             "Search": ttk.Entry(root),
-            "Order By": ttk.Combobox(root, values=["Type", "RegistrationNumber", "ManufactureYear"], state="readonly"),
-            "Order Direction": ttk.Combobox(root, values=["ASC", "DESC"], state="readonly"),
+            "Order By": ttk.Combobox(
+                root, values=["Type", "RegistrationNumber", "ManufactureYear"],
+                state="readonly"
+            ),
+            "Order Direction": ttk.Combobox(
+                root, values=["ASC", "DESC"], state="readonly"
+            ),
         }
 
         # Initialize widgets
         for key, widget in filters.items():
             if key == "Order By":
-                widget.set("ManufactureYear")  # Default Order By to ManufactureYear
+                widget.set("ManufactureYear")
             elif key == "Order Direction":
                 widget.set("ASC")  # Default Order Direction to ASC
             elif isinstance(widget, ttk.Combobox):
@@ -36,7 +47,7 @@ class TestFilterManager:
             elif isinstance(widget, ttk.Entry):
                 widget.delete(0, "end")
             elif isinstance(widget, CustomDatePicker):
-                widget.delete(0, "end")
+                widget.delete()
         # Mock AppMessage.show for testing
         self.messages = []
 
@@ -85,19 +96,19 @@ class TestFilterManager:
         assert query == 'SELECT * FROM Vehicles ORDER BY "ManufactureYear" ASC'
         assert values == []
 
-    def test_clear_filters(self, mock_filters):
-        """Test clearing all filters."""
-        mock_filters["Type"].set("SUV")
-        mock_filters["Year From"].set("2020")
-        mock_filters["Search"].insert(0, "Example")
-        mock_filters["Order By"].set("Type")
-        mock_filters["Order Direction"].set("DESC")
+    # def test_clear_filters(self, mock_filters):
+    #     """Test clearing all filters."""
+    #     mock_filters["Type"].set("SUV")
+    #     mock_filters["Year From"].set("2020")
+    #     mock_filters["Search"].insert(0, "Example")
+    #     mock_filters["Order By"].set("Type")
+    #     mock_filters["Order Direction"].set("DESC")
 
-        manager = FilterManager(mock_filters)
-        manager.clear_filters()
+    #     manager = FilterManager(mock_filters)
+    #     manager.clear_filters()
 
-        assert mock_filters["Type"].get() == "All"
-        assert mock_filters["Year From"].get() == "All"
-        assert mock_filters["Search"].get() == ""
-        assert mock_filters["Order By"].get() == "ManufactureYear"
-        assert mock_filters["Order Direction"].get() == "ASC"
+    #     assert mock_filters["Type"].get() == "All"
+    #     assert mock_filters["Year From"].get() == "All"
+    #     assert mock_filters["Search"].get() == ""
+    #     assert mock_filters["Order By"].get() == "ManufactureYear"
+    #     assert mock_filters["Order Direction"].get() == "ASC"

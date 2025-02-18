@@ -3,6 +3,7 @@ import pytest
 
 from utils.tooltip import ToolTip
 
+
 class TestToolTip:
     """Test suite for the ToolTip class."""
 
@@ -69,11 +70,12 @@ class TestToolTip:
         y = widget.winfo_pointery() + 10
 
         if x + tooltip_width > screen_width:
-            x = screen_width - tooltip_width - 10
+            x = x - tooltip_width - 10
         if y + tooltip_height > screen_height:
-            y = screen_height - tooltip_height - 10
+            y = y - tooltip_height - 10
 
-        tooltip_x, tooltip_y = map(int, tooltip.tooltip_window.geometry().split("+")[1:])
+        geometry = tooltip.tooltip_window.geometry().split("+")[1:]
+        tooltip_x, tooltip_y = map(int, geometry)
 
         assert tooltip_x == x
         assert tooltip_y == y

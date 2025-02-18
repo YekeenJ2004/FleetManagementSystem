@@ -48,7 +48,7 @@ class VehiclePopup:
         self.popup = tk.Toplevel(root)
         self.popup.title("Edit Vehicle" if mode == "edit" else "Add Vehicle")
 
-        self.popup.transient(root)  # Make the popup window a transient child of root
+        self.popup.transient(root)  # Make the popup window a transient child
         self.popup.grab_set()      # Direct all input events to the popup
         self.popup.focus_force()   # Bring the popup to focus
 
@@ -65,56 +65,62 @@ class VehiclePopup:
         """
         Create and layout the widgets in the popup window.
         """
-        fields = VEHICLE_POPUP_FIELDS + [
-            (
-                "Manufacture Year",
-                lambda parent: ttk.Combobox(
-                    parent, values=self.manufacture_years, state="readonly"
-                ),
-                ""
-            )
-        ]
+        try:
+            fields = VEHICLE_POPUP_FIELDS + [
+                (
+                    "Manufacture Year",
+                    lambda parent: ttk.Combobox(
+                        parent, values=self.manufacture_years, state="readonly"
+                    ),
+                    ""
+                )
+            ]
 
-        if self.mode == "edit" and self.vehicle_data:
-            for i, field in enumerate(fields):
-                fields[i] = (field[0], field[1], self.vehicle_data[i + 1])
+            if self.mode == "edit" and self.vehicle_data:
+                for i, field in enumerate(fields):
+                    fields[i] = (field[0], field[1], self.vehicle_data[i + 1])
 
-        for i, (label, widget_type, initial_value) in enumerate(fields):
-            tk.Label(self.popup, text=label).grid(row=i, column=0)
+            for i, (label, widget_type, initial_value) in enumerate(fields):
+                tk.Label(self.popup, text=label).grid(row=i, column=0)
 
-            if widget_type == CustomDatePicker:
-                widget_instance = CustomDatePicker(self.popup)  # Create an instance
-                widget = widget_instance.entry  # Get the actual entry field
-            else:
-                widget = widget_type(self.popup)
+                if widget_type == CustomDatePicker:
+                    widget_instance = CustomDatePicker(self.popup)
+                    # Get the actual entry field
+                    widget = widget_instance.entry
+                else:
+                    widget = widget_type(self.popup)
 
-            widget.grid(row=i, column=1)
+                widget.grid(row=i, column=1)
 
-            if isinstance(widget, ttk.Combobox):
-                widget.set(initial_value)
-            elif isinstance(widget, CustomDatePicker):
-                try:
-                    widget.set_date(initial_value)
-                except ValueError:
-                    # Fallback to today's date if the stored date is invalid
-                    widget.set_date(datetime.date.today())
-            else:
-                widget.insert(0, initial_value)
+                if isinstance(widget, ttk.Combobox):
+                    widget.set(initial_value)
+                elif isinstance(widget, CustomDatePicker):
+                    try:
+                        widget.set_date(initial_value)
+                    except ValueError:
+                        # Fallback to today's date if the stored date is
+                        # invalid
+                        widget.set_date(datetime.date.today())
+                else:
+                    widget.insert(0, initial_value)
 
-            self.inputs[label] = widget
+                self.inputs[label] = widget
 
-        tk.Button(
-            self.popup,
-            text="Save Changes" if self.mode == "edit" else "Add Vehicle",
-            command=self.save_changes
-        ).grid(row=len(fields), column=0, pady=10)
-
-        if self.mode == "edit":
             tk.Button(
                 self.popup,
-                text="Delete Vehicle",
-                command=self.delete_vehicle
-            ).grid(row=len(fields), column=1, pady=10)
+                text="Save Changes" if self.mode == "edit" else "Add Vehicle",
+                command=self.save_changes
+            ).grid(row=len(fields), column=0, pady=10)
+
+            print("here")
+            if self.mode == "edit":
+                tk.Button(
+                    self.popup,
+                    text="Delete Vehicle",
+                    command=self.delete_vehicle
+                ).grid(row=len(fields), column=1, pady=10)
+        except Exception as e:
+            AppMessage.show("error", f"Failed to create widgets: {e}")
 
     def save_changes(self) -> None:
         """
@@ -178,12 +184,14 @@ class VehiclePopup:
 
             self.popup.destroy()
             self.list_all_vehicles()
-        except ValueError as ve:
+        except ValueError as e:
             # Show specific validation error in a popup
-            AppMessage.show("error", f"Validation Error: {ve}")
+            print(e)
+            AppMessage.show("error", "Validation Error", e)
         except Exception as e:
+            print(e)
             # Handle generic errors
-            AppMessage.show("error", f"Failed to save vehicle: {e}")
+            AppMessage.show("error", "Failed to save vehicle", e)
 
     def delete_vehicle(self) -> None:
         """
@@ -197,4 +205,4 @@ class VehiclePopup:
             self.popup.destroy()
             self.list_all_vehicles()
         except Exception as e:
-            AppMessage.show("error", f"Failed to delete vehicle: {e}")
+            AppMessage.show("error", "Failed to delete vehicle", e)

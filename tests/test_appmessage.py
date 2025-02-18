@@ -47,23 +47,32 @@ class TestAppMessage:
         """Test displaying an info message."""
         AppMessage.show("info", "Test info message")
         assert self.log_calls == [("info", "Test info message")]
-        assert self.messagebox_calls == [("info", "Information", "Test info message")]
+        assert self.messagebox_calls == [
+            ("info", "Information", "Test info message")
+        ]
 
     def test_show_error_message(self):
         """Test displaying an error message."""
         AppMessage.show("error", "Test error message", error="Details")
         assert self.log_calls == [("error", "Test error messageDetails")]
-        assert self.messagebox_calls == [("error", "Error", "Test error message")]
+        assert self.messagebox_calls == [
+            ("error", "Error", "Test error message")
+        ]
 
     def test_show_warning_message(self):
         """Test displaying a warning message."""
         AppMessage.show("warning", "Test warning message")
         assert self.log_calls == [("warning", "Test warning message")]
-        assert self.messagebox_calls == [("warning", "Warning", "Test warning message")]
+        assert self.messagebox_calls == [
+            ("warning", "Warning", "Test warning message")
+        ]
 
     def test_invalid_message_type(self):
         """Test handling an invalid message type."""
-        with pytest.raises(ValueError, match="Invalid message type. Use 'info', 'error', or 'warning'."):
+        with pytest.raises(
+            ValueError,
+            match="Invalid message type. Use 'info', 'error', or 'warning'."
+        ):
             AppMessage.show("invalid", "Invalid message type")
 
     def test_empty_message(self):
@@ -86,7 +95,9 @@ class TestAppMessage:
         monkeypatch.setattr(logging, "info", mock_info)
 
         AppMessage.show("info", "Test info message")
-        assert self.messagebox_calls == [("info", "Information", "Test info message")]
+        assert self.messagebox_calls == [
+            ("info", "Information", "Test info message")
+        ]
 
     def test_error_message_with_special_characters(self):
         """Test error message with special characters."""
@@ -97,7 +108,11 @@ class TestAppMessage:
 
     def test_warning_message_with_long_text(self):
         """Test warning message with long text."""
-        long_message = "This is a very long warning message that should be handled properly by the application." * 5
+        long_message = (
+            "This is a very long warning message that should be"
+            "handled properly "
+            "by the application." * 5
+        )
         AppMessage.show("warning", long_message)
         assert self.log_calls == [("warning", long_message)]
         assert self.messagebox_calls == [("warning", "Warning", long_message)]
