@@ -46,7 +46,7 @@ class TestTkFilterManager:
         self.root.destroy()
 
     def test_handle_invalid_range(self) -> None:
-        """Test that handle_invalid_range() calls AppMessage.show() 
+        """Test that handle_invalid_range() calls AppMessage.show()
         correctly."""
         self.filter_manager.handle_invalid_range("Start Date", "End Date")
 

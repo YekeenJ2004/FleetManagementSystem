@@ -37,14 +37,17 @@ class TestVehiclePopup:
         root.destroy()  # Ensure Tkinter cleans up after tests
 
     @pytest.fixture
-    def setup(self, root_tk: tk.Tk) -> Tuple[tk.Tk, MockVehicleManager, callable]:
+    def setup(
+        self, root_tk: tk.Tk
+    ) -> Tuple[tk.Tk, MockVehicleManager, callable]:
         """Fixture to set up a test environment.
 
         Args:
             root_tk: The Tkinter root instance.
 
         Returns:
-            Tuple containing the Tkinter root, MockVehicleManager instance, and a mock list_all_vehicles function.
+            Tuple containing the Tkinter root, MockVehicleManager instance,
+            and a mock list_all_vehicles function.
         """
         manager = MockVehicleManager()
 
@@ -54,7 +57,13 @@ class TestVehiclePopup:
         return root_tk, manager, mock_list_all_vehicles
 
     @pytest.fixture
-    def mock_popup(self, setup: Tuple[tk.Tk, MockVehicleManager, callable], monkeypatch: pytest.MonkeyPatch) -> Generator[Tuple[VehiclePopup, List[Tuple[str, str, str]]], None, None]:
+    def mock_popup(
+        self,
+        setup: Tuple[tk.Tk, MockVehicleManager, callable],
+        monkeypatch: pytest.MonkeyPatch,
+    ) -> Generator[
+        Tuple[VehiclePopup, List[Tuple[str, str, str]]], None, None
+    ]:
         """Fixture to create a fresh VehiclePopup instance per test.
 
         Args:
@@ -62,20 +71,31 @@ class TestVehiclePopup:
             monkeypatch: Pytest fixture to mock methods.
 
         Yields:
-            Tuple containing the VehiclePopup instance and a list of captured messages.
+            Tuple containing the VehiclePopup instance and a list of
+            captured messages.
         """
         root, manager, list_all_vehicles = setup
-        popup = VehiclePopup(tk.Toplevel(root), manager, list_all_vehicles, "add")
+        popup = VehiclePopup(
+            tk.Toplevel(root), manager, list_all_vehicles, "add"
+        )
         popup.popup.withdraw()  # Prevent UI interference
 
         # Mock `AppMessage.show()` using monkeypatch
         calls: List[Tuple[str, str, str]] = []
-        monkeypatch.setattr(AppMessage, "show", lambda msg_type, msg, e=None: calls.append((msg_type, msg, str(e) if e else None)))
+        monkeypatch.setattr(
+            AppMessage,
+            "show",
+            lambda msg_type, msg, e=None: calls.append(
+                (msg_type, msg, str(e) if e else None)
+            ),
+        )
 
         yield popup, calls
         popup.popup.destroy()  # Ensure cleanup to avoid Tkinter lock issues
 
-    def test_popup_initialization(self, mock_popup: Tuple[VehiclePopup, List[Tuple[str, str, str]]]) -> None:
+    def test_popup_initialization(
+        self, mock_popup: Tuple[VehiclePopup, List[Tuple[str, str, str]]]
+    ) -> None:
         """Test popup initialization in 'add' mode.
 
         Args:
@@ -85,7 +105,9 @@ class TestVehiclePopup:
         assert popup.popup is not None
         assert isinstance(popup.inputs, dict)
 
-    def test_create_widgets(self, mock_popup: Tuple[VehiclePopup, List[Tuple[str, str, str]]]) -> None:
+    def test_create_widgets(
+        self, mock_popup: Tuple[VehiclePopup, List[Tuple[str, str, str]]]
+    ) -> None:
         """Test widget creation.
 
         Args:
@@ -96,7 +118,9 @@ class TestVehiclePopup:
         assert isinstance(popup.inputs, dict)
         assert len(popup.inputs) > 0  # Ensure widgets were created
 
-    def test_save_changes_success_add_mode(self, mock_popup: Tuple[VehiclePopup, List[Tuple[str, str, str]]]) -> None:
+    def test_save_changes_success_add_mode(
+        self, mock_popup: Tuple[VehiclePopup, List[Tuple[str, str, str]]]
+    ) -> None:
         """Test saving changes in 'add' mode.
 
         Args:
@@ -104,13 +128,29 @@ class TestVehiclePopup:
         """
         popup, calls = mock_popup
 
-        popup.inputs["Type"] = ttk.Combobox(popup.popup, values=["SUV", "Sedan", "Truck"], state="readonly")
+        popup.inputs["Type"] = ttk.Combobox(
+            popup.popup, values=["SUV", "Sedan", "Truck"],
+            state="readonly"
+        )
         popup.inputs["Manufacture Year"] = ttk.Entry(popup.popup)
         popup.inputs["Registration Number"] = ttk.Entry(popup.popup)
-        popup.inputs["Fuel Type"] = ttk.Combobox(popup.popup, values=["Petrol", "Diesel", "Electric"], state="readonly")
-        popup.inputs["Tax Type"] = ttk.Combobox(popup.popup, values=["Annual", "Monthly"], state="readonly")
-        popup.inputs["Tax Status"] = ttk.Combobox(popup.popup, values=["Paid", "Unpaid"], state="readonly")
-        popup.inputs["Service Status"] = ttk.Combobox(popup.popup, values=["Done", "Pending"], state="readonly")
+        popup.inputs["Fuel Type"] = ttk.Combobox(
+            popup.popup,
+            values=["Petrol", "Diesel", "Electric"],
+            state="readonly"
+        )
+        popup.inputs["Tax Type"] = ttk.Combobox(
+            popup.popup, values=["Annual", "Monthly"], state="readonly"
+        )
+        popup.inputs["Tax Status"] = ttk.Combobox(
+            popup.popup, values=["Paid", "Unpaid"], state="readonly"
+        )
+        popup.inputs["Service Status"] = ttk.Combobox(
+            popup.popup, values=["Done", "Pending"], state="readonly"
+        )
+        popup.inputs["Service Status"] = ttk.Combobox(
+            popup.popup, values=["Done", "Pending"], state="readonly"
+        )
         popup.inputs["Tax Due Date"] = ttk.Entry(popup.popup)
         popup.inputs["Service Due Date"] = ttk.Entry(popup.popup)
 
@@ -120,7 +160,7 @@ class TestVehiclePopup:
 
         # Set values after they exist
         popup.inputs["Type"].set("SUV")  # Use .set() for Combobox
-        popup.inputs["Manufacture Year"].insert(0, "2022")  # Use .insert(0, value) for Entry
+        popup.inputs["Manufacture Year"].insert(0, "2022")
         popup.inputs["Registration Number"].insert(0, "ABC123")
         popup.inputs["Fuel Type"].set("Petrol")
         popup.inputs["Tax Type"].set("SORN")
@@ -137,7 +177,9 @@ class TestVehiclePopup:
         # Ensure success message was shown
         assert ("info", "Vehicle added successfully!", None) in calls
 
-    def test_save_changes_invalid_data(self, mock_popup: Tuple[VehiclePopup, List[Tuple[str, str, str]]]) -> None:
+    def test_save_changes_invalid_data(
+        self, mock_popup: Tuple[VehiclePopup, List[Tuple[str, str, str]]]
+    ) -> None:
         """Ensure invalid data triggers `AppMessage.show()`.
 
         Args:
@@ -150,22 +192,40 @@ class TestVehiclePopup:
         popup.save_changes()
 
         # Ensure correct error message was displayed
-        assert ("error", "Validation Error", "Type must be a valid option.") in calls
+        assert (
+            "error",
+            "Validation Error",
+            "Type must be a valid option."
+        ) in calls
 
-    def test_save_changes_invalid_date_format(self, mock_popup: Tuple[VehiclePopup, List[Tuple[str, str, str]]]) -> None:
+    def test_save_changes_invalid_date_format(
+        self, mock_popup: Tuple[VehiclePopup, List[Tuple[str, str, str]]]
+    ) -> None:
         """Ensure incorrect date format triggers an error message.
 
         Args:
             mock_popup: The mock_popup fixture.
         """
         popup, calls = mock_popup
-        popup.inputs["Type"] = ttk.Combobox(popup.popup, values=["SUV", "Sedan", "Truck"], state="readonly")
+        popup.inputs["Type"] = ttk.Combobox(
+            popup.popup, values=["SUV", "Sedan", "Truck"], state="readonly"
+        )
         popup.inputs["Manufacture Year"] = ttk.Entry(popup.popup)
         popup.inputs["Registration Number"] = ttk.Entry(popup.popup)
-        popup.inputs["Fuel Type"] = ttk.Combobox(popup.popup, values=["Petrol", "Diesel", "Electric"], state="readonly")
-        popup.inputs["Tax Type"] = ttk.Combobox(popup.popup, values=["Annual", "Monthly"], state="readonly")
-        popup.inputs["Tax Status"] = ttk.Combobox(popup.popup, values=["Paid", "Unpaid"], state="readonly")
-        popup.inputs["Service Status"] = ttk.Combobox(popup.popup, values=["Done", "Pending"], state="readonly")
+        popup.inputs["Fuel Type"] = ttk.Combobox(
+            popup.popup,
+            values=["Petrol", "Diesel", "Electric"],
+            state="readonly"
+        )
+        popup.inputs["Tax Type"] = ttk.Combobox(
+            popup.popup, values=["Annual", "Monthly"], state="readonly"
+        )
+        popup.inputs["Tax Status"] = ttk.Combobox(
+            popup.popup, values=["Paid", "Unpaid"], state="readonly"
+        )
+        popup.inputs["Service Status"] = ttk.Combobox(
+            popup.popup, values=["Done", "Pending"], state="readonly"
+        )
         popup.inputs["Tax Due Date"] = ttk.Entry(popup.popup)
         popup.inputs["Service Due Date"] = ttk.Entry(popup.popup)
 
@@ -175,7 +235,7 @@ class TestVehiclePopup:
 
         # Set values after they exist
         popup.inputs["Type"].set("SUV")  # Use .set() for Combobox
-        popup.inputs["Manufacture Year"].insert(0, "2022")  # Use .insert(0, value) for Entry
+        popup.inputs["Manufacture Year"].insert(0, "2022")
         popup.inputs["Registration Number"].insert(0, "ABC123")
         popup.inputs["Fuel Type"].set("Petrol")
         popup.inputs["Tax Type"].set("SORN")
@@ -187,10 +247,17 @@ class TestVehiclePopup:
         popup.save_changes()
 
         # Ensure correct error message was displayed
-        assert ("error", "Validation Error", "Tax Due Date must be in YYYY-MM-DD format.") in calls
+        assert (
+            "error",
+            "Validation Error",
+            "Tax Due Date must be in YYYY-MM-DD format.",
+        ) in calls
 
-    def test_save_changes_invalid_dropdown(self, mock_popup: Tuple[VehiclePopup, List[Tuple[str, str, str]]]) -> None:
-        """Ensure selecting an invalid dropdown option triggers an error message.
+    def test_save_changes_invalid_dropdown(
+        self, mock_popup: Tuple[VehiclePopup, List[Tuple[str, str, str]]]
+    ) -> None:
+        """Ensure selecting an invalid dropdown option triggers an error
+        message.
 
         Args:
             mock_popup: The mock_popup fixture.
@@ -202,9 +269,15 @@ class TestVehiclePopup:
         popup.save_changes()
 
         # Ensure correct error message was displayed
-        assert ("error", "Validation Error", "Type must be a valid option.") in calls
+        assert (
+            "error",
+            "Validation Error",
+            "Type must be a valid option."
+        ) in calls
 
-    def test_delete_vehicle_success(self, mock_popup: Tuple[VehiclePopup, List[Tuple[str, str, str]]]) -> None:
+    def test_delete_vehicle_success(
+        self, mock_popup: Tuple[VehiclePopup, List[Tuple[str, str, str]]]
+    ) -> None:
         """Ensure vehicle deletion works correctly.
 
         Args:
@@ -221,14 +294,19 @@ class TestVehiclePopup:
         # Ensure success message was shown
         assert ("info", "Vehicle deleted successfully!", None) in calls
 
-    def test_delete_vehicle_failure(self, mock_popup: Tuple[VehiclePopup, List[Tuple[str, str, str]]]) -> None:
-        """Simulate a deletion failure and ensure an error message is displayed.
+    def test_delete_vehicle_failure(
+        self, mock_popup: Tuple[VehiclePopup, List[Tuple[str, str, str]]]
+    ) -> None:
+        """Simulate a deletion failure and ensure an error message is
+        displayed.
 
         Args:
             mock_popup: The mock_popup fixture.
         """
         popup, calls = mock_popup
-        popup.manager.remove_vehicle = lambda x: (_ for _ in ()).throw(Exception("Database error"))  # Raise error
+        popup.manager.remove_vehicle = lambda x: (_ for _ in ()).throw(
+            Exception("Database error")
+        )  # Raise error
 
         popup.vehicle_data = {2: 999}  # ID 999 will trigger failure
         popup.delete_vehicle()
