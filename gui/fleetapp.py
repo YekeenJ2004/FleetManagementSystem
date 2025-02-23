@@ -1,18 +1,17 @@
 import tkinter as tk
 from tkinter import ttk
-from utils.customdatepicker import CustomDatePicker
-from vehiclemanager import VehicleManager
-from tkfiltermanager import TkFilterManager
-from filtermanager import FilterManager
-from constants import (
+from gui.utils.customdatepicker import CustomDatePicker
+from core.vehiclemanager import VehicleManager
+from gui.tkfiltermanager import TkFilterManager
+from core.constants import (
     COLUMN_NAMES, ASCII_ART, FILTER_RANGE_FIELDS, FILTER_OPTIONS
 )
 import datetime
-from utils.vehiclepopup import VehiclePopup
-from appmessage import AppMessage
+from gui.vehiclepopup import VehiclePopup
+from gui.utils.appmessage import AppMessage
 from typing import List, Any, Optional
 import logging
-from utils.tooltip import ToolTip
+from gui.utils.tooltip import ToolTip
 
 
 class FleetApp:
@@ -220,33 +219,33 @@ class FleetApp:
         self.vehicle_popup("add")
 
     def edit_vehicle_popup(self, event: tk.Event) -> None:
-        """
-        Open a popup window for editing an existing vehicle.
-
-        Args:
-            event (tk.Event): The event triggered by
-            double-clicking a treeview row.
-        """
+        """Open a popup window for editing an existing vehicle."""
         try:
-            """Opens a popup window for editing an existing vehicle."""
             item = self.tree.identify_row(event.y)
             if not item:
                 return
 
-            reg_number = self.tree.item(item, "values")[2]
-            # Get Registration Number
+            values = self.tree.item(item, "values")
+
+            if len(values) < 3:
+                AppMessage.show("error", "Invalid row data. Cannot edit vehicle.")
+                return
+
+            reg_number = values[2]
+
             vehicle = self.manager.search_vehicles(
                 "SELECT * FROM Vehicles WHERE RegistrationNumber = ?",
                 (reg_number,)
             )
-            print(vehicle)
+
             if not vehicle:
-                AppMessage.show(f"Vehicle not found: {reg_number}")
+                AppMessage.show("error", "Vehicle not found")
                 return
 
             self.vehicle_popup("edit", vehicle[0])
         except Exception as e:
             AppMessage.show("error", "Error at opening vehicle popup at root level", e)
+
 
     def apply_filters(self) -> None:
         """

@@ -1,7 +1,7 @@
 import tkinter as tk
 import pytest
 
-from utils.tooltip import ToolTip
+from gui.utils.tooltip import ToolTip
 
 
 class TestToolTip:

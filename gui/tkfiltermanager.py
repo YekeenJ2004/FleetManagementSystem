@@ -1,13 +1,14 @@
 from tkinter import ttk
-from appmessage import AppMessage
-from utils.customdatepicker import CustomDatePicker
+from gui.utils.appmessage import AppMessage
+from gui.utils.customdatepicker import CustomDatePicker
 import logging
-from filtermanager import FilterManager
+from core.filtermanager import FilterManager
 
 
 class TkFilterManager(FilterManager):
     """
-    A subclass of FilterManager that integrates with Tkinter-specific components.
+    A subclass of FilterManager that integrates with Tkinter-specific
+    components.
     """
     def handle_invalid_range(self, field_from: str, field_to: str) -> None:
         """
@@ -23,7 +24,8 @@ class TkFilterManager(FilterManager):
 
     def clear_filters(self) -> None:
         """
-        Reset all filters to their default values, including CustomDatePicker widgets.
+        Reset all filters to their default values, including CustomDatePicker
+        widgets.
         """
         try:
             for field, widget in self.filters.items():

@@ -1,6 +1,6 @@
 import tkinter as tk
 from tkinter import ttk
-from appmessage import AppMessage
+from gui.utils.appmessage import AppMessage
 import datetime
 
 
@@ -97,6 +97,7 @@ class CustomDatePicker(tk.Frame):
             )
             self.year_dropdown.grid(row=0, column=1, padx=10, pady=5)
             self.year_dropdown.set(self.year_var.get())
+            self.year_dropdown.bind("<<ComboboxSelected>>", self.update_days)
 
             # Month dropdown
             month_values = self.month_short_names
@@ -133,43 +134,89 @@ class CustomDatePicker(tk.Frame):
             AppMessage.show("error", "Failed to open date picker", e)
 
     def update_days(self, event=None):
-        """Updates the day dropdown based on the selected month."""
+        """Updates the day dropdown based on the selected month and year."""
         try:
             if not hasattr(self, 'day_dropdown'):
                 return
-            month_days = self.month_days
+
             month = self.month_var.get()
-            if month in month_days:
-                days = [str(day) for day in range(1, month_days[month] + 1)]
-                self.day_dropdown["values"] = days
-                if str(self.day_var.get()) not in days:
-                    self.day_var.set(days[0])
-                    self.day_dropdown.set(days[0])
+            year = self.year_var.get()
+
+            # Adjust February for leap years
+            days_in_month = self.month_days.get(month, 30)
+            if month == "Feb":
+                days_in_month = 29 if (year % 4 == 0 and (year % 100 != 0 or year % 400 == 0)) else 28
+
+            days = [str(day) for day in range(1, days_in_month + 1)]
+            self.day_dropdown["values"] = days
+
+            # Ensure selected day is still valid
+            if str(self.day_var.get()) not in days:
+                self.day_var.set(days[0])
+                self.day_dropdown.set(days[0])
         except Exception as e:
             AppMessage.show("error", "Failed to update days", e)
+
+    # def set_date(self, date_str=None):
+    #     """
+    #     Sets the date picker to a given date string (YYYY-MM-DD)
+    #     or defaults to current date.
+    #     """
+    #     try:
+    #         if date_str:
+    #             try:
+    #                 date_obj = datetime.datetime.strptime(date_str, "%Y-%m-%d")
+    #             except ValueError:
+    #                 # Fallback to current date if invalid
+    #                 date_obj = datetime.datetime.now()
+    #         else:
+    #             date_obj = datetime.datetime.now()
+
+    #         self.year_var.set(date_obj.year)
+    #         self.month_var.set(self.month_short_names[date_obj.month - 1])
+    #         self.day_var.set(date_obj.day)
+    #         formatted_date = date_obj.strftime("%Y-%m-%d")
+    #         self.date_var.set(formatted_date)
+
+    #         if hasattr(self, 'popup') and self.popup:
+    #             self.popup.destroy()
+    #     except Exception as e:
+    #         AppMessage.show("error", "Failed to set date", e)
 
     def set_date(self, date_str=None):
         """
         Sets the date picker to a given date string (YYYY-MM-DD)
-        or defaults to current date.
+        or defaults to the selected date.
         """
         try:
             if date_str:
                 try:
                     date_obj = datetime.datetime.strptime(date_str, "%Y-%m-%d")
                 except ValueError:
-                    # Fallback to current date if invalid
-                    date_obj = datetime.datetime.now()
+                    AppMessage.show("error", "Invalid date format!", date_str)
+                    return  # 🚀 Exit early if date format is invalid
             else:
-                date_obj = datetime.datetime.now()
+                # ✅ If no date provided, use current selected values
+                selected_year = self.year_var.get()
+                selected_month = self.month_var.get()
+                selected_day = self.day_var.get()
 
+                if selected_year and selected_month and selected_day:
+                    month_index = self.month_short_names.index(selected_month) + 1
+                    date_obj = datetime.datetime(
+                        selected_year, month_index, int(selected_day)
+                    )
+                else:
+                    date_obj = datetime.datetime.now()
+
+            # ✅ Set variables correctly
             self.year_var.set(date_obj.year)
             self.month_var.set(self.month_short_names[date_obj.month - 1])
             self.day_var.set(date_obj.day)
             formatted_date = date_obj.strftime("%Y-%m-%d")
             self.date_var.set(formatted_date)
 
-            if hasattr(self, 'popup') and self.popup:
+            if hasattr(self, "popup") and self.popup:
                 self.popup.destroy()
         except Exception as e:
             AppMessage.show("error", "Failed to set date", e)

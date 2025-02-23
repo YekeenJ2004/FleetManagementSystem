@@ -1,5 +1,6 @@
 import pytest
-from vehicle import Vehicle
+from core.vehicle import Vehicle
+
 
 class TestVehicle:
     def test_vehicle_initialization(self):

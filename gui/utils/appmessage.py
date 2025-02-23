@@ -18,10 +18,12 @@ class AppMessage:
             logging.info(message)
             messagebox.showinfo("Information", message)
         elif message_type == "error":
-            logging.error(message + error)
+            logging.error(f"{message}, {error}")
             messagebox.showerror("Error", message)
         elif message_type == "warning":
-            logging.warning(message)
+            logging.warning(f"{message}, {error}")
             messagebox.showwarning("Warning", message)
         else:
-            raise ValueError("Invalid message type. Use 'info', 'error', or 'warning'.")
+            raise ValueError(
+                "Invalid message type. Use 'info', 'error', or 'warning'."
+            )

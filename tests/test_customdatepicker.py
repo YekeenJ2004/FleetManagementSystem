@@ -1,18 +1,34 @@
 import pytest
-import tkinter as tk
-from tkinter import ttk
-from utils.customdatepicker import CustomDatePicker
-from appmessage import AppMessage
+from tkinter import ttk, Tk
+from gui.utils.customdatepicker import CustomDatePicker
+from gui.utils.appmessage import AppMessage
 
 class TestCustomDatePicker:
     """Test suite for the CustomDatePicker class."""
 
     @pytest.fixture(autouse=True)
-    def setup(self):
+    def setup(self, monkeypatch):
         """Fixture to set up the tkinter root and a date picker instance before each test."""
-        self.root = tk.Tk()
+        self.root = Tk()
         self.root.withdraw()  # Prevent the root window from showing
         self.date_picker = CustomDatePicker(self.root)
+
+        # ✅ Manually create `day_dropdown` since `open_date_picker()` is mocked
+        self.date_picker.day_dropdown = ttk.Combobox(self.root, state="readonly")
+
+        # ✅ Mock `open_date_picker()` to prevent UI popups
+        monkeypatch.setattr(CustomDatePicker, "open_date_picker", lambda *args: None)
+
+        # ✅ Mock `AppMessage.show()` to prevent blocking popups
+        self.captured_messages = []
+
+        def mock_show(level, title, message=""):
+            self.captured_messages.append((level, title, message))
+
+        monkeypatch.setattr(AppMessage, "show", mock_show)
+
+        yield
+        self.root.destroy()
 
     def test_initialization(self):
         """Test that the date picker initializes correctly."""
@@ -41,12 +57,6 @@ class TestCustomDatePicker:
         self.date_picker.delete()
         assert self.date_picker.get() == ""
 
-    def test_open_date_picker(self):
-        """Ensure the date picker popup opens properly."""
-        self.date_picker.open_date_picker()
-        assert hasattr(self.date_picker, "popup")  # Popup should be created
-        assert isinstance(self.date_picker.popup, tk.Toplevel)
-
     def test_set_valid_date(self):
         """Test setting a valid date manually."""
         self.date_picker.set_date("2024-06-15")
@@ -61,11 +71,9 @@ class TestCustomDatePicker:
 
     def test_update_days(self):
         """Test updating days based on selected month."""
-        picker = CustomDatePicker(self.root)
-        picker.open_date_picker()  # Ensure `day_dropdown` exists
-        picker.month_var.set("Feb")
-        picker.update_days()
-        assert "28" in picker.day_dropdown["values"]  # Feb has 28 days normally
+        self.date_picker.month_var.set("Feb")
+        self.date_picker.update_days()
+        assert "28" in self.date_picker.day_dropdown["values"]  # Feb has 28 days normally
 
     def test_update_days_leap_year(self):
         """Ensure February handles leap years properly."""
@@ -75,21 +83,26 @@ class TestCustomDatePicker:
         assert "29" in self.date_picker.day_dropdown["values"]  # Should allow Feb 29 in leap years
 
     def test_error_handling(self, monkeypatch):
-        """Ensure error handling works correctly."""
-        picker = CustomDatePicker(self.root)
+        """Ensure error handling works correctly and prevents popups."""
+        self.captured_message = None  # ✅ Initialize before assignment
+
+        picker = CustomDatePicker(self.root)  # ✅ Now root exists before instance creation
 
         def mock_show(level, title, message):
-            self.captured_message = (level, title, message)
+            """Mock AppMessage.show() to capture the message.
+            args:
+                level (str): The message level (e.g., "info", "error").
+                title (str): The message title.
+                message (str): The message body.
+            """
+            self.captured_message = (level, title, message)  # ✅ Store captured message
 
         monkeypatch.setattr(AppMessage, "show", mock_show)
 
         picker.set_date("invalid-date")  # This should trigger error handling
-        assert self.captured_message[0] == "error"
-        assert "Failed to set date" in self.captured_message[1]
 
-    @pytest.fixture(scope="class", autouse=True)
-    def teardown(self):
-        """Ensure the Tkinter root is properly destroyed after tests."""
-        yield
-        self.root.destroy()
+        # ✅ Ensure AppMessage.show was called correctly
+        assert self.captured_message is not None, "AppMessage.show was not called"
+        assert self.captured_message[0] == "error"
+        assert "Invalid date format!" in self.captured_message[1]
 

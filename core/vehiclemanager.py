@@ -1,5 +1,5 @@
 import sqlite3
-from vehicle import Vehicle
+from core.vehicle import Vehicle
 from typing import List, Tuple, Any
 import logging
 

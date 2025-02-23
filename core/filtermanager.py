@@ -1,7 +1,7 @@
-from constants import SQL_MAPPINGS
+from core.constants import SQL_MAPPINGS
 import logging
 from typing import Dict, Any, Tuple, List
-from customtypes import FromRange, ToRange, RangeField
+from core.customtypes import FromRange, ToRange, RangeField
 
 
 class FilterManager:
@@ -41,7 +41,8 @@ class FilterManager:
                 Add range filters for date or year fields to the query.
 
                 Args:
-                    field_from (str): The filter name for the start of the range.
+                    field_from (str): The filter name for the start of the
+                    range.
                     field_to (str): The filter name for the end of the range.
                     db_field (str): The database column name to filter.
                 """
@@ -56,8 +57,9 @@ class FilterManager:
                 if not to_value or to_value == "All":
                     to_value = None
 
-                if from_value and to_value and int(to_value.replace("-", "")) < int(from_value.replace("-", "")):
-                    print("re")
+                if from_value and to_value and int(
+                    to_value.replace("-", "")
+                ) < int(from_value.replace("-", "")):
                     self.handle_invalid_range(field_from, field_to)
                     logging.error(
                         f"Invalid range: {field_to} < {field_from}"
@@ -108,9 +110,10 @@ class FilterManager:
         # Dropdown Filters
             for field, widget in self.filters.items():
                 if field not in [
-                    "Year From", "Year To", "Tax Due Date From", "Tax Due Date To",
-                    "Service Date From", "Service Date To", "Search", "Order By",
-                    "Order Direction", "Order By", "Order Direction"
+                    "Year From", "Year To", "Tax Due Date From",
+                    "Tax Due Date To", "Service Date From", "Service Date To",
+                    "Search", "Order By", "Order Direction", "Order By",
+                    "Order Direction"
                 ]:
                     value = widget.get()
                     if value and value != "All":
@@ -139,7 +142,7 @@ class FilterManager:
         except Exception as e:
             logging.error(f"Error applying filters: {e}")
             return "", []
-        
+
     def handle_invalid_range(self, field_from: str, field_to: str) -> None:
         """
         Handle invalid range inputs (to be implemented in subclasses).
@@ -148,6 +151,7 @@ class FilterManager:
 
     def clear_filters(self) -> None:
         """
-        Reset all filters to their default values(to be implemented in subclasses)
+        Reset all filters to their default values
+        (to be implemented in subclasses)
         """
         pass

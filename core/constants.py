@@ -1,6 +1,6 @@
 import tkinter as tk
 from tkinter import ttk
-from utils.customdatepicker import CustomDatePicker
+from gui.utils.customdatepicker import CustomDatePicker
 
 
 VEHICLE_TYPES = [
