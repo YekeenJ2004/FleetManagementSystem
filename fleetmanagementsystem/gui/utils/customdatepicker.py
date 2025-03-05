@@ -1,6 +1,6 @@
 import tkinter as tk
 from tkinter import ttk
-from fleetmanagementsystem.gui.utils.appmessage import AppMessage
+from gui.utils.appmessage import AppMessage
 import datetime
 
 
@@ -145,7 +145,9 @@ class CustomDatePicker(tk.Frame):
             # Adjust February for leap years
             days_in_month = self.month_days.get(month, 30)
             if month == "Feb":
-                days_in_month = 29 if (year % 4 == 0 and (year % 100 != 0 or year % 400 == 0)) else 28
+                days_in_month = 29 if (
+                    year % 4 == 0 and (year % 100 != 0 or year % 400 == 0)
+                ) else 28
 
             days = [str(day) for day in range(1, days_in_month + 1)]
             self.day_dropdown["values"] = days
@@ -156,32 +158,6 @@ class CustomDatePicker(tk.Frame):
                 self.day_dropdown.set(days[0])
         except Exception as e:
             AppMessage.show("error", "Failed to update days", e)
-
-    # def set_date(self, date_str=None):
-    #     """
-    #     Sets the date picker to a given date string (YYYY-MM-DD)
-    #     or defaults to current date.
-    #     """
-    #     try:
-    #         if date_str:
-    #             try:
-    #                 date_obj = datetime.datetime.strptime(date_str, "%Y-%m-%d")
-    #             except ValueError:
-    #                 # Fallback to current date if invalid
-    #                 date_obj = datetime.datetime.now()
-    #         else:
-    #             date_obj = datetime.datetime.now()
-
-    #         self.year_var.set(date_obj.year)
-    #         self.month_var.set(self.month_short_names[date_obj.month - 1])
-    #         self.day_var.set(date_obj.day)
-    #         formatted_date = date_obj.strftime("%Y-%m-%d")
-    #         self.date_var.set(formatted_date)
-
-    #         if hasattr(self, 'popup') and self.popup:
-    #             self.popup.destroy()
-    #     except Exception as e:
-    #         AppMessage.show("error", "Failed to set date", e)
 
     def set_date(self, date_str=None):
         """
@@ -202,7 +178,8 @@ class CustomDatePicker(tk.Frame):
                 selected_day = self.day_var.get()
 
                 if selected_year and selected_month and selected_day:
-                    month_index = self.month_short_names.index(selected_month) + 1
+                    month_index = self.month_short_names.index(
+                        selected_month) + 1
                     date_obj = datetime.datetime(
                         selected_year, month_index, int(selected_day)
                     )

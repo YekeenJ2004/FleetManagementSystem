@@ -1,18 +1,18 @@
 import tkinter as tk
 from tkinter import ttk
-from fleetmanagementsystem.gui.utils.customdatepicker import CustomDatePicker
+from gui.utils.customdatepicker import CustomDatePicker
 import datetime
-from fleetmanagementsystem.core.vehicle import Vehicle
+from core.vehicle import Vehicle
 from typing import Callable, Optional, Dict, Any
-from fleetmanagementsystem.core.constants import (
+from core.constants import (
     SQL_MAPPINGS,
     VEHICLE_CLASS_MAPPINGS,
     VEHICLE_POPUP_FIELDS,
     FIELD_OPTIONS,
 )
-from fleetmanagementsystem.gui.utils.appmessage import AppMessage
-from fleetmanagementsystem.core.vehiclemanager import VehicleManager
-from fleetmanagementsystem.core.customtypes import VehiclePopupAction
+from gui.utils.appmessage import AppMessage
+from core.vehiclemanager import VehicleManager
+from core.customtypes import VehiclePopupAction
 
 
 class VehiclePopup:

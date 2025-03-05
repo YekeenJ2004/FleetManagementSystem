@@ -1,5 +1,5 @@
 import sqlite3
-from fleetmanagementsystem.core.vehicle import Vehicle
+from core.vehicle import Vehicle
 from typing import List, Tuple, Any
 import logging
 
@@ -13,10 +13,12 @@ class VehicleManager:
     """
     def __init__(self, db_name: str = "fleet_management.db") -> None:
         """
-        Initializes the VehicleManager and ensures the table structure is created.
+        Initializes the VehicleManager and ensures the table structure is
+        created.
 
         Args:
-            db_name (str): Name of the database file. Defaults to 'fleet_management.db'.
+            db_name (str): Name of the database file.
+                Defaults to 'fleet_management.db'.
         """
         self.conn = sqlite3.connect(db_name)
         self.create_table()
@@ -55,9 +57,17 @@ class VehicleManager:
         try:
             cursor = self.conn.cursor()
             cursor.execute("""
-                INSERT INTO Vehicles (Type, RegistrationNumber, TaxStatus, TaxDueDate, TaxType, ServiceDueDate, ServiceStatus, FuelType, ManufactureYear)
+                INSERT INTO Vehicles (
+                    Type, RegistrationNumber, TaxStatus, TaxDueDate, TaxType,
+                    ServiceDueDate, ServiceStatus, FuelType, ManufactureYear
+                )
                 VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)
-            """, (vehicle.vehicle_type, vehicle.reg_number, vehicle.tax_status, vehicle.tax_due_date, vehicle.tax_type, vehicle.service_due_date, vehicle.service_status, vehicle.fuel_type, vehicle.manufacture_year))
+            """, (
+                vehicle.vehicle_type, vehicle.reg_number, vehicle.tax_status,
+                vehicle.tax_due_date, vehicle.tax_type,
+                vehicle.service_due_date, vehicle.service_status,
+                vehicle.fuel_type, vehicle.manufacture_year
+            ))
             self.conn.commit()
         except sqlite3.Error as e:
             logging.error(f"Database error: {e}")
@@ -75,7 +85,10 @@ class VehicleManager:
         """
         try:
             cursor = self.conn.cursor()
-            cursor.execute("DELETE FROM Vehicles WHERE RegistrationNumber = ?", (reg_number,))
+            cursor.execute(
+                "DELETE FROM Vehicles WHERE RegistrationNumber = ?",
+                (reg_number,)
+            )
             self.conn.commit()
         except sqlite3.Error as e:
             logging.error(f"Database error: {e}")
@@ -94,12 +107,18 @@ class VehicleManager:
         try:
             cursor = self.conn.cursor()
             for key, value in kwargs.items():
-                cursor.execute(f"UPDATE Vehicles SET {key} = ? WHERE RegistrationNumber = ?", (value, reg_number))
+                cursor.execute(
+                    f"UPDATE Vehicles SET {key} = ? "
+                    "WHERE RegistrationNumber = ?",
+                    (value, reg_number)
+                )
             self.conn.commit()
         except sqlite3.Error as e:
             print(f"Database error: {e}")
 
-    def search_vehicles(self, query: str, params: Tuple[Any, ...] = ()) -> List[Tuple[Any, ...]]:
+    def search_vehicles(
+        self, query: str, params: Tuple[Any, ...] = ()
+    ) -> List[Tuple[Any, ...]]:
         """
         Searches for vehicles in the database using a custom SQL query.
 

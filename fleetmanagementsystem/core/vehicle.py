@@ -1,6 +1,6 @@
 import logging
 from typing import Optional
-from fleetmanagementsystem.core.customtypes import (
+from core.customtypes import (
     TaxStatus,
     TaxType,
     ServiceStatus,
