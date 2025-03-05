@@ -1,0 +1,265 @@
+<!DOCTYPE html>
+
+<html lang="en" data-content_root="../../../">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>fleetmanagementsystem.core.filtermanager &#8212; ECM2429DA 1.0 documentation</title>
+    <link rel="stylesheet" type="text/css" href="../../../_static/pygments.css?v=5ecbeea2" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/basic.css?v=b08954a9" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/alabaster.css?v=27fed22d" />
+    <script src="../../../_static/documentation_options.js?v=f2a433a1"></script>
+    <script src="../../../_static/doctools.js?v=9bcbadda"></script>
+    <script src="../../../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <link rel="index" title="Index" href="../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../search.html" />
+   
+  <link rel="stylesheet" href="../../../_static/custom.css" type="text/css" />
+  
+
+  
+  
+
+  </head><body>
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          
+
+          <div class="body" role="main">
+            
+  <h1>Source code for fleetmanagementsystem.core.filtermanager</h1><div class="highlight"><pre>
+<span></span><span class="kn">from</span><span class="w"> </span><span class="nn">fleetmanagementsystem.core.constants</span><span class="w"> </span><span class="kn">import</span> <span class="n">SQL_MAPPINGS</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">logging</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">typing</span><span class="w"> </span><span class="kn">import</span> <span class="n">Dict</span><span class="p">,</span> <span class="n">Any</span><span class="p">,</span> <span class="n">Tuple</span><span class="p">,</span> <span class="n">List</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">fleetmanagementsystem.core.customtypes</span><span class="w"> </span><span class="kn">import</span> <span class="n">FromRange</span><span class="p">,</span> <span class="n">ToRange</span><span class="p">,</span> <span class="n">RangeField</span>
+
+
+<div class="viewcode-block" id="FilterManager">
+<a class="viewcode-back" href="../../../fleetmanagementsystem.core.html#fleetmanagementsystem.core.filtermanager.FilterManager">[docs]</a>
+<span class="k">class</span><span class="w"> </span><span class="nc">FilterManager</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    A class to manage and apply filters for querying a database.</span>
+
+<span class="sd">    This class builds SQL `WHERE` clauses based on user-provided filters and</span>
+<span class="sd">    manages resetting the filters to their default states.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">filters</span><span class="p">:</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Initialize the FilterManager with a dictionary of filters.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            filters (Dict[str, Any]): A dictionary where keys are filter names</span>
+<span class="sd">            and values are tkinter widgets.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">filters</span> <span class="o">=</span> <span class="n">filters</span>
+
+<div class="viewcode-block" id="FilterManager.apply_filters">
+<a class="viewcode-back" href="../../../fleetmanagementsystem.core.html#fleetmanagementsystem.core.filtermanager.FilterManager.apply_filters">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">apply_filters</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Tuple</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">List</span><span class="p">[</span><span class="n">Any</span><span class="p">]]:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Build the SQL `WHERE` clause and corresponding values based on the</span>
+<span class="sd">        filters.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            Tuple[str, List[Any]]: A tuple containing the SQL query string and</span>
+<span class="sd">            the list of query parameters.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">where_clauses</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="n">values</span> <span class="o">=</span> <span class="p">[]</span>
+
+        <span class="k">try</span><span class="p">:</span>
+            <span class="k">def</span><span class="w"> </span><span class="nf">add_range_filter</span><span class="p">(</span>
+                <span class="n">field_from</span><span class="p">:</span> <span class="n">FromRange</span><span class="p">,</span> <span class="n">field_to</span><span class="p">:</span> <span class="n">ToRange</span><span class="p">,</span> <span class="n">db_field</span><span class="p">:</span> <span class="n">RangeField</span>
+            <span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+<span class="w">                </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">                Add range filters for date or year fields to the query.</span>
+
+<span class="sd">                Args:</span>
+<span class="sd">                    field_from (str): The filter name for the start of the</span>
+<span class="sd">                    range.</span>
+<span class="sd">                    field_to (str): The filter name for the end of the range.</span>
+<span class="sd">                    db_field (str): The database column name to filter.</span>
+<span class="sd">                &quot;&quot;&quot;</span>
+                <span class="n">from_widget</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">filters</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">field_from</span><span class="p">)</span>
+                <span class="n">to_widget</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">filters</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">field_to</span><span class="p">)</span>
+
+                <span class="n">from_value</span> <span class="o">=</span> <span class="n">from_widget</span><span class="o">.</span><span class="n">get</span><span class="p">()</span> <span class="k">if</span> <span class="n">from_widget</span> <span class="k">else</span> <span class="s2">&quot;&quot;</span>
+                <span class="n">to_value</span> <span class="o">=</span> <span class="n">to_widget</span><span class="o">.</span><span class="n">get</span><span class="p">()</span> <span class="k">if</span> <span class="n">to_widget</span> <span class="k">else</span> <span class="s2">&quot;&quot;</span>
+
+                <span class="k">if</span> <span class="ow">not</span> <span class="n">from_value</span> <span class="ow">or</span> <span class="n">from_value</span> <span class="o">==</span> <span class="s2">&quot;All&quot;</span><span class="p">:</span>
+                    <span class="n">from_value</span> <span class="o">=</span> <span class="kc">None</span>
+                <span class="k">if</span> <span class="ow">not</span> <span class="n">to_value</span> <span class="ow">or</span> <span class="n">to_value</span> <span class="o">==</span> <span class="s2">&quot;All&quot;</span><span class="p">:</span>
+                    <span class="n">to_value</span> <span class="o">=</span> <span class="kc">None</span>
+
+                <span class="k">if</span> <span class="n">from_value</span> <span class="ow">and</span> <span class="n">to_value</span> <span class="ow">and</span> <span class="nb">int</span><span class="p">(</span>
+                    <span class="n">to_value</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s2">&quot;-&quot;</span><span class="p">,</span> <span class="s2">&quot;&quot;</span><span class="p">)</span>
+                <span class="p">)</span> <span class="o">&lt;</span> <span class="nb">int</span><span class="p">(</span><span class="n">from_value</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s2">&quot;-&quot;</span><span class="p">,</span> <span class="s2">&quot;&quot;</span><span class="p">)):</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">handle_invalid_range</span><span class="p">(</span><span class="n">field_from</span><span class="p">,</span> <span class="n">field_to</span><span class="p">)</span>
+                    <span class="n">logging</span><span class="o">.</span><span class="n">error</span><span class="p">(</span>
+                        <span class="sa">f</span><span class="s2">&quot;Invalid range: </span><span class="si">{</span><span class="n">field_to</span><span class="si">}</span><span class="s2"> &lt; </span><span class="si">{</span><span class="n">field_from</span><span class="si">}</span><span class="s2">&quot;</span>
+                    <span class="p">)</span>
+                    <span class="k">return</span>
+                <span class="k">if</span> <span class="n">from_value</span><span class="p">:</span>
+                    <span class="n">where_clauses</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;&quot;</span><span class="si">{</span><span class="n">db_field</span><span class="si">}</span><span class="s1">&quot; &gt;= ?&#39;</span><span class="p">)</span>
+                    <span class="n">values</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">from_value</span><span class="p">)</span>
+                <span class="k">if</span> <span class="n">to_value</span><span class="p">:</span>
+                    <span class="n">where_clauses</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;&quot;</span><span class="si">{</span><span class="n">db_field</span><span class="si">}</span><span class="s1">&quot; &lt;= ?&#39;</span><span class="p">)</span>
+                    <span class="n">values</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">to_value</span><span class="p">)</span>
+
+            <span class="c1"># Search Bar</span>
+            <span class="n">search_query</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">filters</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;Search&quot;</span><span class="p">,</span> <span class="s2">&quot;&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">get</span><span class="p">()</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span>
+            <span class="k">if</span> <span class="n">search_query</span><span class="p">:</span>
+                <span class="n">search_fields</span> <span class="o">=</span> <span class="p">[</span>
+                    <span class="s2">&quot;Type&quot;</span><span class="p">,</span> <span class="s2">&quot;RegistrationNumber&quot;</span><span class="p">,</span> <span class="s2">&quot;TaxStatus&quot;</span><span class="p">,</span> <span class="s2">&quot;FuelType&quot;</span>
+                <span class="p">]</span>
+                <span class="n">search_fields</span> <span class="o">=</span> <span class="p">[</span>
+                    <span class="s2">&quot;Type&quot;</span><span class="p">,</span> <span class="s2">&quot;RegistrationNumber&quot;</span><span class="p">,</span> <span class="s2">&quot;TaxStatus&quot;</span><span class="p">,</span> <span class="s2">&quot;FuelType&quot;</span>
+                <span class="p">]</span>
+                <span class="n">search_conditions</span> <span class="o">=</span> <span class="s2">&quot; OR &quot;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span>
+                    <span class="p">[</span><span class="sa">f</span><span class="s1">&#39;&quot;</span><span class="si">{</span><span class="n">field</span><span class="si">}</span><span class="s1">&quot; LIKE ?&#39;</span> <span class="k">for</span> <span class="n">field</span> <span class="ow">in</span> <span class="n">search_fields</span><span class="p">]</span>
+                <span class="p">)</span>
+                <span class="n">where_clauses</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;(</span><span class="si">{</span><span class="n">search_conditions</span><span class="si">}</span><span class="s2">)&quot;</span><span class="p">)</span>
+                <span class="n">values</span><span class="o">.</span><span class="n">extend</span><span class="p">([</span><span class="sa">f</span><span class="s2">&quot;%</span><span class="si">{</span><span class="n">search_query</span><span class="si">}</span><span class="s2">%&quot;</span><span class="p">]</span> <span class="o">*</span> <span class="nb">len</span><span class="p">(</span><span class="n">search_fields</span><span class="p">))</span>
+
+            <span class="c1"># Range Filters</span>
+            <span class="k">if</span> <span class="s2">&quot;Year From&quot;</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">filters</span> <span class="ow">and</span> <span class="s2">&quot;Year To&quot;</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">filters</span><span class="p">:</span>
+                <span class="n">add_range_filter</span><span class="p">(</span><span class="s2">&quot;Year From&quot;</span><span class="p">,</span> <span class="s2">&quot;Year To&quot;</span><span class="p">,</span> <span class="s2">&quot;ManufactureYear&quot;</span><span class="p">)</span>
+            <span class="k">if</span> <span class="p">(</span>
+                <span class="s2">&quot;Tax Due Date From&quot;</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">filters</span> <span class="ow">and</span>
+                <span class="s2">&quot;Tax Due Date To&quot;</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">filters</span>
+            <span class="p">):</span>
+                <span class="n">add_range_filter</span><span class="p">(</span>
+                    <span class="s2">&quot;Tax Due Date From&quot;</span><span class="p">,</span>
+                    <span class="s2">&quot;Tax Due Date To&quot;</span><span class="p">,</span>
+                    <span class="s2">&quot;TaxDueDate&quot;</span>
+                <span class="p">)</span>
+            <span class="k">if</span> <span class="p">(</span>
+                <span class="s2">&quot;Service Date From&quot;</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">filters</span> <span class="ow">and</span>
+                <span class="s2">&quot;Service Date To&quot;</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">filters</span>
+            <span class="p">):</span>
+                <span class="n">add_range_filter</span><span class="p">(</span>
+                    <span class="s2">&quot;Service Date From&quot;</span><span class="p">,</span> <span class="s2">&quot;Service Date To&quot;</span><span class="p">,</span> <span class="s2">&quot;ServiceDate&quot;</span>
+                <span class="p">)</span>
+
+        <span class="c1"># Dropdown Filters</span>
+            <span class="k">for</span> <span class="n">field</span><span class="p">,</span> <span class="n">widget</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">filters</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+                <span class="k">if</span> <span class="n">field</span> <span class="ow">not</span> <span class="ow">in</span> <span class="p">[</span>
+                    <span class="s2">&quot;Year From&quot;</span><span class="p">,</span> <span class="s2">&quot;Year To&quot;</span><span class="p">,</span> <span class="s2">&quot;Tax Due Date From&quot;</span><span class="p">,</span>
+                    <span class="s2">&quot;Tax Due Date To&quot;</span><span class="p">,</span> <span class="s2">&quot;Service Date From&quot;</span><span class="p">,</span> <span class="s2">&quot;Service Date To&quot;</span><span class="p">,</span>
+                    <span class="s2">&quot;Search&quot;</span><span class="p">,</span> <span class="s2">&quot;Order By&quot;</span><span class="p">,</span> <span class="s2">&quot;Order Direction&quot;</span><span class="p">,</span> <span class="s2">&quot;Order By&quot;</span><span class="p">,</span>
+                    <span class="s2">&quot;Order Direction&quot;</span>
+                <span class="p">]:</span>
+                    <span class="n">value</span> <span class="o">=</span> <span class="n">widget</span><span class="o">.</span><span class="n">get</span><span class="p">()</span>
+                    <span class="k">if</span> <span class="n">value</span> <span class="ow">and</span> <span class="n">value</span> <span class="o">!=</span> <span class="s2">&quot;All&quot;</span><span class="p">:</span>
+                        <span class="n">where_clauses</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;&quot;</span><span class="si">{</span><span class="n">SQL_MAPPINGS</span><span class="p">[</span><span class="n">field</span><span class="p">]</span><span class="si">}</span><span class="s1">&quot; = ?&#39;</span><span class="p">)</span>
+                        <span class="n">values</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">value</span><span class="p">)</span>
+
+            <span class="n">query</span> <span class="o">=</span> <span class="s2">&quot;SELECT * FROM Vehicles&quot;</span>
+            <span class="k">if</span> <span class="n">where_clauses</span><span class="p">:</span>
+                <span class="n">query</span> <span class="o">+=</span> <span class="sa">f</span><span class="s2">&quot; WHERE </span><span class="si">{</span><span class="s1">&#39; AND &#39;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">where_clauses</span><span class="p">)</span><span class="si">}</span><span class="s2">&quot;</span>
+
+            <span class="c1"># Order By</span>
+            <span class="n">order_by_column</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">filters</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;Order By&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">get</span><span class="p">()</span>
+            <span class="n">order_direction</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">filters</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;Order Direction&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">get</span><span class="p">()</span>
+
+            <span class="k">if</span> <span class="n">order_by_column</span> <span class="ow">and</span> <span class="n">order_direction</span><span class="p">:</span>
+                <span class="n">query</span> <span class="o">+=</span> <span class="p">(</span>
+                    <span class="sa">f</span><span class="s2">&quot; ORDER BY </span><span class="se">\&quot;</span><span class="si">{</span><span class="n">SQL_MAPPINGS</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">order_by_column</span><span class="p">,</span>
+<span class="w">                                                    </span><span class="n">order_by_column</span><span class="p">)</span><span class="si">}</span><span class="se">\&quot;</span><span class="s2"> &quot;</span>
+                <span class="p">)</span>
+                <span class="n">query</span> <span class="o">+=</span> <span class="p">(</span>
+                    <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">order_direction</span><span class="si">}</span><span class="s2">&quot;</span>
+                <span class="p">)</span>
+
+            <span class="nb">print</span><span class="p">(</span><span class="n">query</span><span class="p">,</span> <span class="n">values</span><span class="p">)</span>
+            <span class="k">return</span> <span class="n">query</span><span class="p">,</span> <span class="n">values</span>
+        <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+            <span class="n">logging</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Error applying filters: </span><span class="si">{</span><span class="n">e</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+            <span class="k">return</span> <span class="s2">&quot;&quot;</span><span class="p">,</span> <span class="p">[]</span></div>
+
+
+<div class="viewcode-block" id="FilterManager.handle_invalid_range">
+<a class="viewcode-back" href="../../../fleetmanagementsystem.core.html#fleetmanagementsystem.core.filtermanager.FilterManager.handle_invalid_range">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">handle_invalid_range</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">field_from</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">field_to</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Handle invalid range inputs (to be implemented in subclasses).</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">pass</span></div>
+
+
+<div class="viewcode-block" id="FilterManager.clear_filters">
+<a class="viewcode-back" href="../../../fleetmanagementsystem.core.html#fleetmanagementsystem.core.filtermanager.FilterManager.clear_filters">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">clear_filters</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Reset all filters to their default values</span>
+<span class="sd">        (to be implemented in subclasses)</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">pass</span></div>
+</div>
+
+</pre></div>
+
+          </div>
+          
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="Main">
+        <div class="sphinxsidebarwrapper">
+<h1 class="logo"><a href="../../../index.html">ECM2429DA</a></h1>
+
+
+
+
+
+
+
+
+
+<search id="searchbox" style="display: none" role="search">
+    <div class="searchformwrapper">
+    <form class="search" action="../../../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" placeholder="Search"/>
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</search>
+<script>document.getElementById('searchbox').style.display = "block"</script><h3>Navigation</h3>
+
+<div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="../../../index.html">Documentation overview</a><ul>
+  <li><a href="../../index.html">Module code</a><ul>
+  </ul></li>
+  </ul></li>
+</ul>
+</div>
+
+
+
+
+
+
+
+
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &#169;2025, 730089187.
+      
+      |
+      Powered by <a href="https://www.sphinx-doc.org/">Sphinx 8.2.1</a>
+      &amp; <a href="https://alabaster.readthedocs.io">Alabaster 1.0.0</a>
+      
+    </div>
+
+    
+
+    
+  </body>
+</html>

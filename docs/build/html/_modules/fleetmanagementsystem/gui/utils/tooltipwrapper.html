@@ -1,0 +1,353 @@
+<!DOCTYPE html>
+
+<html lang="en" data-content_root="../../../../">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>fleetmanagementsystem.gui.utils.tooltipwrapper &#8212; ECM2429DA 1.0 documentation</title>
+    <link rel="stylesheet" type="text/css" href="../../../../_static/pygments.css?v=5ecbeea2" />
+    <link rel="stylesheet" type="text/css" href="../../../../_static/basic.css?v=b08954a9" />
+    <link rel="stylesheet" type="text/css" href="../../../../_static/alabaster.css?v=27fed22d" />
+    <script src="../../../../_static/documentation_options.js?v=f2a433a1"></script>
+    <script src="../../../../_static/doctools.js?v=9bcbadda"></script>
+    <script src="../../../../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <link rel="index" title="Index" href="../../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../../search.html" />
+   
+  <link rel="stylesheet" href="../../../../_static/custom.css" type="text/css" />
+  
+
+  
+  
+
+  </head><body>
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          
+
+          <div class="body" role="main">
+            
+  <h1>Source code for fleetmanagementsystem.gui.utils.tooltipwrapper</h1><div class="highlight"><pre>
+<span></span><span class="ch">#! /usr/bin/python3</span>
+<span class="c1"># -*- coding:Utf-8 -*-</span>
+<span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">tkcalendar - System tray unread mail checker</span>
+<span class="sd">Copyright 2016-2018 Juliette Monsel &lt;j_4321@protonmail.com&gt;</span>
+
+<span class="sd">tkcalendar is free software: you can redistribute it and/or modify</span>
+<span class="sd">it under the terms of the GNU General Public License as published by</span>
+<span class="sd">the Free Software Foundation, either version 3 of the License, or</span>
+<span class="sd">(at your option) any later version.</span>
+
+<span class="sd">tkcalendar is distributed in the hope that it will be useful,</span>
+<span class="sd">but WITHOUT ANY WARRANTY; without even the implied warranty of</span>
+<span class="sd">MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the</span>
+<span class="sd">GNU General Public License for more details.</span>
+<span class="sd">You should have received a copy of the GNU General Public License</span>
+<span class="sd">along with this program.  If not, see &lt;http://www.gnu.org/licenses/&gt;.</span>
+
+
+<span class="sd">Tooltip and TooltipWrapper</span>
+<span class="sd">&quot;&quot;&quot;</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">sys</span><span class="w"> </span><span class="kn">import</span> <span class="n">platform</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">tkinter</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">tk</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">tkinter</span><span class="w"> </span><span class="kn">import</span> <span class="n">ttk</span>
+
+
+<div class="viewcode-block" id="Tooltip">
+<a class="viewcode-back" href="../../../../fleetmanagementsystem.gui.utils.html#fleetmanagementsystem.gui.utils.tooltipwrapper.Tooltip">[docs]</a>
+<span class="k">class</span><span class="w"> </span><span class="nc">Tooltip</span><span class="p">(</span><span class="n">tk</span><span class="o">.</span><span class="n">Toplevel</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Tooltip widget displays a ttk.Label in a Toplevel without window decoration.&quot;&quot;&quot;</span>
+
+    <span class="n">_initialized</span> <span class="o">=</span> <span class="kc">False</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">parent</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Construct a Tooltip with parent master.</span>
+
+<span class="sd">        Keyword Options</span>
+<span class="sd">        ---------------</span>
+
+<span class="sd">        ttk.Label options,</span>
+
+<span class="sd">        alpha: float. Tooltip opacity between 0 and 1.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">tk</span><span class="o">.</span><span class="n">Toplevel</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">parent</span><span class="p">,</span> <span class="n">padx</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">pady</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">transient</span><span class="p">(</span><span class="n">parent</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">overrideredirect</span><span class="p">(</span><span class="kc">True</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">update_idletasks</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">attributes</span><span class="p">(</span><span class="s1">&#39;-alpha&#39;</span><span class="p">,</span> <span class="n">kwargs</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="s1">&#39;alpha&#39;</span><span class="p">,</span> <span class="mf">0.8</span><span class="p">))</span>
+        <span class="k">if</span> <span class="n">platform</span> <span class="o">==</span> <span class="s1">&#39;linux&#39;</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">attributes</span><span class="p">(</span><span class="s1">&#39;-type&#39;</span><span class="p">,</span> <span class="s1">&#39;tooltip&#39;</span><span class="p">)</span>
+
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">Tooltip</span><span class="o">.</span><span class="n">_initialized</span><span class="p">:</span>
+            <span class="c1"># default tooltip style</span>
+            <span class="n">style</span> <span class="o">=</span> <span class="n">ttk</span><span class="o">.</span><span class="n">Style</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span>
+            <span class="n">style</span><span class="o">.</span><span class="n">configure</span><span class="p">(</span><span class="s1">&#39;tooltip.TLabel&#39;</span><span class="p">,</span>
+                            <span class="n">foreground</span><span class="o">=</span><span class="s1">&#39;gray90&#39;</span><span class="p">,</span>
+                            <span class="n">background</span><span class="o">=</span><span class="s1">&#39;black&#39;</span><span class="p">,</span>
+                            <span class="n">font</span><span class="o">=</span><span class="s1">&#39;TkDefaultFont 9 bold&#39;</span><span class="p">)</span>
+            <span class="n">Tooltip</span><span class="o">.</span><span class="n">_initialized</span> <span class="o">=</span> <span class="kc">True</span>
+
+        <span class="c1"># default options</span>
+        <span class="n">kw</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;compound&#39;</span><span class="p">:</span> <span class="s1">&#39;left&#39;</span><span class="p">,</span> <span class="s1">&#39;style&#39;</span><span class="p">:</span> <span class="s1">&#39;tooltip.TLabel&#39;</span><span class="p">,</span> <span class="s1">&#39;padding&#39;</span><span class="p">:</span> <span class="mi">4</span><span class="p">}</span>
+        <span class="c1"># update with given options</span>
+        <span class="n">kw</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="n">kwargs</span><span class="p">)</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">label</span> <span class="o">=</span> <span class="n">ttk</span><span class="o">.</span><span class="n">Label</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">**</span><span class="n">kw</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">label</span><span class="o">.</span><span class="n">pack</span><span class="p">(</span><span class="n">fill</span><span class="o">=</span><span class="s1">&#39;both&#39;</span><span class="p">)</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">config</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">configure</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="fm">__setitem__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">key</span><span class="p">,</span> <span class="n">value</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">configure</span><span class="p">(</span><span class="o">**</span><span class="p">{</span><span class="n">key</span><span class="p">:</span> <span class="n">value</span><span class="p">})</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="fm">__getitem__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">key</span><span class="p">):</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">cget</span><span class="p">(</span><span class="n">key</span><span class="p">)</span>
+
+<div class="viewcode-block" id="Tooltip.cget">
+<a class="viewcode-back" href="../../../../fleetmanagementsystem.gui.utils.html#fleetmanagementsystem.gui.utils.tooltipwrapper.Tooltip.cget">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">cget</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">key</span><span class="p">):</span>
+        <span class="k">if</span> <span class="n">key</span> <span class="o">==</span> <span class="s1">&#39;alpha&#39;</span><span class="p">:</span>
+            <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">attributes</span><span class="p">(</span><span class="s1">&#39;-alpha&#39;</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">label</span><span class="o">.</span><span class="n">cget</span><span class="p">(</span><span class="n">key</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="Tooltip.configure">
+<a class="viewcode-back" href="../../../../fleetmanagementsystem.gui.utils.html#fleetmanagementsystem.gui.utils.tooltipwrapper.Tooltip.configure">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">configure</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+        <span class="k">if</span> <span class="s1">&#39;alpha&#39;</span> <span class="ow">in</span> <span class="n">kwargs</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">attributes</span><span class="p">(</span><span class="s1">&#39;-alpha&#39;</span><span class="p">,</span> <span class="n">kwargs</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="s1">&#39;alpha&#39;</span><span class="p">))</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">label</span><span class="o">.</span><span class="n">configure</span><span class="p">(</span><span class="o">**</span><span class="n">kwargs</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="Tooltip.keys">
+<a class="viewcode-back" href="../../../../fleetmanagementsystem.gui.utils.html#fleetmanagementsystem.gui.utils.tooltipwrapper.Tooltip.keys">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">keys</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="n">keys</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">label</span><span class="o">.</span><span class="n">keys</span><span class="p">())</span>
+        <span class="n">keys</span><span class="o">.</span><span class="n">insert</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="s1">&#39;alpha&#39;</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">keys</span></div>
+</div>
+
+
+
+<div class="viewcode-block" id="TooltipWrapper">
+<a class="viewcode-back" href="../../../../fleetmanagementsystem.gui.utils.html#fleetmanagementsystem.gui.utils.tooltipwrapper.TooltipWrapper">[docs]</a>
+<span class="k">class</span><span class="w"> </span><span class="nc">TooltipWrapper</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Tooltip wrapper widget handle tooltip display when the mouse hovers over</span>
+<span class="sd">    widgets.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">master</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Construct a Tooltip wrapper with parent master.</span>
+
+<span class="sd">        Keyword Options</span>
+<span class="sd">        ---------------</span>
+
+<span class="sd">        Tooltip options,</span>
+
+<span class="sd">        delay: time (ms) the mouse has to stay still over the widget before</span>
+<span class="sd">        the Tooltip is displayed.</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">widgets</span> <span class="o">=</span> <span class="p">{}</span>  <span class="c1"># {widget name: tooltip text, ...}</span>
+        <span class="c1"># keep track of binding ids to cleanly remove them</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">bind_enter_ids</span> <span class="o">=</span> <span class="p">{}</span>  <span class="c1"># {widget name: bind id, ...}</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">bind_leave_ids</span> <span class="o">=</span> <span class="p">{}</span>  <span class="c1"># {widget name: bind id, ...}</span>
+
+        <span class="c1"># time delay before displaying the tooltip</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_delay</span> <span class="o">=</span> <span class="mi">2000</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_timer_id</span> <span class="o">=</span> <span class="kc">None</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">tooltip</span> <span class="o">=</span> <span class="n">Tooltip</span><span class="p">(</span><span class="n">master</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">tooltip</span><span class="o">.</span><span class="n">withdraw</span><span class="p">()</span>
+        <span class="c1"># widget currently under the mouse if among wrapped widgets:</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">current_widget</span> <span class="o">=</span> <span class="kc">None</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">configure</span><span class="p">(</span><span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">config</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">configure</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">tooltip</span><span class="o">.</span><span class="n">bind</span><span class="p">(</span><span class="s1">&#39;&lt;Leave&gt;&#39;</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_on_leave_tooltip</span><span class="p">)</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="fm">__setitem__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">key</span><span class="p">,</span> <span class="n">value</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">configure</span><span class="p">(</span><span class="o">**</span><span class="p">{</span><span class="n">key</span><span class="p">:</span> <span class="n">value</span><span class="p">})</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="fm">__getitem__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">key</span><span class="p">):</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">cget</span><span class="p">(</span><span class="n">key</span><span class="p">)</span>
+
+<div class="viewcode-block" id="TooltipWrapper.cget">
+<a class="viewcode-back" href="../../../../fleetmanagementsystem.gui.utils.html#fleetmanagementsystem.gui.utils.tooltipwrapper.TooltipWrapper.cget">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">cget</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">key</span><span class="p">):</span>
+        <span class="k">if</span> <span class="n">key</span> <span class="o">==</span> <span class="s1">&#39;delay&#39;</span><span class="p">:</span>
+            <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_delay</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">tooltip</span><span class="o">.</span><span class="n">cget</span><span class="p">(</span><span class="n">key</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="TooltipWrapper.configure">
+<a class="viewcode-back" href="../../../../fleetmanagementsystem.gui.utils.html#fleetmanagementsystem.gui.utils.tooltipwrapper.TooltipWrapper.configure">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">configure</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_delay</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">kwargs</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="s1">&#39;delay&#39;</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_delay</span><span class="p">))</span>
+        <span class="k">except</span> <span class="ne">ValueError</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s1">&#39;expected integer for the delay option.&#39;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">tooltip</span><span class="o">.</span><span class="n">configure</span><span class="p">(</span><span class="o">**</span><span class="n">kwargs</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="TooltipWrapper.add_tooltip">
+<a class="viewcode-back" href="../../../../fleetmanagementsystem.gui.utils.html#fleetmanagementsystem.gui.utils.tooltipwrapper.TooltipWrapper.add_tooltip">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">add_tooltip</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">widget</span><span class="p">,</span> <span class="n">text</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Add new widget to wrapper.&quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">widgets</span><span class="p">[</span><span class="nb">str</span><span class="p">(</span><span class="n">widget</span><span class="p">)]</span> <span class="o">=</span> <span class="n">text</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">bind_enter_ids</span><span class="p">[</span><span class="nb">str</span><span class="p">(</span><span class="n">widget</span><span class="p">)]</span> <span class="o">=</span> <span class="n">widget</span><span class="o">.</span><span class="n">bind</span><span class="p">(</span><span class="s1">&#39;&lt;Enter&gt;&#39;</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_on_enter</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">bind_leave_ids</span><span class="p">[</span><span class="nb">str</span><span class="p">(</span><span class="n">widget</span><span class="p">)]</span> <span class="o">=</span> <span class="n">widget</span><span class="o">.</span><span class="n">bind</span><span class="p">(</span><span class="s1">&#39;&lt;Leave&gt;&#39;</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_on_leave</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="TooltipWrapper.set_tooltip_text">
+<a class="viewcode-back" href="../../../../fleetmanagementsystem.gui.utils.html#fleetmanagementsystem.gui.utils.tooltipwrapper.TooltipWrapper.set_tooltip_text">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">set_tooltip_text</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">widget</span><span class="p">,</span> <span class="n">text</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Change tooltip text for given widget.&quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">widgets</span><span class="p">[</span><span class="nb">str</span><span class="p">(</span><span class="n">widget</span><span class="p">)]</span> <span class="o">=</span> <span class="n">text</span></div>
+
+
+<div class="viewcode-block" id="TooltipWrapper.remove_all">
+<a class="viewcode-back" href="../../../../fleetmanagementsystem.gui.utils.html#fleetmanagementsystem.gui.utils.tooltipwrapper.TooltipWrapper.remove_all">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">remove_all</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Remove all tooltips.&quot;&quot;&quot;</span>
+        <span class="k">for</span> <span class="n">name</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">widgets</span><span class="p">:</span>
+            <span class="n">widget</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">tooltip</span><span class="o">.</span><span class="n">nametowidget</span><span class="p">(</span><span class="n">name</span><span class="p">)</span>
+            <span class="n">widget</span><span class="o">.</span><span class="n">unbind</span><span class="p">(</span><span class="s1">&#39;&lt;Enter&gt;&#39;</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">bind_enter_ids</span><span class="p">[</span><span class="n">name</span><span class="p">])</span>
+            <span class="n">widget</span><span class="o">.</span><span class="n">unbind</span><span class="p">(</span><span class="s1">&#39;&lt;Leave&gt;&#39;</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">bind_leave_ids</span><span class="p">[</span><span class="n">name</span><span class="p">])</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">widgets</span><span class="o">.</span><span class="n">clear</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">bind_enter_ids</span><span class="o">.</span><span class="n">clear</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">bind_leave_ids</span><span class="o">.</span><span class="n">clear</span><span class="p">()</span></div>
+
+
+<div class="viewcode-block" id="TooltipWrapper.remove_tooltip">
+<a class="viewcode-back" href="../../../../fleetmanagementsystem.gui.utils.html#fleetmanagementsystem.gui.utils.tooltipwrapper.TooltipWrapper.remove_tooltip">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">remove_tooltip</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">widget</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Remove widget from wrapper.&quot;&quot;&quot;</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="n">name</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="n">widget</span><span class="p">)</span>
+            <span class="k">del</span> <span class="bp">self</span><span class="o">.</span><span class="n">widgets</span><span class="p">[</span><span class="n">name</span><span class="p">]</span>
+            <span class="n">widget</span><span class="o">.</span><span class="n">unbind</span><span class="p">(</span><span class="s1">&#39;&lt;Enter&gt;&#39;</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">bind_enter_ids</span><span class="p">[</span><span class="n">name</span><span class="p">])</span>
+            <span class="n">widget</span><span class="o">.</span><span class="n">unbind</span><span class="p">(</span><span class="s1">&#39;&lt;Leave&gt;&#39;</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">bind_leave_ids</span><span class="p">[</span><span class="n">name</span><span class="p">])</span>
+            <span class="k">del</span> <span class="bp">self</span><span class="o">.</span><span class="n">bind_enter_ids</span><span class="p">[</span><span class="n">name</span><span class="p">]</span>
+            <span class="k">del</span> <span class="bp">self</span><span class="o">.</span><span class="n">bind_leave_ids</span><span class="p">[</span><span class="n">name</span><span class="p">]</span>
+        <span class="k">except</span> <span class="ne">KeyError</span><span class="p">:</span>
+            <span class="k">pass</span></div>
+
+
+    <span class="k">def</span><span class="w"> </span><span class="nf">_on_enter</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">event</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Change current widget and launch timer to display tooltip.&quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">tooltip</span><span class="o">.</span><span class="n">winfo_ismapped</span><span class="p">():</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_timer_id</span> <span class="o">=</span> <span class="n">event</span><span class="o">.</span><span class="n">widget</span><span class="o">.</span><span class="n">after</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_delay</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">display_tooltip</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">current_widget</span> <span class="o">=</span> <span class="n">event</span><span class="o">.</span><span class="n">widget</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="nf">_on_leave</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">event</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Hide tooltip if visible or cancel tooltip display.&quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">tooltip</span><span class="o">.</span><span class="n">winfo_ismapped</span><span class="p">():</span>
+            <span class="n">x</span><span class="p">,</span> <span class="n">y</span> <span class="o">=</span> <span class="n">event</span><span class="o">.</span><span class="n">widget</span><span class="o">.</span><span class="n">winfo_pointerxy</span><span class="p">()</span>
+            <span class="k">if</span> <span class="ow">not</span> <span class="n">event</span><span class="o">.</span><span class="n">widget</span><span class="o">.</span><span class="n">winfo_containing</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">)</span> <span class="ow">in</span> <span class="p">[</span><span class="n">event</span><span class="o">.</span><span class="n">widget</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">tooltip</span><span class="p">]:</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">tooltip</span><span class="o">.</span><span class="n">withdraw</span><span class="p">()</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">try</span><span class="p">:</span>
+                <span class="n">event</span><span class="o">.</span><span class="n">widget</span><span class="o">.</span><span class="n">after_cancel</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_timer_id</span><span class="p">)</span>
+            <span class="k">except</span> <span class="ne">ValueError</span><span class="p">:</span>
+                <span class="k">pass</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">current_widget</span> <span class="o">=</span> <span class="kc">None</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="nf">_on_leave_tooltip</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">event</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Hide tooltip.&quot;&quot;&quot;</span>
+        <span class="n">x</span><span class="p">,</span> <span class="n">y</span> <span class="o">=</span> <span class="n">event</span><span class="o">.</span><span class="n">widget</span><span class="o">.</span><span class="n">winfo_pointerxy</span><span class="p">()</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">event</span><span class="o">.</span><span class="n">widget</span><span class="o">.</span><span class="n">winfo_containing</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">)</span> <span class="ow">in</span> <span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">current_widget</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">tooltip</span><span class="p">]:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">tooltip</span><span class="o">.</span><span class="n">withdraw</span><span class="p">()</span>
+
+<div class="viewcode-block" id="TooltipWrapper.display_tooltip">
+<a class="viewcode-back" href="../../../../fleetmanagementsystem.gui.utils.html#fleetmanagementsystem.gui.utils.tooltipwrapper.TooltipWrapper.display_tooltip">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">display_tooltip</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Display tooltip with text corresponding to current widget.&quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">current_widget</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="k">return</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="n">disabled</span> <span class="o">=</span> <span class="s2">&quot;disabled&quot;</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">current_widget</span><span class="o">.</span><span class="n">state</span><span class="p">()</span>
+        <span class="k">except</span> <span class="ne">AttributeError</span><span class="p">:</span>
+            <span class="n">disabled</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">current_widget</span><span class="o">.</span><span class="n">cget</span><span class="p">(</span><span class="s1">&#39;state&#39;</span><span class="p">)</span> <span class="o">==</span> <span class="s2">&quot;disabled&quot;</span>
+
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">disabled</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">tooltip</span><span class="p">[</span><span class="s1">&#39;text&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">widgets</span><span class="p">[</span><span class="nb">str</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">current_widget</span><span class="p">)]</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">tooltip</span><span class="o">.</span><span class="n">deiconify</span><span class="p">()</span>
+            <span class="n">x</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">current_widget</span><span class="o">.</span><span class="n">winfo_pointerx</span><span class="p">()</span> <span class="o">+</span> <span class="mi">14</span>
+            <span class="n">y</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">current_widget</span><span class="o">.</span><span class="n">winfo_rooty</span><span class="p">()</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">current_widget</span><span class="o">.</span><span class="n">winfo_height</span><span class="p">()</span> <span class="o">+</span> <span class="mi">2</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">tooltip</span><span class="o">.</span><span class="n">geometry</span><span class="p">(</span><span class="s1">&#39;+</span><span class="si">%i</span><span class="s1">+</span><span class="si">%i</span><span class="s1">&#39;</span> <span class="o">%</span> <span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">))</span></div>
+</div>
+
+</pre></div>
+
+          </div>
+          
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="Main">
+        <div class="sphinxsidebarwrapper">
+<h1 class="logo"><a href="../../../../index.html">ECM2429DA</a></h1>
+
+
+
+
+
+
+
+
+
+<search id="searchbox" style="display: none" role="search">
+    <div class="searchformwrapper">
+    <form class="search" action="../../../../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" placeholder="Search"/>
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</search>
+<script>document.getElementById('searchbox').style.display = "block"</script><h3>Navigation</h3>
+
+<div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="../../../../index.html">Documentation overview</a><ul>
+  <li><a href="../../../index.html">Module code</a><ul>
+  </ul></li>
+  </ul></li>
+</ul>
+</div>
+
+
+
+
+
+
+
+
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &#169;2025, 730089187.
+      
+      |
+      Powered by <a href="https://www.sphinx-doc.org/">Sphinx 8.2.1</a>
+      &amp; <a href="https://alabaster.readthedocs.io">Alabaster 1.0.0</a>
+      
+    </div>
+
+    
+
+    
+  </body>
+</html>

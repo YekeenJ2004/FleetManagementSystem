@@ -1,0 +1,251 @@
+<!DOCTYPE html>
+
+<html lang="en" data-content_root="../../../../">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>fleetmanagementsystem.tests.core.test_constants &#8212; ECM2429DA 1.0 documentation</title>
+    <link rel="stylesheet" type="text/css" href="../../../../_static/pygments.css?v=5ecbeea2" />
+    <link rel="stylesheet" type="text/css" href="../../../../_static/basic.css?v=b08954a9" />
+    <link rel="stylesheet" type="text/css" href="../../../../_static/alabaster.css?v=27fed22d" />
+    <script src="../../../../_static/documentation_options.js?v=f2a433a1"></script>
+    <script src="../../../../_static/doctools.js?v=9bcbadda"></script>
+    <script src="../../../../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <link rel="index" title="Index" href="../../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../../search.html" />
+   
+  <link rel="stylesheet" href="../../../../_static/custom.css" type="text/css" />
+  
+
+  
+  
+
+  </head><body>
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          
+
+          <div class="body" role="main">
+            
+  <h1>Source code for fleetmanagementsystem.tests.core.test_constants</h1><div class="highlight"><pre>
+<span></span><span class="kn">import</span><span class="w"> </span><span class="nn">pytest</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">fleetmanagementsystem.core.constants</span><span class="w"> </span><span class="kn">import</span> <span class="p">(</span>
+    <span class="n">VEHICLE_TYPES</span><span class="p">,</span> <span class="n">TAX_TYPES</span><span class="p">,</span> <span class="n">FUEL_TYPES</span><span class="p">,</span> <span class="n">TAX_STATUS</span><span class="p">,</span> <span class="n">SERVICE_STATUS</span><span class="p">,</span>
+    <span class="n">COLUMN_NAMES</span><span class="p">,</span> <span class="n">SQL_MAPPINGS</span><span class="p">,</span> <span class="n">VEHICLE_POPUP_FIELDS</span><span class="p">,</span>
+    <span class="n">VEHICLE_CLASS_MAPPINGS</span><span class="p">,</span> <span class="n">FILTER_RANGE_FIELDS</span><span class="p">,</span> <span class="n">FILTER_OPTIONS</span><span class="p">,</span>
+    <span class="n">FIELD_OPTIONS</span>
+<span class="p">)</span>
+
+
+<div class="viewcode-block" id="TestConstants">
+<a class="viewcode-back" href="../../../../fleetmanagementsystem.tests.core.html#fleetmanagementsystem.tests.core.test_constants.TestConstants">[docs]</a>
+<span class="k">class</span><span class="w"> </span><span class="nc">TestConstants</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Test suite for validating the constants module.&quot;&quot;&quot;</span>
+
+<div class="viewcode-block" id="TestConstants.setup">
+<a class="viewcode-back" href="../../../../fleetmanagementsystem.tests.core.html#fleetmanagementsystem.tests.core.test_constants.TestConstants.setup">[docs]</a>
+    <span class="nd">@pytest</span><span class="o">.</span><span class="n">fixture</span><span class="p">(</span><span class="n">autouse</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">setup</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Setup any necessary resources for the tests.&quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">expected_vehicle_types</span> <span class="o">=</span> <span class="p">[</span>
+            <span class="s2">&quot;Sedan&quot;</span><span class="p">,</span> <span class="s2">&quot;Hatchback&quot;</span><span class="p">,</span> <span class="s2">&quot;SUV&quot;</span><span class="p">,</span> <span class="s2">&quot;Coupe&quot;</span><span class="p">,</span> <span class="s2">&quot;Convertible&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;Minivan&quot;</span><span class="p">,</span> <span class="s2">&quot;Pickup Truck&quot;</span><span class="p">,</span> <span class="s2">&quot;Cargo Van&quot;</span><span class="p">,</span> <span class="s2">&quot;Box Truck&quot;</span>
+        <span class="p">]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">expected_tax_types</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;Taxed&quot;</span><span class="p">,</span> <span class="s2">&quot;Tax Exempt&quot;</span><span class="p">,</span> <span class="s2">&quot;SORN&quot;</span><span class="p">,</span> <span class="s2">&quot;Untaxed&quot;</span><span class="p">]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">expected_fuel_types</span> <span class="o">=</span> <span class="p">[</span>
+            <span class="s2">&quot;Diesel&quot;</span><span class="p">,</span> <span class="s2">&quot;Petrol&quot;</span><span class="p">,</span> <span class="s2">&quot;Electricity&quot;</span><span class="p">,</span> <span class="s2">&quot;Hybrid&quot;</span>
+        <span class="p">]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">expected_tax_status</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;Paid&quot;</span><span class="p">,</span> <span class="s2">&quot;Unpaid&quot;</span><span class="p">]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">expected_service_status</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;Done&quot;</span><span class="p">,</span> <span class="s2">&quot;Pending&quot;</span><span class="p">]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">expected_column_names</span> <span class="o">=</span> <span class="p">[</span>
+            <span class="s2">&quot;Select&quot;</span><span class="p">,</span> <span class="s2">&quot;Type&quot;</span><span class="p">,</span> <span class="s2">&quot;Registration Number&quot;</span><span class="p">,</span> <span class="s2">&quot;Tax Status&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;Tax Due Date&quot;</span><span class="p">,</span> <span class="s2">&quot;Tax Type&quot;</span><span class="p">,</span> <span class="s2">&quot;Service Due Date&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;Service Status&quot;</span><span class="p">,</span> <span class="s2">&quot;Fuel Type&quot;</span><span class="p">,</span> <span class="s2">&quot;Manufacture Year&quot;</span>
+        <span class="p">]</span></div>
+
+
+<div class="viewcode-block" id="TestConstants.test_vehicle_types">
+<a class="viewcode-back" href="../../../../fleetmanagementsystem.tests.core.html#fleetmanagementsystem.tests.core.test_constants.TestConstants.test_vehicle_types">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">test_vehicle_types</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Test if VEHICLE_TYPES contains expected vehicle types.&quot;&quot;&quot;</span>
+        <span class="k">assert</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">VEHICLE_TYPES</span><span class="p">,</span> <span class="nb">list</span><span class="p">)</span>
+        <span class="k">for</span> <span class="n">vehicle</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">expected_vehicle_types</span><span class="p">:</span>
+            <span class="k">assert</span> <span class="n">vehicle</span> <span class="ow">in</span> <span class="n">VEHICLE_TYPES</span>
+        <span class="k">assert</span> <span class="nb">len</span><span class="p">(</span><span class="n">VEHICLE_TYPES</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">10</span></div>
+
+
+<div class="viewcode-block" id="TestConstants.test_tax_types">
+<a class="viewcode-back" href="../../../../fleetmanagementsystem.tests.core.html#fleetmanagementsystem.tests.core.test_constants.TestConstants.test_tax_types">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">test_tax_types</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Ensure tax types are correctly defined.&quot;&quot;&quot;</span>
+        <span class="k">assert</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">TAX_TYPES</span><span class="p">,</span> <span class="nb">list</span><span class="p">)</span>
+        <span class="k">for</span> <span class="n">tax</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">expected_tax_types</span><span class="p">:</span>
+            <span class="k">assert</span> <span class="n">tax</span> <span class="ow">in</span> <span class="n">TAX_TYPES</span>
+        <span class="k">assert</span> <span class="nb">len</span><span class="p">(</span><span class="n">TAX_TYPES</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">3</span></div>
+
+
+<div class="viewcode-block" id="TestConstants.test_fuel_types">
+<a class="viewcode-back" href="../../../../fleetmanagementsystem.tests.core.html#fleetmanagementsystem.tests.core.test_constants.TestConstants.test_fuel_types">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">test_fuel_types</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Verify fuel types contain expected values.&quot;&quot;&quot;</span>
+        <span class="k">assert</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">FUEL_TYPES</span><span class="p">,</span> <span class="nb">list</span><span class="p">)</span>
+        <span class="k">for</span> <span class="n">fuel</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">expected_fuel_types</span><span class="p">:</span>
+            <span class="k">assert</span> <span class="n">fuel</span> <span class="ow">in</span> <span class="n">FUEL_TYPES</span>
+        <span class="k">assert</span> <span class="nb">len</span><span class="p">(</span><span class="n">FUEL_TYPES</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">3</span></div>
+
+
+<div class="viewcode-block" id="TestConstants.test_tax_status">
+<a class="viewcode-back" href="../../../../fleetmanagementsystem.tests.core.html#fleetmanagementsystem.tests.core.test_constants.TestConstants.test_tax_status">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">test_tax_status</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Check that tax status contains only valid options.&quot;&quot;&quot;</span>
+        <span class="k">assert</span> <span class="n">TAX_STATUS</span> <span class="o">==</span> <span class="bp">self</span><span class="o">.</span><span class="n">expected_tax_status</span></div>
+
+
+<div class="viewcode-block" id="TestConstants.test_service_status">
+<a class="viewcode-back" href="../../../../fleetmanagementsystem.tests.core.html#fleetmanagementsystem.tests.core.test_constants.TestConstants.test_service_status">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">test_service_status</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Check service status options.&quot;&quot;&quot;</span>
+        <span class="k">assert</span> <span class="n">SERVICE_STATUS</span> <span class="o">==</span> <span class="bp">self</span><span class="o">.</span><span class="n">expected_service_status</span></div>
+
+
+<div class="viewcode-block" id="TestConstants.test_column_names">
+<a class="viewcode-back" href="../../../../fleetmanagementsystem.tests.core.html#fleetmanagementsystem.tests.core.test_constants.TestConstants.test_column_names">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">test_column_names</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Ensure column names are defined correctly.&quot;&quot;&quot;</span>
+        <span class="k">assert</span> <span class="n">COLUMN_NAMES</span> <span class="o">==</span> <span class="bp">self</span><span class="o">.</span><span class="n">expected_column_names</span></div>
+
+
+<div class="viewcode-block" id="TestConstants.test_sql_mappings">
+<a class="viewcode-back" href="../../../../fleetmanagementsystem.tests.core.html#fleetmanagementsystem.tests.core.test_constants.TestConstants.test_sql_mappings">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">test_sql_mappings</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Ensure SQL mappings correctly map fields to database column</span>
+<span class="sd">        names.&quot;&quot;&quot;</span>
+        <span class="k">assert</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">SQL_MAPPINGS</span><span class="p">,</span> <span class="nb">dict</span><span class="p">)</span>
+        <span class="k">assert</span> <span class="n">SQL_MAPPINGS</span><span class="p">[</span><span class="s2">&quot;Type&quot;</span><span class="p">]</span> <span class="o">==</span> <span class="s2">&quot;Type&quot;</span>
+        <span class="k">assert</span> <span class="n">SQL_MAPPINGS</span><span class="p">[</span><span class="s2">&quot;Tax Status&quot;</span><span class="p">]</span> <span class="o">==</span> <span class="s2">&quot;TaxStatus&quot;</span>
+        <span class="k">assert</span> <span class="s2">&quot;Fuel Type&quot;</span> <span class="ow">in</span> <span class="n">SQL_MAPPINGS</span>
+        <span class="k">assert</span> <span class="nb">len</span><span class="p">(</span><span class="n">SQL_MAPPINGS</span><span class="p">)</span> <span class="o">==</span> <span class="mi">9</span></div>
+
+
+<div class="viewcode-block" id="TestConstants.test_vehicle_popup_fields">
+<a class="viewcode-back" href="../../../../fleetmanagementsystem.tests.core.html#fleetmanagementsystem.tests.core.test_constants.TestConstants.test_vehicle_popup_fields">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">test_vehicle_popup_fields</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Check that vehicle popup fields define valid input fields.&quot;&quot;&quot;</span>
+        <span class="k">assert</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">VEHICLE_POPUP_FIELDS</span><span class="p">,</span> <span class="nb">list</span><span class="p">)</span>
+
+        <span class="k">for</span> <span class="n">label</span><span class="p">,</span> <span class="n">widget_type</span><span class="p">,</span> <span class="n">_</span> <span class="ow">in</span> <span class="n">VEHICLE_POPUP_FIELDS</span><span class="p">:</span>
+            <span class="k">assert</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">label</span><span class="p">,</span> <span class="nb">str</span><span class="p">)</span>
+            <span class="k">assert</span> <span class="nb">callable</span><span class="p">(</span><span class="n">widget_type</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="TestConstants.test_vehicle_class_mappings">
+<a class="viewcode-back" href="../../../../fleetmanagementsystem.tests.core.html#fleetmanagementsystem.tests.core.test_constants.TestConstants.test_vehicle_class_mappings">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">test_vehicle_class_mappings</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Ensure vehicle class mappings correctly map fields to class</span>
+<span class="sd">        attributes.&quot;&quot;&quot;</span>
+        <span class="k">assert</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">VEHICLE_CLASS_MAPPINGS</span><span class="p">,</span> <span class="nb">dict</span><span class="p">)</span>
+        <span class="k">assert</span> <span class="n">VEHICLE_CLASS_MAPPINGS</span><span class="p">[</span><span class="s2">&quot;Type&quot;</span><span class="p">]</span> <span class="o">==</span> <span class="s2">&quot;vehicle_type&quot;</span>
+        <span class="k">assert</span> <span class="n">VEHICLE_CLASS_MAPPINGS</span><span class="p">[</span><span class="s2">&quot;RegistrationNumber&quot;</span><span class="p">]</span> <span class="o">==</span> <span class="s2">&quot;reg_number&quot;</span>
+        <span class="k">assert</span> <span class="nb">len</span><span class="p">(</span><span class="n">VEHICLE_CLASS_MAPPINGS</span><span class="p">)</span> <span class="o">==</span> <span class="mi">9</span></div>
+
+
+<div class="viewcode-block" id="TestConstants.test_filter_range_fields">
+<a class="viewcode-back" href="../../../../fleetmanagementsystem.tests.core.html#fleetmanagementsystem.tests.core.test_constants.TestConstants.test_filter_range_fields">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">test_filter_range_fields</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Ensure filter range fields are correctly structured.&quot;&quot;&quot;</span>
+        <span class="k">assert</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">FILTER_RANGE_FIELDS</span><span class="p">,</span> <span class="nb">list</span><span class="p">)</span>
+        <span class="k">for</span> <span class="n">field</span> <span class="ow">in</span> <span class="n">FILTER_RANGE_FIELDS</span><span class="p">:</span>
+            <span class="k">assert</span> <span class="nb">len</span><span class="p">(</span><span class="n">field</span><span class="p">)</span> <span class="o">==</span> <span class="mi">4</span>
+            <span class="k">assert</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">field</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="nb">str</span><span class="p">)</span>
+            <span class="k">assert</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">field</span><span class="p">[</span><span class="mi">2</span><span class="p">],</span> <span class="nb">int</span><span class="p">)</span>
+            <span class="k">assert</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">field</span><span class="p">[</span><span class="mi">3</span><span class="p">],</span> <span class="nb">int</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="TestConstants.test_filter_options">
+<a class="viewcode-back" href="../../../../fleetmanagementsystem.tests.core.html#fleetmanagementsystem.tests.core.test_constants.TestConstants.test_filter_options">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">test_filter_options</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Ensure filter options contain expected values.&quot;&quot;&quot;</span>
+        <span class="k">assert</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">FILTER_OPTIONS</span><span class="p">,</span> <span class="nb">dict</span><span class="p">)</span>
+        <span class="k">assert</span> <span class="s2">&quot;Type&quot;</span> <span class="ow">in</span> <span class="n">FILTER_OPTIONS</span>
+        <span class="k">assert</span> <span class="s2">&quot;All&quot;</span> <span class="ow">in</span> <span class="n">FILTER_OPTIONS</span><span class="p">[</span><span class="s2">&quot;Type&quot;</span><span class="p">]</span>
+        <span class="k">assert</span> <span class="s2">&quot;ASC&quot;</span> <span class="ow">in</span> <span class="n">FILTER_OPTIONS</span><span class="p">[</span><span class="s2">&quot;Order Direction&quot;</span><span class="p">]</span>
+        <span class="k">assert</span> <span class="s2">&quot;DESC&quot;</span> <span class="ow">in</span> <span class="n">FILTER_OPTIONS</span><span class="p">[</span><span class="s2">&quot;Order Direction&quot;</span><span class="p">]</span></div>
+
+
+<div class="viewcode-block" id="TestConstants.test_field_options">
+<a class="viewcode-back" href="../../../../fleetmanagementsystem.tests.core.html#fleetmanagementsystem.tests.core.test_constants.TestConstants.test_field_options">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">test_field_options</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Ensure field options are structured properly.&quot;&quot;&quot;</span>
+        <span class="k">assert</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">FIELD_OPTIONS</span><span class="p">,</span> <span class="nb">dict</span><span class="p">)</span>
+        <span class="k">assert</span> <span class="s2">&quot;Type&quot;</span> <span class="ow">in</span> <span class="n">FIELD_OPTIONS</span>
+        <span class="k">assert</span> <span class="s2">&quot;Tax Type&quot;</span> <span class="ow">in</span> <span class="n">FIELD_OPTIONS</span>
+        <span class="k">assert</span> <span class="s2">&quot;Fuel Type&quot;</span> <span class="ow">in</span> <span class="n">FIELD_OPTIONS</span>
+        <span class="k">assert</span> <span class="s2">&quot;Diesel&quot;</span> <span class="ow">in</span> <span class="n">FIELD_OPTIONS</span><span class="p">[</span><span class="s2">&quot;Fuel Type&quot;</span><span class="p">]</span></div>
+</div>
+
+</pre></div>
+
+          </div>
+          
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="Main">
+        <div class="sphinxsidebarwrapper">
+<h1 class="logo"><a href="../../../../index.html">ECM2429DA</a></h1>
+
+
+
+
+
+
+
+
+
+<search id="searchbox" style="display: none" role="search">
+    <div class="searchformwrapper">
+    <form class="search" action="../../../../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" placeholder="Search"/>
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</search>
+<script>document.getElementById('searchbox').style.display = "block"</script><h3>Navigation</h3>
+
+<div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="../../../../index.html">Documentation overview</a><ul>
+  <li><a href="../../../index.html">Module code</a><ul>
+  </ul></li>
+  </ul></li>
+</ul>
+</div>
+
+
+
+
+
+
+
+
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &#169;2025, 730089187.
+      
+      |
+      Powered by <a href="https://www.sphinx-doc.org/">Sphinx 8.2.1</a>
+      &amp; <a href="https://alabaster.readthedocs.io">Alabaster 1.0.0</a>
+      
+    </div>
+
+    
+
+    
+  </body>
+</html>

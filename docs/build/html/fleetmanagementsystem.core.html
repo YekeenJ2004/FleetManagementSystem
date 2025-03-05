@@ -1,0 +1,437 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="./">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>fleetmanagementsystem.core package &mdash; ECM2429DA 1.0 documentation</title>
+      <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=b86133f3" />
+      <link rel="stylesheet" type="text/css" href="_static/css/theme.css?v=e59714d7" />
+
+  
+      <script src="_static/jquery.js?v=5d32c60e"></script>
+      <script src="_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="_static/documentation_options.js?v=f2a433a1"></script>
+      <script src="_static/doctools.js?v=9bcbadda"></script>
+      <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="fleetmanagementsystem.gui package" href="fleetmanagementsystem.gui.html" />
+    <link rel="prev" title="fleetmanagementsystem package" href="fleetmanagementsystem.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="index.html" class="icon icon-home">
+            ECM2429DA
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul class="current">
+<li class="toctree-l1 current"><a class="reference internal" href="fleetmanagementsystem.html">fleetmanagementsystem package</a><ul class="current">
+<li class="toctree-l2 current"><a class="reference internal" href="fleetmanagementsystem.html#subpackages">Subpackages</a><ul class="current">
+<li class="toctree-l3 current"><a class="current reference internal" href="#">fleetmanagementsystem.core package</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#submodules">Submodules</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#module-fleetmanagementsystem.core.constants">fleetmanagementsystem.core.constants module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#module-fleetmanagementsystem.core.customtypes">fleetmanagementsystem.core.customtypes module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#module-fleetmanagementsystem.core.databasemanager">fleetmanagementsystem.core.databasemanager module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#module-fleetmanagementsystem.core.filtermanager">fleetmanagementsystem.core.filtermanager module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#module-fleetmanagementsystem.core.vehicle">fleetmanagementsystem.core.vehicle module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#module-fleetmanagementsystem.core.vehiclemanager">fleetmanagementsystem.core.vehiclemanager module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#module-fleetmanagementsystem.core">Module contents</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="fleetmanagementsystem.gui.html">fleetmanagementsystem.gui package</a></li>
+<li class="toctree-l3"><a class="reference internal" href="fleetmanagementsystem.tests.html">fleetmanagementsystem.tests package</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="fleetmanagementsystem.html#submodules">Submodules</a></li>
+<li class="toctree-l2"><a class="reference internal" href="fleetmanagementsystem.html#module-fleetmanagementsystem.main">fleetmanagementsystem.main module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="fleetmanagementsystem.html#module-fleetmanagementsystem">Module contents</a></li>
+</ul>
+</li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">ECM2429DA</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="fleetmanagementsystem.html">fleetmanagementsystem package</a></li>
+      <li class="breadcrumb-item active">fleetmanagementsystem.core package</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="_sources/fleetmanagementsystem.core.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="fleetmanagementsystem-core-package">
+<h1>fleetmanagementsystem.core package<a class="headerlink" href="#fleetmanagementsystem-core-package" title="Link to this heading"></a></h1>
+<section id="submodules">
+<h2>Submodules<a class="headerlink" href="#submodules" title="Link to this heading"></a></h2>
+</section>
+<section id="module-fleetmanagementsystem.core.constants">
+<span id="fleetmanagementsystem-core-constants-module"></span><h2>fleetmanagementsystem.core.constants module<a class="headerlink" href="#module-fleetmanagementsystem.core.constants" title="Link to this heading"></a></h2>
+</section>
+<section id="module-fleetmanagementsystem.core.customtypes">
+<span id="fleetmanagementsystem-core-customtypes-module"></span><h2>fleetmanagementsystem.core.customtypes module<a class="headerlink" href="#module-fleetmanagementsystem.core.customtypes" title="Link to this heading"></a></h2>
+</section>
+<section id="module-fleetmanagementsystem.core.databasemanager">
+<span id="fleetmanagementsystem-core-databasemanager-module"></span><h2>fleetmanagementsystem.core.databasemanager module<a class="headerlink" href="#module-fleetmanagementsystem.core.databasemanager" title="Link to this heading"></a></h2>
+<dl class="py class">
+<dt class="sig sig-object py" id="fleetmanagementsystem.core.databasemanager.DatabaseManager">
+<em class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">fleetmanagementsystem.core.databasemanager.</span></span><span class="sig-name descname"><span class="pre">DatabaseManager</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">db_path</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/fleetmanagementsystem/core/databasemanager.html#DatabaseManager"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#fleetmanagementsystem.core.databasemanager.DatabaseManager" title="Link to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>A class for managing database connections and executing queries.</p>
+<p>This class provides methods for interacting with a SQLite database,
+including executing queries and closing the database connection.</p>
+<dl class="py method">
+<dt class="sig sig-object py" id="fleetmanagementsystem.core.databasemanager.DatabaseManager.close">
+<span class="sig-name descname"><span class="pre">close</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="reference internal" href="_modules/fleetmanagementsystem/core/databasemanager.html#DatabaseManager.close"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#fleetmanagementsystem.core.databasemanager.DatabaseManager.close" title="Link to this definition"></a></dt>
+<dd><p>Close the database connection.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="fleetmanagementsystem.core.databasemanager.DatabaseManager.execute_query">
+<span class="sig-name descname"><span class="pre">execute_query</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">query</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">params</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Tuple</span><span class="p"><span class="pre">[</span></span><span class="pre">Any</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="p"><span class="pre">...</span></span><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">()</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">raise_exceptions</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">List</span><span class="p"><span class="pre">[</span></span><span class="pre">Tuple</span><span class="p"><span class="pre">[</span></span><span class="pre">Any</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="p"><span class="pre">...</span></span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></span></span><a class="reference internal" href="_modules/fleetmanagementsystem/core/databasemanager.html#DatabaseManager.execute_query"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#fleetmanagementsystem.core.databasemanager.DatabaseManager.execute_query" title="Link to this definition"></a></dt>
+<dd><p>Execute a query on the database.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>query</strong> (<em>str</em>) – The SQL query to execute.</p></li>
+<li><p><strong>params</strong> (<em>Tuple</em><em>[</em><em>Any</em><em>, </em><em>...</em><em>]</em>) – A tuple of parameters to bind to the</p></li>
+<li><p><strong>query.</strong></p></li>
+<li><p><strong>tuple.</strong> (<em>Defaults to an empty</em>)</p></li>
+<li><p><strong>raise_exceptions</strong> (<em>bool</em>) – Whether to raise exceptions if a</p></li>
+<li><p><strong>False.</strong> (<em>database error occurs. Defaults to</em>)</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>The result of the query as a list of tuples.
+Returns an empty list on error.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>List[Tuple[Any, …]]</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+</section>
+<section id="module-fleetmanagementsystem.core.filtermanager">
+<span id="fleetmanagementsystem-core-filtermanager-module"></span><h2>fleetmanagementsystem.core.filtermanager module<a class="headerlink" href="#module-fleetmanagementsystem.core.filtermanager" title="Link to this heading"></a></h2>
+<dl class="py class">
+<dt class="sig sig-object py" id="fleetmanagementsystem.core.filtermanager.FilterManager">
+<em class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">fleetmanagementsystem.core.filtermanager.</span></span><span class="sig-name descname"><span class="pre">FilterManager</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">filters</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Dict</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">Any</span><span class="p"><span class="pre">]</span></span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/fleetmanagementsystem/core/filtermanager.html#FilterManager"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#fleetmanagementsystem.core.filtermanager.FilterManager" title="Link to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>A class to manage and apply filters for querying a database.</p>
+<p>This class builds SQL <cite>WHERE</cite> clauses based on user-provided filters and
+manages resetting the filters to their default states.</p>
+<dl class="py method">
+<dt class="sig sig-object py" id="fleetmanagementsystem.core.filtermanager.FilterManager.apply_filters">
+<span class="sig-name descname"><span class="pre">apply_filters</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">Tuple</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">List</span><span class="p"><span class="pre">[</span></span><span class="pre">Any</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></span></span><a class="reference internal" href="_modules/fleetmanagementsystem/core/filtermanager.html#FilterManager.apply_filters"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#fleetmanagementsystem.core.filtermanager.FilterManager.apply_filters" title="Link to this definition"></a></dt>
+<dd><p>Build the SQL <cite>WHERE</cite> clause and corresponding values based on the
+filters.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>A tuple containing the SQL query string and
+the list of query parameters.</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p>Tuple[str, List[Any]]</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="fleetmanagementsystem.core.filtermanager.FilterManager.clear_filters">
+<span class="sig-name descname"><span class="pre">clear_filters</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="reference internal" href="_modules/fleetmanagementsystem/core/filtermanager.html#FilterManager.clear_filters"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#fleetmanagementsystem.core.filtermanager.FilterManager.clear_filters" title="Link to this definition"></a></dt>
+<dd><p>Reset all filters to their default values
+(to be implemented in subclasses)</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="fleetmanagementsystem.core.filtermanager.FilterManager.handle_invalid_range">
+<span class="sig-name descname"><span class="pre">handle_invalid_range</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">field_from</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">field_to</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="reference internal" href="_modules/fleetmanagementsystem/core/filtermanager.html#FilterManager.handle_invalid_range"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#fleetmanagementsystem.core.filtermanager.FilterManager.handle_invalid_range" title="Link to this definition"></a></dt>
+<dd><p>Handle invalid range inputs (to be implemented in subclasses).</p>
+</dd></dl>
+
+</dd></dl>
+
+</section>
+<section id="module-fleetmanagementsystem.core.vehicle">
+<span id="fleetmanagementsystem-core-vehicle-module"></span><h2>fleetmanagementsystem.core.vehicle module<a class="headerlink" href="#module-fleetmanagementsystem.core.vehicle" title="Link to this heading"></a></h2>
+<dl class="py class">
+<dt class="sig sig-object py" id="fleetmanagementsystem.core.vehicle.Vehicle">
+<em class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">fleetmanagementsystem.core.vehicle.</span></span><span class="sig-name descname"><span class="pre">Vehicle</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">vehicle_type</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Literal</span><span class="p"><span class="pre">[</span></span><span class="s"><span class="pre">'Sedan'</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="s"><span class="pre">'Hatchback'</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="s"><span class="pre">'SUV'</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="s"><span class="pre">'Coupe'</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="s"><span class="pre">'Convertible'</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="s"><span class="pre">'Minivan'</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="s"><span class="pre">'Pickup</span> <span class="pre">Truck'</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="s"><span class="pre">'Cargo</span> <span class="pre">Van'</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="s"><span class="pre">'Box</span> <span class="pre">Truck'</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="s"><span class="pre">'Bus'</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="s"><span class="pre">'Motorcycle'</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="s"><span class="pre">'Scooter'</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="s"><span class="pre">'Bicycle'</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="s"><span class="pre">'Semi-Truck'</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="s"><span class="pre">'Dump</span> <span class="pre">Truck'</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="s"><span class="pre">'Bulldozer'</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="s"><span class="pre">'Fire</span> <span class="pre">Truck'</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="s"><span class="pre">'Crane'</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="s"><span class="pre">'ATV'</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="s"><span class="pre">'Forklift'</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="s"><span class="pre">'Snowmobile'</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="s"><span class="pre">'Speedboat'</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="s"><span class="pre">'Yacht'</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="s"><span class="pre">'Ferry'</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="s"><span class="pre">'Helicopter'</span></span><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">reg_number</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">tax_status</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Literal</span><span class="p"><span class="pre">[</span></span><span class="s"><span class="pre">'Paid'</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="s"><span class="pre">'Unpaid'</span></span><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">tax_type</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Literal</span><span class="p"><span class="pre">[</span></span><span class="s"><span class="pre">'Taxed'</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="s"><span class="pre">'Tax</span> <span class="pre">Exempt'</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="s"><span class="pre">'SORN'</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="s"><span class="pre">'Untaxed'</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="s"><span class="pre">'First-Year</span> <span class="pre">Rate'</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="s"><span class="pre">'Reduced</span> <span class="pre">Rate'</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="s"><span class="pre">'Historic'</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="s"><span class="pre">'Disabled'</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="s"><span class="pre">'Agricultural</span> <span class="pre">Vehicle'</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="s"><span class="pre">'Exported'</span></span><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">tax_due_date</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">service_status</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Literal</span><span class="p"><span class="pre">[</span></span><span class="s"><span class="pre">'Done'</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="s"><span class="pre">'Pending'</span></span><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">service_due_date</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">fuel_type</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Literal</span><span class="p"><span class="pre">[</span></span><span class="s"><span class="pre">'Diesel'</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="s"><span class="pre">'Petrol'</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="s"><span class="pre">'Electricity'</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="s"><span class="pre">'Hybrid'</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="s"><span class="pre">'Kerosene'</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="s"><span class="pre">'Jet</span> <span class="pre">Fuel'</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="s"><span class="pre">'Hydrogen'</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="s"><span class="pre">'Solar'</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="s"><span class="pre">'Other'</span></span><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">manufacture_year</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/fleetmanagementsystem/core/vehicle.html#Vehicle"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#fleetmanagementsystem.core.vehicle.Vehicle" title="Link to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>Represents a vehicle with various attributes such as type,
+registration number, tax status, fuel type, and manufacture year.</p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="fleetmanagementsystem.core.vehicle.Vehicle.vehicle_type">
+<span class="sig-name descname"><span class="pre">vehicle_type</span></span><a class="headerlink" href="#fleetmanagementsystem.core.vehicle.Vehicle.vehicle_type" title="Link to this definition"></a></dt>
+<dd><p>The type of the vehicle (e.g., SUV, Sedan).</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>str</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="fleetmanagementsystem.core.vehicle.Vehicle.reg_number">
+<span class="sig-name descname"><span class="pre">reg_number</span></span><a class="headerlink" href="#fleetmanagementsystem.core.vehicle.Vehicle.reg_number" title="Link to this definition"></a></dt>
+<dd><p>The registration number of the vehicle.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>str</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="fleetmanagementsystem.core.vehicle.Vehicle.tax_status">
+<span class="sig-name descname"><span class="pre">tax_status</span></span><a class="headerlink" href="#fleetmanagementsystem.core.vehicle.Vehicle.tax_status" title="Link to this definition"></a></dt>
+<dd><p>The tax status of the vehicle
+(e.g., Paid, Unpaid).</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>str</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="fleetmanagementsystem.core.vehicle.Vehicle.tax_type">
+<span class="sig-name descname"><span class="pre">tax_type</span></span><a class="headerlink" href="#fleetmanagementsystem.core.vehicle.Vehicle.tax_type" title="Link to this definition"></a></dt>
+<dd><p>The type of tax applicable to the vehicle.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>str</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="fleetmanagementsystem.core.vehicle.Vehicle.tax_due_date">
+<span class="sig-name descname"><span class="pre">tax_due_date</span></span><a class="headerlink" href="#fleetmanagementsystem.core.vehicle.Vehicle.tax_due_date" title="Link to this definition"></a></dt>
+<dd><p>The due date for tax payment
+(format: YYYY-MM-DD).</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>Optional[str]</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="fleetmanagementsystem.core.vehicle.Vehicle.service_status">
+<span class="sig-name descname"><span class="pre">service_status</span></span><a class="headerlink" href="#fleetmanagementsystem.core.vehicle.Vehicle.service_status" title="Link to this definition"></a></dt>
+<dd><p>The service status of the vehicle
+(e.g., Due, Completed).</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>str</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="fleetmanagementsystem.core.vehicle.Vehicle.service_due_date">
+<span class="sig-name descname"><span class="pre">service_due_date</span></span><a class="headerlink" href="#fleetmanagementsystem.core.vehicle.Vehicle.service_due_date" title="Link to this definition"></a></dt>
+<dd><p>The due date for vehicle service
+(format: YYYY-MM-DD).</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>Optional[str]</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="fleetmanagementsystem.core.vehicle.Vehicle.fuel_type">
+<span class="sig-name descname"><span class="pre">fuel_type</span></span><a class="headerlink" href="#fleetmanagementsystem.core.vehicle.Vehicle.fuel_type" title="Link to this definition"></a></dt>
+<dd><p>The type of fuel used by the vehicle
+(e.g., Petrol, Diesel).</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>str</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="fleetmanagementsystem.core.vehicle.Vehicle.manufacture_year">
+<span class="sig-name descname"><span class="pre">manufacture_year</span></span><a class="headerlink" href="#fleetmanagementsystem.core.vehicle.Vehicle.manufacture_year" title="Link to this definition"></a></dt>
+<dd><p>The year the vehicle was manufactured.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>int</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+</section>
+<section id="module-fleetmanagementsystem.core.vehiclemanager">
+<span id="fleetmanagementsystem-core-vehiclemanager-module"></span><h2>fleetmanagementsystem.core.vehiclemanager module<a class="headerlink" href="#module-fleetmanagementsystem.core.vehiclemanager" title="Link to this heading"></a></h2>
+<dl class="py class">
+<dt class="sig sig-object py" id="fleetmanagementsystem.core.vehiclemanager.VehicleManager">
+<em class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">fleetmanagementsystem.core.vehiclemanager.</span></span><span class="sig-name descname"><span class="pre">VehicleManager</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">db_name</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">'fleet_management.db'</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/fleetmanagementsystem/core/vehiclemanager.html#VehicleManager"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#fleetmanagementsystem.core.vehiclemanager.VehicleManager" title="Link to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>A manager for handling operations related to vehicles in the database.</p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="fleetmanagementsystem.core.vehiclemanager.VehicleManager.conn">
+<span class="sig-name descname"><span class="pre">conn</span></span><a class="headerlink" href="#fleetmanagementsystem.core.vehiclemanager.VehicleManager.conn" title="Link to this definition"></a></dt>
+<dd><p>SQLite database connection object.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>sqlite3.Connection</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="fleetmanagementsystem.core.vehiclemanager.VehicleManager.add_vehicle">
+<span class="sig-name descname"><span class="pre">add_vehicle</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">vehicle</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#fleetmanagementsystem.core.vehicle.Vehicle" title="fleetmanagementsystem.core.vehicle.Vehicle"><span class="pre">Vehicle</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="reference internal" href="_modules/fleetmanagementsystem/core/vehiclemanager.html#VehicleManager.add_vehicle"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#fleetmanagementsystem.core.vehiclemanager.VehicleManager.add_vehicle" title="Link to this definition"></a></dt>
+<dd><p>Adds a new vehicle to the database.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>vehicle</strong> (<a class="reference internal" href="#fleetmanagementsystem.core.vehicle.Vehicle" title="fleetmanagementsystem.core.vehicle.Vehicle"><em>Vehicle</em></a>) – A Vehicle object containing vehicle details.</p>
+</dd>
+<dt class="field-even">Raises<span class="colon">:</span></dt>
+<dd class="field-even"><p><strong>sqlite3.Error</strong> – If there is an error during the insertion process.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="fleetmanagementsystem.core.vehiclemanager.VehicleManager.create_table">
+<span class="sig-name descname"><span class="pre">create_table</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="reference internal" href="_modules/fleetmanagementsystem/core/vehiclemanager.html#VehicleManager.create_table"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#fleetmanagementsystem.core.vehiclemanager.VehicleManager.create_table" title="Link to this definition"></a></dt>
+<dd><p>Creates the Vehicles table if it does not already exist.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="fleetmanagementsystem.core.vehiclemanager.VehicleManager.remove_vehicle">
+<span class="sig-name descname"><span class="pre">remove_vehicle</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">reg_number</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="reference internal" href="_modules/fleetmanagementsystem/core/vehiclemanager.html#VehicleManager.remove_vehicle"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#fleetmanagementsystem.core.vehiclemanager.VehicleManager.remove_vehicle" title="Link to this definition"></a></dt>
+<dd><p>Removes a vehicle from the database by its registration number.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>reg_number</strong> (<em>str</em>) – The registration number of the vehicle to remove.</p>
+</dd>
+<dt class="field-even">Raises<span class="colon">:</span></dt>
+<dd class="field-even"><p><strong>sqlite3.Error</strong> – If there is an error during the deletion process.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="fleetmanagementsystem.core.vehiclemanager.VehicleManager.search_vehicles">
+<span class="sig-name descname"><span class="pre">search_vehicles</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">query</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">params</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Tuple</span><span class="p"><span class="pre">[</span></span><span class="pre">Any</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="p"><span class="pre">...</span></span><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">()</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">List</span><span class="p"><span class="pre">[</span></span><span class="pre">Tuple</span><span class="p"><span class="pre">[</span></span><span class="pre">Any</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="p"><span class="pre">...</span></span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></span></span><a class="reference internal" href="_modules/fleetmanagementsystem/core/vehiclemanager.html#VehicleManager.search_vehicles"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#fleetmanagementsystem.core.vehiclemanager.VehicleManager.search_vehicles" title="Link to this definition"></a></dt>
+<dd><p>Searches for vehicles in the database using a custom SQL query.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>query</strong> (<em>str</em>) – The SQL query to execute.</p></li>
+<li><p><strong>params</strong> (<em>Tuple</em><em>[</em><em>Any</em><em>, </em><em>...</em><em>]</em>) – Parameters to use in the SQL query.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>Results from the query.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>List[Tuple[Any, …]]</p>
+</dd>
+<dt class="field-even">Raises<span class="colon">:</span></dt>
+<dd class="field-even"><p><strong>sqlite3.Error</strong> – If there is an error during the query execution.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="fleetmanagementsystem.core.vehiclemanager.VehicleManager.update_vehicle">
+<span class="sig-name descname"><span class="pre">update_vehicle</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">reg_number</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Any</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="reference internal" href="_modules/fleetmanagementsystem/core/vehiclemanager.html#VehicleManager.update_vehicle"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#fleetmanagementsystem.core.vehiclemanager.VehicleManager.update_vehicle" title="Link to this definition"></a></dt>
+<dd><p>Updates details of a specific vehicle in the database.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>reg_number</strong> (<em>str</em>) – The registration number of the vehicle to update.</p></li>
+<li><p><strong>**kwargs</strong> – Column-value pairs to update in the database.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Raises<span class="colon">:</span></dt>
+<dd class="field-even"><p><strong>sqlite3.Error</strong> – If there is an error during the update process.</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+</section>
+<section id="module-fleetmanagementsystem.core">
+<span id="module-contents"></span><h2>Module contents<a class="headerlink" href="#module-fleetmanagementsystem.core" title="Link to this heading"></a></h2>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="fleetmanagementsystem.html" class="btn btn-neutral float-left" title="fleetmanagementsystem package" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="fleetmanagementsystem.gui.html" class="btn btn-neutral float-right" title="fleetmanagementsystem.gui package" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2025, 730089187.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

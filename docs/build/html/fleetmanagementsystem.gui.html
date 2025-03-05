@@ -1,0 +1,352 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="./">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>fleetmanagementsystem.gui package &mdash; ECM2429DA 1.0 documentation</title>
+      <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=b86133f3" />
+      <link rel="stylesheet" type="text/css" href="_static/css/theme.css?v=e59714d7" />
+
+  
+      <script src="_static/jquery.js?v=5d32c60e"></script>
+      <script src="_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="_static/documentation_options.js?v=f2a433a1"></script>
+      <script src="_static/doctools.js?v=9bcbadda"></script>
+      <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="fleetmanagementsystem.gui.utils package" href="fleetmanagementsystem.gui.utils.html" />
+    <link rel="prev" title="fleetmanagementsystem.core package" href="fleetmanagementsystem.core.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="index.html" class="icon icon-home">
+            ECM2429DA
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul class="current">
+<li class="toctree-l1 current"><a class="reference internal" href="fleetmanagementsystem.html">fleetmanagementsystem package</a><ul class="current">
+<li class="toctree-l2 current"><a class="reference internal" href="fleetmanagementsystem.html#subpackages">Subpackages</a><ul class="current">
+<li class="toctree-l3"><a class="reference internal" href="fleetmanagementsystem.core.html">fleetmanagementsystem.core package</a></li>
+<li class="toctree-l3 current"><a class="current reference internal" href="#">fleetmanagementsystem.gui package</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#subpackages">Subpackages</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#submodules">Submodules</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#module-fleetmanagementsystem.gui.fleetapp">fleetmanagementsystem.gui.fleetapp module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#module-fleetmanagementsystem.gui.tkfiltermanager">fleetmanagementsystem.gui.tkfiltermanager module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#module-fleetmanagementsystem.gui.vehiclepopup">fleetmanagementsystem.gui.vehiclepopup module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#module-fleetmanagementsystem.gui">Module contents</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="fleetmanagementsystem.tests.html">fleetmanagementsystem.tests package</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="fleetmanagementsystem.html#submodules">Submodules</a></li>
+<li class="toctree-l2"><a class="reference internal" href="fleetmanagementsystem.html#module-fleetmanagementsystem.main">fleetmanagementsystem.main module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="fleetmanagementsystem.html#module-fleetmanagementsystem">Module contents</a></li>
+</ul>
+</li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">ECM2429DA</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="fleetmanagementsystem.html">fleetmanagementsystem package</a></li>
+      <li class="breadcrumb-item active">fleetmanagementsystem.gui package</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="_sources/fleetmanagementsystem.gui.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="fleetmanagementsystem-gui-package">
+<h1>fleetmanagementsystem.gui package<a class="headerlink" href="#fleetmanagementsystem-gui-package" title="Link to this heading"></a></h1>
+<section id="subpackages">
+<h2>Subpackages<a class="headerlink" href="#subpackages" title="Link to this heading"></a></h2>
+<div class="toctree-wrapper compound">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="fleetmanagementsystem.gui.utils.html">fleetmanagementsystem.gui.utils package</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="fleetmanagementsystem.gui.utils.html#submodules">Submodules</a></li>
+<li class="toctree-l2"><a class="reference internal" href="fleetmanagementsystem.gui.utils.html#module-fleetmanagementsystem.gui.utils.appmessage">fleetmanagementsystem.gui.utils.appmessage module</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="fleetmanagementsystem.gui.utils.html#fleetmanagementsystem.gui.utils.appmessage.AppMessage"><code class="docutils literal notranslate"><span class="pre">AppMessage</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="fleetmanagementsystem.gui.utils.html#fleetmanagementsystem.gui.utils.appmessage.AppMessage.show"><code class="docutils literal notranslate"><span class="pre">AppMessage.show()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="fleetmanagementsystem.gui.utils.html#module-fleetmanagementsystem.gui.utils.customdatepicker">fleetmanagementsystem.gui.utils.customdatepicker module</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="fleetmanagementsystem.gui.utils.html#fleetmanagementsystem.gui.utils.customdatepicker.CustomDatePicker"><code class="docutils literal notranslate"><span class="pre">CustomDatePicker</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="fleetmanagementsystem.gui.utils.html#fleetmanagementsystem.gui.utils.customdatepicker.CustomDatePicker.delete"><code class="docutils literal notranslate"><span class="pre">CustomDatePicker.delete()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="fleetmanagementsystem.gui.utils.html#fleetmanagementsystem.gui.utils.customdatepicker.CustomDatePicker.get"><code class="docutils literal notranslate"><span class="pre">CustomDatePicker.get()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="fleetmanagementsystem.gui.utils.html#fleetmanagementsystem.gui.utils.customdatepicker.CustomDatePicker.insert"><code class="docutils literal notranslate"><span class="pre">CustomDatePicker.insert()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="fleetmanagementsystem.gui.utils.html#fleetmanagementsystem.gui.utils.customdatepicker.CustomDatePicker.open_date_picker"><code class="docutils literal notranslate"><span class="pre">CustomDatePicker.open_date_picker()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="fleetmanagementsystem.gui.utils.html#fleetmanagementsystem.gui.utils.customdatepicker.CustomDatePicker.popup_instance"><code class="docutils literal notranslate"><span class="pre">CustomDatePicker.popup_instance</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="fleetmanagementsystem.gui.utils.html#fleetmanagementsystem.gui.utils.customdatepicker.CustomDatePicker.set_date"><code class="docutils literal notranslate"><span class="pre">CustomDatePicker.set_date()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="fleetmanagementsystem.gui.utils.html#fleetmanagementsystem.gui.utils.customdatepicker.CustomDatePicker.set_date_to_current"><code class="docutils literal notranslate"><span class="pre">CustomDatePicker.set_date_to_current()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="fleetmanagementsystem.gui.utils.html#fleetmanagementsystem.gui.utils.customdatepicker.CustomDatePicker.update_days"><code class="docutils literal notranslate"><span class="pre">CustomDatePicker.update_days()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="fleetmanagementsystem.gui.utils.html#module-fleetmanagementsystem.gui.utils.tooltip">fleetmanagementsystem.gui.utils.tooltip module</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="fleetmanagementsystem.gui.utils.html#fleetmanagementsystem.gui.utils.tooltip.ToolTip"><code class="docutils literal notranslate"><span class="pre">ToolTip</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="fleetmanagementsystem.gui.utils.html#fleetmanagementsystem.gui.utils.tooltip.ToolTip.hide_tooltip"><code class="docutils literal notranslate"><span class="pre">ToolTip.hide_tooltip()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="fleetmanagementsystem.gui.utils.html#fleetmanagementsystem.gui.utils.tooltip.ToolTip.show_tooltip"><code class="docutils literal notranslate"><span class="pre">ToolTip.show_tooltip()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="fleetmanagementsystem.gui.utils.html#fleetmanagementsystem.gui.utils.tooltip.ToolTip.update_text"><code class="docutils literal notranslate"><span class="pre">ToolTip.update_text()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="fleetmanagementsystem.gui.utils.html#module-fleetmanagementsystem.gui.utils.tooltipwrapper">fleetmanagementsystem.gui.utils.tooltipwrapper module</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="fleetmanagementsystem.gui.utils.html#fleetmanagementsystem.gui.utils.tooltipwrapper.Tooltip"><code class="docutils literal notranslate"><span class="pre">Tooltip</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="fleetmanagementsystem.gui.utils.html#fleetmanagementsystem.gui.utils.tooltipwrapper.Tooltip.cget"><code class="docutils literal notranslate"><span class="pre">Tooltip.cget()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="fleetmanagementsystem.gui.utils.html#fleetmanagementsystem.gui.utils.tooltipwrapper.Tooltip.configure"><code class="docutils literal notranslate"><span class="pre">Tooltip.configure()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="fleetmanagementsystem.gui.utils.html#fleetmanagementsystem.gui.utils.tooltipwrapper.Tooltip.keys"><code class="docutils literal notranslate"><span class="pre">Tooltip.keys()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="fleetmanagementsystem.gui.utils.html#fleetmanagementsystem.gui.utils.tooltipwrapper.TooltipWrapper"><code class="docutils literal notranslate"><span class="pre">TooltipWrapper</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="fleetmanagementsystem.gui.utils.html#fleetmanagementsystem.gui.utils.tooltipwrapper.TooltipWrapper.add_tooltip"><code class="docutils literal notranslate"><span class="pre">TooltipWrapper.add_tooltip()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="fleetmanagementsystem.gui.utils.html#fleetmanagementsystem.gui.utils.tooltipwrapper.TooltipWrapper.cget"><code class="docutils literal notranslate"><span class="pre">TooltipWrapper.cget()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="fleetmanagementsystem.gui.utils.html#fleetmanagementsystem.gui.utils.tooltipwrapper.TooltipWrapper.configure"><code class="docutils literal notranslate"><span class="pre">TooltipWrapper.configure()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="fleetmanagementsystem.gui.utils.html#fleetmanagementsystem.gui.utils.tooltipwrapper.TooltipWrapper.display_tooltip"><code class="docutils literal notranslate"><span class="pre">TooltipWrapper.display_tooltip()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="fleetmanagementsystem.gui.utils.html#fleetmanagementsystem.gui.utils.tooltipwrapper.TooltipWrapper.remove_all"><code class="docutils literal notranslate"><span class="pre">TooltipWrapper.remove_all()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="fleetmanagementsystem.gui.utils.html#fleetmanagementsystem.gui.utils.tooltipwrapper.TooltipWrapper.remove_tooltip"><code class="docutils literal notranslate"><span class="pre">TooltipWrapper.remove_tooltip()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="fleetmanagementsystem.gui.utils.html#fleetmanagementsystem.gui.utils.tooltipwrapper.TooltipWrapper.set_tooltip_text"><code class="docutils literal notranslate"><span class="pre">TooltipWrapper.set_tooltip_text()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="fleetmanagementsystem.gui.utils.html#module-fleetmanagementsystem.gui.utils">Module contents</a></li>
+</ul>
+</li>
+</ul>
+</div>
+</section>
+<section id="submodules">
+<h2>Submodules<a class="headerlink" href="#submodules" title="Link to this heading"></a></h2>
+</section>
+<section id="module-fleetmanagementsystem.gui.fleetapp">
+<span id="fleetmanagementsystem-gui-fleetapp-module"></span><h2>fleetmanagementsystem.gui.fleetapp module<a class="headerlink" href="#module-fleetmanagementsystem.gui.fleetapp" title="Link to this heading"></a></h2>
+<dl class="py class">
+<dt class="sig sig-object py" id="fleetmanagementsystem.gui.fleetapp.FleetApp">
+<em class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">fleetmanagementsystem.gui.fleetapp.</span></span><span class="sig-name descname"><span class="pre">FleetApp</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">root</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Tk</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/fleetmanagementsystem/gui/fleetapp.html#FleetApp"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#fleetmanagementsystem.gui.fleetapp.FleetApp" title="Link to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>Fleet Management System application.</p>
+<p>This class handles the main GUI components, user interactions, and
+integrates with the <cite>VehicleManager</cite> and <cite>FilterManager</cite>
+for backend operations.</p>
+<dl class="py method">
+<dt class="sig sig-object py" id="fleetmanagementsystem.gui.fleetapp.FleetApp.apply_filters">
+<span class="sig-name descname"><span class="pre">apply_filters</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="reference internal" href="_modules/fleetmanagementsystem/gui/fleetapp.html#FleetApp.apply_filters"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#fleetmanagementsystem.gui.fleetapp.FleetApp.apply_filters" title="Link to this definition"></a></dt>
+<dd><p>Apply the selected filters and update the vehicle list.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="fleetmanagementsystem.gui.fleetapp.FleetApp.bulk_delete">
+<span class="sig-name descname"><span class="pre">bulk_delete</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="reference internal" href="_modules/fleetmanagementsystem/gui/fleetapp.html#FleetApp.bulk_delete"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#fleetmanagementsystem.gui.fleetapp.FleetApp.bulk_delete" title="Link to this definition"></a></dt>
+<dd><p>Delete selected vehicles from the database
+and refresh the vehicle list.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="fleetmanagementsystem.gui.fleetapp.FleetApp.clear_filters">
+<span class="sig-name descname"><span class="pre">clear_filters</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="reference internal" href="_modules/fleetmanagementsystem/gui/fleetapp.html#FleetApp.clear_filters"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#fleetmanagementsystem.gui.fleetapp.FleetApp.clear_filters" title="Link to this definition"></a></dt>
+<dd><p>Clear all filters and reset the vehicle list.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="fleetmanagementsystem.gui.fleetapp.FleetApp.create_widgets">
+<span class="sig-name descname"><span class="pre">create_widgets</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="reference internal" href="_modules/fleetmanagementsystem/gui/fleetapp.html#FleetApp.create_widgets"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#fleetmanagementsystem.gui.fleetapp.FleetApp.create_widgets" title="Link to this definition"></a></dt>
+<dd><p>Create and layout the widgets for the application.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="fleetmanagementsystem.gui.fleetapp.FleetApp.edit_vehicle_popup">
+<span class="sig-name descname"><span class="pre">edit_vehicle_popup</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">event</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Event</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="reference internal" href="_modules/fleetmanagementsystem/gui/fleetapp.html#FleetApp.edit_vehicle_popup"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#fleetmanagementsystem.gui.fleetapp.FleetApp.edit_vehicle_popup" title="Link to this definition"></a></dt>
+<dd><p>Open a popup window for editing an existing vehicle.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>event</strong> (<em>tk.Event</em>) – The event object containing information
+about the click event.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="fleetmanagementsystem.gui.fleetapp.FleetApp.list_all_vehicles">
+<span class="sig-name descname"><span class="pre">list_all_vehicles</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="reference internal" href="_modules/fleetmanagementsystem/gui/fleetapp.html#FleetApp.list_all_vehicles"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#fleetmanagementsystem.gui.fleetapp.FleetApp.list_all_vehicles" title="Link to this definition"></a></dt>
+<dd><p>Fetch and display all vehicles.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="fleetmanagementsystem.gui.fleetapp.FleetApp.open_add_vehicle_popup">
+<span class="sig-name descname"><span class="pre">open_add_vehicle_popup</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="reference internal" href="_modules/fleetmanagementsystem/gui/fleetapp.html#FleetApp.open_add_vehicle_popup"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#fleetmanagementsystem.gui.fleetapp.FleetApp.open_add_vehicle_popup" title="Link to this definition"></a></dt>
+<dd><p>Open a popup window for adding a new vehicle.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="fleetmanagementsystem.gui.fleetapp.FleetApp.toggle_checkbox">
+<span class="sig-name descname"><span class="pre">toggle_checkbox</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">event</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Event</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="reference internal" href="_modules/fleetmanagementsystem/gui/fleetapp.html#FleetApp.toggle_checkbox"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#fleetmanagementsystem.gui.fleetapp.FleetApp.toggle_checkbox" title="Link to this definition"></a></dt>
+<dd><p>Toggles the checkbox state (checked/unchecked) for the clicked row
+in the Treeview.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>event</strong> (<em>tk.Event</em>) – The event object containing information
+about the click event.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="fleetmanagementsystem.gui.fleetapp.FleetApp.update_treeview">
+<span class="sig-name descname"><span class="pre">update_treeview</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">records</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">List</span><span class="p"><span class="pre">[</span></span><span class="pre">List</span><span class="p"><span class="pre">[</span></span><span class="pre">Any</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="reference internal" href="_modules/fleetmanagementsystem/gui/fleetapp.html#FleetApp.update_treeview"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#fleetmanagementsystem.gui.fleetapp.FleetApp.update_treeview" title="Link to this definition"></a></dt>
+<dd><p>Update the treeview with given records.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>records</strong> (<em>List</em><em>[</em><em>List</em><em>[</em><em>Any</em><em>]</em><em>]</em>) – The records to display in the treeview.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="fleetmanagementsystem.gui.fleetapp.FleetApp.vehicle_popup">
+<span class="sig-name descname"><span class="pre">vehicle_popup</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">mode</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">vehicle_data</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">List</span><span class="p"><span class="pre">[</span></span><span class="pre">Any</span><span class="p"><span class="pre">]</span></span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="reference internal" href="_modules/fleetmanagementsystem/gui/fleetapp.html#FleetApp.vehicle_popup"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#fleetmanagementsystem.gui.fleetapp.FleetApp.vehicle_popup" title="Link to this definition"></a></dt>
+<dd><p>Open a popup window for adding or editing a vehicle.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>mode</strong> (<em>str</em>) – The mode of the popup (“add” or “edit”).</p></li>
+<li><p><strong>vehicle_data</strong> (<em>Optional</em><em>[</em><em>List</em><em>[</em><em>Any</em><em>]</em><em>]</em>) – Data for the vehicle to edit.</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+</section>
+<section id="module-fleetmanagementsystem.gui.tkfiltermanager">
+<span id="fleetmanagementsystem-gui-tkfiltermanager-module"></span><h2>fleetmanagementsystem.gui.tkfiltermanager module<a class="headerlink" href="#module-fleetmanagementsystem.gui.tkfiltermanager" title="Link to this heading"></a></h2>
+<dl class="py class">
+<dt class="sig sig-object py" id="fleetmanagementsystem.gui.tkfiltermanager.TkFilterManager">
+<em class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">fleetmanagementsystem.gui.tkfiltermanager.</span></span><span class="sig-name descname"><span class="pre">TkFilterManager</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">filters</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Dict</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">Any</span><span class="p"><span class="pre">]</span></span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/fleetmanagementsystem/gui/tkfiltermanager.html#TkFilterManager"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#fleetmanagementsystem.gui.tkfiltermanager.TkFilterManager" title="Link to this definition"></a></dt>
+<dd><p>Bases: <a class="reference internal" href="fleetmanagementsystem.core.html#fleetmanagementsystem.core.filtermanager.FilterManager" title="fleetmanagementsystem.core.filtermanager.FilterManager"><code class="xref py py-class docutils literal notranslate"><span class="pre">FilterManager</span></code></a></p>
+<p>A subclass of FilterManager that integrates with Tkinter-specific
+components.</p>
+<dl class="py method">
+<dt class="sig sig-object py" id="fleetmanagementsystem.gui.tkfiltermanager.TkFilterManager.clear_filters">
+<span class="sig-name descname"><span class="pre">clear_filters</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="reference internal" href="_modules/fleetmanagementsystem/gui/tkfiltermanager.html#TkFilterManager.clear_filters"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#fleetmanagementsystem.gui.tkfiltermanager.TkFilterManager.clear_filters" title="Link to this definition"></a></dt>
+<dd><p>Reset all filters to their default values, including CustomDatePicker
+widgets.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="fleetmanagementsystem.gui.tkfiltermanager.TkFilterManager.handle_invalid_range">
+<span class="sig-name descname"><span class="pre">handle_invalid_range</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">field_from</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">field_to</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="reference internal" href="_modules/fleetmanagementsystem/gui/tkfiltermanager.html#TkFilterManager.handle_invalid_range"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#fleetmanagementsystem.gui.tkfiltermanager.TkFilterManager.handle_invalid_range" title="Link to this definition"></a></dt>
+<dd><p>Display an error message using Tkinter’s AppMessage.</p>
+</dd></dl>
+
+</dd></dl>
+
+</section>
+<section id="module-fleetmanagementsystem.gui.vehiclepopup">
+<span id="fleetmanagementsystem-gui-vehiclepopup-module"></span><h2>fleetmanagementsystem.gui.vehiclepopup module<a class="headerlink" href="#module-fleetmanagementsystem.gui.vehiclepopup" title="Link to this heading"></a></h2>
+<dl class="py class">
+<dt class="sig sig-object py" id="fleetmanagementsystem.gui.vehiclepopup.VehiclePopup">
+<em class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">fleetmanagementsystem.gui.vehiclepopup.</span></span><span class="sig-name descname"><span class="pre">VehiclePopup</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">root</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Any</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">manager</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="fleetmanagementsystem.core.html#fleetmanagementsystem.core.vehiclemanager.VehicleManager" title="fleetmanagementsystem.core.vehiclemanager.VehicleManager"><span class="pre">VehicleManager</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">list_all_vehicles</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Callable</span><span class="p"><span class="pre">[</span></span><span class="p"><span class="pre">[</span></span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">None</span><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">mode</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Literal</span><span class="p"><span class="pre">[</span></span><span class="s"><span class="pre">'add'</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="s"><span class="pre">'edit'</span></span><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">vehicle_data</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Dict</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">Any</span><span class="p"><span class="pre">]</span></span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/fleetmanagementsystem/gui/vehiclepopup.html#VehiclePopup"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#fleetmanagementsystem.gui.vehiclepopup.VehiclePopup" title="Link to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>Popup window for adding or editing a vehicle.</p>
+<dl class="py method">
+<dt class="sig sig-object py" id="fleetmanagementsystem.gui.vehiclepopup.VehiclePopup.create_widgets">
+<span class="sig-name descname"><span class="pre">create_widgets</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="reference internal" href="_modules/fleetmanagementsystem/gui/vehiclepopup.html#VehiclePopup.create_widgets"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#fleetmanagementsystem.gui.vehiclepopup.VehiclePopup.create_widgets" title="Link to this definition"></a></dt>
+<dd><p>Create and layout the widgets in the popup window.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="fleetmanagementsystem.gui.vehiclepopup.VehiclePopup.delete_vehicle">
+<span class="sig-name descname"><span class="pre">delete_vehicle</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="reference internal" href="_modules/fleetmanagementsystem/gui/vehiclepopup.html#VehiclePopup.delete_vehicle"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#fleetmanagementsystem.gui.vehiclepopup.VehiclePopup.delete_vehicle" title="Link to this definition"></a></dt>
+<dd><p>Delete the current vehicle from the database.</p>
+<p>Displays appropriate success or error messages based on the outcome.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="fleetmanagementsystem.gui.vehiclepopup.VehiclePopup.save_changes">
+<span class="sig-name descname"><span class="pre">save_changes</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="reference internal" href="_modules/fleetmanagementsystem/gui/vehiclepopup.html#VehiclePopup.save_changes"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#fleetmanagementsystem.gui.vehiclepopup.VehiclePopup.save_changes" title="Link to this definition"></a></dt>
+<dd><p>Save the changes made to the vehicle.</p>
+<p>This method validates the input data and either adds a new
+vehicle or updates an existing one in the database. It shows
+appropriate messages based on the success or failure of the operation.</p>
+</dd></dl>
+
+</dd></dl>
+
+</section>
+<section id="module-fleetmanagementsystem.gui">
+<span id="module-contents"></span><h2>Module contents<a class="headerlink" href="#module-fleetmanagementsystem.gui" title="Link to this heading"></a></h2>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="fleetmanagementsystem.core.html" class="btn btn-neutral float-left" title="fleetmanagementsystem.core package" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="fleetmanagementsystem.gui.utils.html" class="btn btn-neutral float-right" title="fleetmanagementsystem.gui.utils package" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2025, 730089187.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>
