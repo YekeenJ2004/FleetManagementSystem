@@ -1,12 +1,14 @@
-from core.constants import SQL_MAPPINGS
+from fleetmanagementsystem.core.constants import SQL_MAPPINGS
 import logging
 from typing import Dict, Any, Tuple, List
-from core.customtypes import FromRange, ToRange, RangeField
+from fleetmanagementsystem.core.customtypes import (
+    FromRange, ToRange, RangeField
+)
 
 
 class FilterManager:
     """
-    A class to manage and apply filterss for querying a database.
+    A class to manage and apply filters for querying a database.
 
     This class builds SQL `WHERE` clauses based on user-provided filters and
     manages resetting the filters to their default states.

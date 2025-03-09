@@ -1,8 +1,8 @@
 from tkinter import ttk
-from gui.utils.appmessage import AppMessage
-from gui.utils.customdatepicker import CustomDatePicker
+from fleetmanagementsystem.gui.utils.appmessage import AppMessage
+from fleetmanagementsystem.gui.utils.customdatepicker import CustomDatePicker
 import logging
-from core.filtermanager import FilterManager
+from fleetmanagementsystem.core.filtermanager import FilterManager
 
 
 class TkFilterManager(FilterManager):

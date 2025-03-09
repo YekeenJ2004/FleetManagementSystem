@@ -25,7 +25,8 @@ from tkinter import ttk
 
 
 class Tooltip(tk.Toplevel):
-    """Tooltip widget displays a ttk.Label in a Toplevel without window decoration."""
+    """Tooltip widget displays a ttk.Label in a Toplevel without
+    window decoration."""
 
     _initialized = False
 
@@ -150,8 +151,10 @@ class TooltipWrapper:
     def add_tooltip(self, widget, text):
         """Add new widget to wrapper."""
         self.widgets[str(widget)] = text
-        self.bind_enter_ids[str(widget)] = widget.bind('<Enter>', self._on_enter)
-        self.bind_leave_ids[str(widget)] = widget.bind('<Leave>', self._on_leave)
+        self.bind_enter_ids[str(widget)] = widget.bind(
+            '<Enter>', self._on_enter)
+        self.bind_leave_ids[str(widget)] = widget.bind(
+            '<Leave>', self._on_leave)
 
     def set_tooltip_text(self, widget, text):
         """Change tooltip text for given widget."""
@@ -182,14 +185,16 @@ class TooltipWrapper:
     def _on_enter(self, event):
         """Change current widget and launch timer to display tooltip."""
         if not self.tooltip.winfo_ismapped():
-            self._timer_id = event.widget.after(self._delay, self.display_tooltip)
+            self._timer_id = event.widget.after(
+                self._delay, self.display_tooltip)
             self.current_widget = event.widget
 
     def _on_leave(self, event):
         """Hide tooltip if visible or cancel tooltip display."""
         if self.tooltip.winfo_ismapped():
             x, y = event.widget.winfo_pointerxy()
-            if not event.widget.winfo_containing(x, y) in [event.widget, self.tooltip]:
+            if not event.widget.winfo_containing(x, y) in [event.widget,
+                                                           self.tooltip]:
                 self.tooltip.withdraw()
         else:
             try:
@@ -201,7 +206,8 @@ class TooltipWrapper:
     def _on_leave_tooltip(self, event):
         """Hide tooltip."""
         x, y = event.widget.winfo_pointerxy()
-        if not event.widget.winfo_containing(x, y) in [self.current_widget, self.tooltip]:
+        if not event.widget.winfo_containing(x, y) in [
+                self.current_widget, self.tooltip]:
             self.tooltip.withdraw()
 
     def display_tooltip(self):
@@ -217,5 +223,6 @@ class TooltipWrapper:
             self.tooltip['text'] = self.widgets[str(self.current_widget)]
             self.tooltip.deiconify()
             x = self.current_widget.winfo_pointerx() + 14
-            y = self.current_widget.winfo_rooty() + self.current_widget.winfo_height() + 2
+            y = (self.current_widget.winfo_rooty() +
+                 self.current_widget.winfo_height() + 2)
             self.tooltip.geometry('+%i+%i' % (x, y))

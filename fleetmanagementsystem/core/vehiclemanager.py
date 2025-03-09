@@ -1,5 +1,5 @@
 import sqlite3
-from core.vehicle import Vehicle
+from fleetmanagementsystem.core.vehicle import Vehicle
 from typing import List, Tuple, Any
 import logging
 
@@ -109,7 +109,7 @@ class VehicleManager:
             for key, value in kwargs.items():
                 cursor.execute(
                     f"UPDATE Vehicles SET {key} = ? "
-                    "WHERE RegistrationNumber = ?",
+                    f"WHERE RegistrationNumber = ?",
                     (value, reg_number)
                 )
             self.conn.commit()

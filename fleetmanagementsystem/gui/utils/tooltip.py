@@ -3,7 +3,7 @@ import tkinter as tk
 
 class ToolTip:
     """
-    A class to create a dynamic tooltip that adjusts to the 
+    A class to create a dynamic tooltip that adjusts to the
     available screen space.
     """
 
@@ -33,7 +33,7 @@ class ToolTip:
         Display the tooltip near the widget when the mouse enters.
 
         Args:
-            event (tk.Event): The event object triggered by the mouse 
+            event (tk.Event): The event object triggered by the mouse
                 entering the widget.
         """
         if self.tooltip_window:
@@ -83,7 +83,7 @@ class ToolTip:
         Hide the tooltip when the mouse leaves the widget.
 
         Args:
-            event (tk.Event): The event object triggered by the mouse 
+            event (tk.Event): The event object triggered by the mouse
             leaving the widget.
         """
         if self.tooltip_window:

@@ -95,20 +95,3 @@ class TestFilterManager:
 
         assert query == 'SELECT * FROM Vehicles ORDER BY "ManufactureYear" ASC'
         assert values == []
-
-    # def test_clear_filters(self, mock_filters):
-    #     """Test clearing all filters."""
-    #     mock_filters["Type"].set("SUV")
-    #     mock_filters["Year From"].set("2020")
-    #     mock_filters["Search"].insert(0, "Example")
-    #     mock_filters["Order By"].set("Type")
-    #     mock_filters["Order Direction"].set("DESC")
-
-    #     manager = FilterManager(mock_filters)
-    #     manager.clear_filters()
-
-    #     assert mock_filters["Type"].get() == "All"
-    #     assert mock_filters["Year From"].get() == "All"
-    #     assert mock_filters["Search"].get() == ""
-    #     assert mock_filters["Order By"].get() == "ManufactureYear"
-    #     assert mock_filters["Order Direction"].get() == "ASC"

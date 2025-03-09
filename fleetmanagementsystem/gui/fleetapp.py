@@ -1,17 +1,17 @@
 import tkinter as tk
 from tkinter import ttk
-from gui.utils.customdatepicker import CustomDatePicker
-from core.vehiclemanager import VehicleManager
-from gui.tkfiltermanager import TkFilterManager
-from core.constants import (
+from fleetmanagementsystem.gui.utils.customdatepicker import CustomDatePicker
+from fleetmanagementsystem.core.vehiclemanager import VehicleManager
+from fleetmanagementsystem.gui.tkfiltermanager import TkFilterManager
+from fleetmanagementsystem.core.constants import (
     COLUMN_NAMES, ASCII_ART, FILTER_RANGE_FIELDS, FILTER_OPTIONS
 )
 import datetime
-from gui.vehiclepopup import VehiclePopup
-from gui.utils.appmessage import AppMessage
+from fleetmanagementsystem.gui.vehiclepopup import VehiclePopup
+from fleetmanagementsystem.gui.utils.appmessage import AppMessage
 from typing import List, Any, Optional
 import logging
-from gui.utils.tooltip import ToolTip
+from fleetmanagementsystem.gui.utils.tooltip import ToolTip
 
 
 class FleetApp:

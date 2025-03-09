@@ -1,6 +1,6 @@
 import tkinter as tk
 from tkinter import ttk
-from gui.utils.appmessage import AppMessage
+from fleetmanagementsystem.gui.utils.appmessage import AppMessage
 import datetime
 
 

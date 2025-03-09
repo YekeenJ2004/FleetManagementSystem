@@ -1,5 +1,5 @@
 import tkinter as tk
-from gui.fleetapp import FleetApp
+from fleetmanagementsystem.gui.fleetapp import FleetApp
 # Run the App
 if __name__ == "__main__":
     root = tk.Tk()

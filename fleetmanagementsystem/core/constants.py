@@ -1,8 +1,8 @@
 import tkinter as tk
 from tkinter import ttk
-from gui.utils.customdatepicker import CustomDatePicker
+from fleetmanagementsystem.gui.utils.customdatepicker import CustomDatePicker
 
-
+# List of vehicle types
 VEHICLE_TYPES = [
     "Sedan", "Hatchback", "SUV", "Coupe", "Convertible", "Minivan",
     "Pickup Truck", "Cargo Van", "Box Truck", "Bus", "Motorcycle",
@@ -10,22 +10,34 @@ VEHICLE_TYPES = [
     "Fire Truck", "Crane", "ATV", "Forklift", "Snowmobile",
     "Speedboat", "Yacht", "Ferry", "Helicopter"
 ]
+
+# List of tax types
 TAX_TYPES = [
     "Taxed", "Tax Exempt", "SORN", "Untaxed", "First-Year Rate",
     "Reduced Rate", "Historic", "Disabled", "Agricultural Vehicle",
     "Exported"
 ]
+
+# List of fuel types
 FUEL_TYPES = [
     "Diesel", "Petrol", "Electricity", "Hybrid", "Kerosene", "Jet Fuel",
     "Hydrogen", "Solar", "Other"
 ]
+
+# List of tax statuses
 TAX_STATUS = ["Paid", "Unpaid"]
+
+# List of service statuses
 SERVICE_STATUS = ["Done", "Pending"]
+
+# Column names for the vehicle table
 COLUMN_NAMES = [
     "Select", "Type", "Registration Number", "Tax Status", "Tax Due Date",
     "Tax Type", "Service Due Date", "Service Status",
     "Fuel Type", "Manufacture Year"
 ]
+
+# SQL mappings for vehicle attributes
 SQL_MAPPINGS = {
     "Type": "Type",
     "Registration Number": "RegistrationNumber",
@@ -37,6 +49,8 @@ SQL_MAPPINGS = {
     "Service Due Date": "ServiceDueDate",
     "Service Status": "ServiceStatus"
 }
+
+# Fields for the vehicle popup
 VEHICLE_POPUP_FIELDS = [
     ("Type",
         lambda parent: ttk.Combobox(
@@ -69,6 +83,8 @@ VEHICLE_POPUP_FIELDS = [
      lambda parent: ttk.Combobox(parent, values=FUEL_TYPES, state="readonly"),
      ""),
 ]
+
+# Mappings for vehicle class attributes
 VEHICLE_CLASS_MAPPINGS = {
     "Type": "vehicle_type",
     "RegistrationNumber": "reg_number",
@@ -80,6 +96,8 @@ VEHICLE_CLASS_MAPPINGS = {
     "FuelType": "fuel_type",
     "ManufactureYear": "manufacture_year"
 }
+
+# Fields for filter ranges
 FILTER_RANGE_FIELDS = [
     ("Year From", "Year From", 2, 4), ("To", "Year To", 2, 6),
     ("Tax Due Date From", "Tax Due Date From", 2, 0),
@@ -87,6 +105,8 @@ FILTER_RANGE_FIELDS = [
     ("Service Date From", "Service Date From", 3, 0),
     ("To", "Service Date To", 3, 2)
 ]
+
+# Options for filters
 FILTER_OPTIONS = {
     "Type": VEHICLE_TYPES + ["All"],
     "Tax Type": TAX_TYPES + ["All"],
@@ -99,6 +119,8 @@ FILTER_OPTIONS = {
     ],
     "Order Direction": ["ASC", "DESC"]
 }
+
+# Options for fields
 FIELD_OPTIONS = {
     "Type": VEHICLE_TYPES,
     "Tax Type": TAX_TYPES,
@@ -106,6 +128,8 @@ FIELD_OPTIONS = {
     "Fuel Type": FUEL_TYPES,
     "Service Status": SERVICE_STATUS
 }
+
+# ASCII art for the application
 ASCII_ART = r"""
          ______ __  __  _____
         |  ____|  \/  |/ ____|
